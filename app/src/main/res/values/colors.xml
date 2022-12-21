@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="grey">#191919</color>
-    <color name="red">#FF6355</color>
+    <color name="grey_0">#EDEDED</color>
+    <color name="grey_10">#DBDBDB</color>
+    <color name="grey_100">#191919</color>
+    <color name="grey_50">#4B4B4B</color>
+    <color name="red">#E65651</color>
+    <color name="green">#1FA900</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="trans">#00000000</color>
 </resources>

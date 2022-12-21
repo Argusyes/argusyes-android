@@ -3,4 +3,41 @@
     <style name="myNavigationBottomStyle" >
         <item name="android:textSize">16sp</item>
     </style>
+
+    <style name="myFragment">
+        <item name="android:padding">20sp</item>
+    </style>
+
+    <style name="myFragmentTitle">
+        <item name="android:padding">0sp</item>
+    </style>
+
+    <style name="myFragmentTitleText">
+        <item name="android:textSize">40sp</item>
+        <item name="android:textColor">?colorOnSurface</item>
+    </style>
+
+    <style name="myFragmentTitleButton">
+        <item name="android:minWidth">54sp</item>
+        <item name="android:minHeight">54sp</item>
+    </style>
+
+    <style name="mySearchLayout">
+        <item name="android:padding">0sp</item>
+        <item name="android:background">@drawable/corners_bg_black</item>
+    </style>
+
+    <style name="mySearchImageView">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:src">@drawable/ic_search</item>
+        <item name="android:background">@color/trans</item>
+    </style>
+
+    <style name="mySearchTextInput">
+        <item name="android:textCursorDrawable">@drawable/cursor_line</item>
+        <item name="android:hint">@string/search</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColorHint">@color/grey_50</item>
+    </style>
+
 </resources>

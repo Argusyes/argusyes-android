@@ -1,15 +1,21 @@
 <resources>
     <!-- Base application theme. -->
     <style name="Theme.Argusyes" parent="Theme.AppCompat.DayNight">
-
         <item name="colorPrimary">@color/red</item>
+        <item name="colorSecondary">@color/green</item>
+        <item name="colorOnBackground">@color/black</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="colorOnSecondary">@color/grey_100</item>
+        <item name="colorOnPrimary">@color/grey_100</item>
 
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <!-- Status bar color. -->
         <item name="android:windowLightStatusBar">false</item>
-        <item name="android:statusBarColor">@color/grey</item>
+        <item name="android:statusBarColor">?colorOnBackground</item>
+        <item name="android:navigationBarColor">?colorOnBackground</item>
         <!-- Customize your theme here. -->
-        <item name="android:background">@color/grey</item>
+        <item name="android:background">?colorOnBackground</item>
+
     </style>
 </resources>
