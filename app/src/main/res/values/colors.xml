@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <color name="grey_20">#FF202020</color>
-    <color name="grey_f2">#FFF2F2F2</color>
+    <color name="grey">#191919</color>
+    <color name="red">#FF6355</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

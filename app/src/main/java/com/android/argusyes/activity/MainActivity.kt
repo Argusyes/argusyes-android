@@ -1,6 +1,7 @@
 package com.android.argusyes.activity
 
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -11,7 +12,7 @@ import com.android.argusyes.fragment.SettingFragment
 import com.android.argusyes.fragment.StatusFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MainActivity : FragmentActivity() {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -23,19 +24,8 @@ class MainActivity : FragmentActivity() {
         val viewPager2: ViewPager2 = findViewById(R.id.mainViewPage)
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.navigationBottomView)
 
-        viewPager2.adapter = object : FragmentStateAdapter(this) {
-            override fun getItemCount(): Int {
-                return 3
-            }
-
-            override fun createFragment(position: Int): Fragment {
-                return when (position) {
-                    0 -> ServerFragment()
-                    1 -> StatusFragment()
-                    else -> SettingFragment()
-                }
-            }
-        }
+        // 设置FragmentStateAdapter
+        viewPager2.adapter = MyFragmentStateAdapter(this)
 
         // 当ViewPager切换页面时，改变底部导航栏的状态
         viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -63,3 +53,15 @@ class MainActivity : FragmentActivity() {
     }
 }
 
+class MyFragmentStateAdapter(activity:FragmentActivity):FragmentStateAdapter(activity) {
+    override fun getItemCount(): Int {
+        return 3
+    }
+    override fun createFragment(position: Int): Fragment {
+        return when (position) {
+            0 -> ServerFragment()
+            1 -> StatusFragment()
+            else -> SettingFragment()
+        }
+    }
+}
