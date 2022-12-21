@@ -1,0 +1,10 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.Argusyes" parent="Theme.AppCompat.DayNight">
+        <!-- Status bar color. -->
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">@color/grey_20</item>
+        <!-- Customize your theme here. -->
+        <item name="android:background">@color/grey_20</item>
+    </style>
+</resources>
