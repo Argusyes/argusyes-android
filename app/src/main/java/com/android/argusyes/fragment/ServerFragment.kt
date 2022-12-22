@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.webkit.WebView
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -31,8 +30,8 @@ class ServerFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    private var searchInput : TextInputEditText? = null;
-    private var searchCancelButton : Button? = null;
+    private var searchInput : TextInputEditText? = null
+    private var searchCancelButton : Button? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +45,7 @@ class ServerFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_server, container, false)
         view.findViewById<ImageButton>(R.id.server_button).setColorFilter(ContextCompat.getColor(requireContext(), R.color.red))
         view.findViewById<ImageView>(R.id.server_search_view).setColorFilter(ContextCompat.getColor(requireContext(), R.color.grey_50))
-        searchInput = view.findViewById(R.id.server_search_input);
+        searchInput = view.findViewById(R.id.server_search_input)
         searchCancelButton = view.findViewById(R.id.server_search_cancel_button)
 
         searchCancelButton?.apply {
@@ -65,8 +64,8 @@ class ServerFragment : Fragment() {
                     searchCancelButton?.apply {
                         visibility = View.GONE
                     }
-                    val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager;
-                    imm.hideSoftInputFromWindow(view.windowToken, 0);
+                    val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(view.windowToken, 0)
                 }
             }
         }
