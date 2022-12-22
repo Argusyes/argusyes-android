@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.android.argusyes.R
@@ -30,6 +31,8 @@ class ServerFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private var titleLayout : LinearLayout? = null
+
     private var searchInput : TextInputEditText? = null
     private var searchCancelButton : Button? = null
 
@@ -43,6 +46,7 @@ class ServerFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_server, container, false)
+        titleLayout = view.findViewById(R.id.server_title_layout)
         view.findViewById<ImageButton>(R.id.server_button).setColorFilter(ContextCompat.getColor(requireContext(), R.color.red))
         view.findViewById<ImageView>(R.id.server_search_view).setColorFilter(ContextCompat.getColor(requireContext(), R.color.grey_50))
         searchInput = view.findViewById(R.id.server_search_input)
@@ -57,13 +61,11 @@ class ServerFragment : Fragment() {
         searchInput?.apply {
             onFocusChangeListener = View.OnFocusChangeListener { view, isFocus ->
                 if (isFocus) {
-                    searchCancelButton?.apply {
-                        visibility = View.VISIBLE
-                    }
+                    searchCancelButton?.visibility = View.VISIBLE
+                    titleLayout?.visibility = View.GONE
                 } else {
-                    searchCancelButton?.apply {
-                        visibility = View.GONE
-                    }
+                    searchCancelButton?.visibility = View.GONE
+                    titleLayout?.visibility = View.VISIBLE
                     val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(view.windowToken, 0)
                 }
