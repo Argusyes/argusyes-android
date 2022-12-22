@@ -8,7 +8,7 @@
         <item name="android:padding">20sp</item>
     </style>
 
-    <style name="myFragmentTitle">
+    <style name="noPaddingLayout">
         <item name="android:padding">0sp</item>
     </style>
 
@@ -36,8 +36,16 @@
     <style name="mySearchTextInput">
         <item name="android:textCursorDrawable">@drawable/cursor_line</item>
         <item name="android:hint">@string/search</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColorHint">@color/grey_50</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="mySearchCancelButton">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">?colorPrimary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:text">@string/cancel</item>
     </style>
 
 </resources>

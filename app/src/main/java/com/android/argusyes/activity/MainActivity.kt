@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         initView()
     }
 
+
     private fun initView() {
 
         val viewPager2: ViewPager2 = findViewById(R.id.mainViewPage)
