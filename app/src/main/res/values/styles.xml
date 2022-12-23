@@ -17,7 +17,7 @@
         <item name="android:textColor">?colorOnSurface</item>
     </style>
 
-    <style name="myFragmentTitleButton">
+    <style name="myFragmentTitleImageButton">
         <item name="android:minWidth">54sp</item>
         <item name="android:minHeight">54sp</item>
     </style>
@@ -46,6 +46,30 @@
         <item name="android:textColor">?colorPrimary</item>
         <item name="android:textStyle">bold</item>
         <item name="android:text">@string/cancel</item>
+    </style>
+
+    <style name="myText">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?colorOnSurface</item>
+    </style>
+
+    <style name="myPrimaryText">
+        <item name="android:textColor">?colorPrimary</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <style name="myServerAddTextInputLayout">
+        <item name="android:background">@color/trans</item>
+    </style>
+
+    <style name="myServerAddTextInput">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColorHint">?colorOnSecondary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textCursorDrawable">@drawable/cursor_line</item>
     </style>
 
 </resources>

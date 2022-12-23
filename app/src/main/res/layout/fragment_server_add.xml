@@ -1,15 +1,220 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:theme="@style/myFragment"
     tools:context=".fragment.ServerAddFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/server_add_title_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="30sp"
+        android:orientation="horizontal"
+        android:theme="@style/noPaddingLayout">
 
-</FrameLayout>
+        <Button
+            android:id="@+id/server_add_title_cancel_button"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="@color/trans"
+            android:theme="@style/myPrimaryText"
+            android:gravity="center_vertical|start"
+            android:text="@string/cancel" />
+
+        <TextView
+            android:id="@+id/server_add_title"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/add_server"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:theme="@style/myText"/>
+
+        <Button
+            android:id="@+id/server_add_title_save_button"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|end"
+            android:background="@color/trans"
+            android:theme="@style/myPrimaryText"
+            android:text="@string/save" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/server_add_basic_info_layout"
+        android:layout_width="match_parent"
+        android:layout_height="150sp"
+        android:layout_marginTop="30sp"
+        android:orientation="vertical"
+        android:theme="@style/noPaddingLayout"
+        android:background="@drawable/corners_bg_white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:padding="10sp"
+            android:layout_weight="@integer/material_motion_duration_long_1"
+            android:theme="@style/myServerAddTextInputLayout" >
+
+            <TextView
+                android:layout_width="54sp"
+                android:layout_height="match_parent"
+                android:theme="@style/myText"
+                android:gravity="center_vertical"
+                android:text="@string/name"/>
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="end"
+                android:theme="@style/myServerAddTextInput"
+                android:hint="@string/show_name"
+                android:background="@null" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="10sp"
+            android:background="?colorOnSecondary" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="10sp"
+            android:orientation="horizontal"
+            android:layout_weight="@integer/material_motion_duration_long_1"
+            android:theme="@style/myServerAddTextInputLayout" >
+
+            <TextView
+                android:layout_width="54sp"
+                android:layout_height="match_parent"
+                android:theme="@style/myText"
+                android:gravity="center_vertical"
+                android:text="@string/host"/>
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="end"
+                android:theme="@style/myServerAddTextInput"
+                android:hint="@string/ip"
+                android:background="@null" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="10sp"
+            android:background="?colorOnSecondary" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="10sp"
+            android:orientation="horizontal"
+            android:layout_weight="@integer/material_motion_duration_long_1"
+            android:theme="@style/myServerAddTextInputLayout" >
+
+            <TextView
+                android:layout_width="54sp"
+                android:layout_height="match_parent"
+                android:theme="@style/myText"
+                android:gravity="center_vertical"
+                android:text="@string/port"/>
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="end"
+                android:theme="@style/myServerAddTextInput"
+                android:hint="@string/port"
+                android:background="@null"
+                android:inputType="number"
+                android:text="@string/default_port"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/server_add_auth_info_layout"
+        android:layout_width="match_parent"
+        android:layout_height="100sp"
+        android:layout_marginTop="30sp"
+        android:orientation="vertical"
+        android:theme="@style/noPaddingLayout"
+        android:background="@drawable/corners_bg_white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:padding="10sp"
+            android:layout_weight="@integer/material_motion_duration_long_1"
+            android:theme="@style/myServerAddTextInputLayout" >
+
+            <TextView
+                android:layout_width="54sp"
+                android:layout_height="match_parent"
+                android:theme="@style/myText"
+                android:gravity="center_vertical"
+                android:text="@string/user"/>
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="end"
+                android:theme="@style/myServerAddTextInput"
+                android:hint="@string/username"
+                android:background="@null"
+                android:text="@string/root"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="10sp"
+            android:background="?colorOnSecondary" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:padding="10sp"
+            android:orientation="horizontal"
+            android:layout_weight="@integer/material_motion_duration_long_1"
+            android:theme="@style/myServerAddTextInputLayout" >
+
+            <TextView
+                android:layout_width="54sp"
+                android:layout_height="match_parent"
+                android:theme="@style/myText"
+                android:gravity="center_vertical"
+                android:text="@string/password"/>
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="end"
+                android:theme="@style/myServerAddTextInput"
+                android:inputType="textPassword"
+                android:hint="@string/password"
+                android:background="@null" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

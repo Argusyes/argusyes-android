@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_navigation"
+    app:startDestination="@id/server_info_fragment">
+
+    <fragment
+        android:id="@+id/server_info_fragment"
+        android:name="com.android.argusyes.fragment.ServerInfoFragment"
+        android:label="server_info_fragment"
+        tools:layout="@layout/fragment_server_info" >
+        <action
+            android:id="@+id/action_serverInfoFragment_to_serverAddFragment"
+            app:destination="@id/server_add_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/server_add_fragment"
+        android:name="com.android.argusyes.fragment.ServerAddFragment"
+        android:label="server_add_fragment"
+        tools:layout="@layout/fragment_server_add" />
+</navigation>

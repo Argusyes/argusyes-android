@@ -9,4 +9,16 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search">搜索</string>
     <string name="cancel">取消</string>
+    <string name="save">保存</string>
+    <string name="add_server">Add Server</string>
+    <string name="show_name">显示名称</string>
+    <string name="name">名称</string>
+    <string name="port">端口</string>
+    <string name="host">主机</string>
+    <string name="ip">IP</string>
+    <string name="default_port">22</string>
+    <string name="username">username</string>
+    <string name="user">用户</string>
+    <string name="password">密码</string>
+    <string name="root">root</string>
 </resources>

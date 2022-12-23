@@ -2,8 +2,8 @@
 <resources>
     <color name="grey_0">#EDEDED</color>
     <color name="grey_10">#DBDBDB</color>
-    <color name="grey_100">#191919</color>
     <color name="grey_50">#4B4B4B</color>
+    <color name="grey_100">#191919</color>
     <color name="red">#E65651</color>
     <color name="green">#1FA900</color>
     <color name="black">#FF000000</color>

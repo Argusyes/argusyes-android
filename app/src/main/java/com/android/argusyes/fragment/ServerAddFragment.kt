@@ -1,10 +1,12 @@
 package com.android.argusyes.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.android.argusyes.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -22,6 +24,9 @@ class ServerAddFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private var saveButton : Button? = null
+    private var cancelButton : Button? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -30,12 +35,12 @@ class ServerAddFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_server_add, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_server_add, container, false)
+        saveButton = view.findViewById(R.id.server_add_title_save_button)
+        cancelButton = view.findViewById(R.id.server_add_title_cancel_button)
+        cancelButton?.setOnClickListener { it.findNavController().popBackStack() }
+        return view
     }
 
     companion object {
