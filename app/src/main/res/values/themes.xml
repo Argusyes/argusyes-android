@@ -9,8 +9,10 @@
         <item name="colorOnBackground">@color/grey_0</item>
         <!-- 文字 -->
         <item name="colorOnSurface">@color/black</item>
-        <!-- hint / 次要容器背景 -->
-        <item name="colorOnSecondary">@color/grey_10</item>
+        <!-- hint -->
+        <item name="colorOnSecondary">@color/grey_20</item>
+        <!--次要容器背景 -->
+        <item name="colorOnSecondaryContainer">@color/grey_10</item>
         <!-- 主要容器背景 -->
         <item name="colorOnPrimary">@color/white</item>
 
