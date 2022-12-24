@@ -2,9 +2,7 @@ package com.android.argusyes.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.fragment.app.Fragment
@@ -52,7 +50,18 @@ class ServerInfoFragment : Fragment() {
                     titleLayout?.visibility = View.VISIBLE
                     val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(view.windowToken, 0)
+
+                    context?.run { listView?.adapter = ServerBaseAdapter(this, servers) }
                 }
+            }
+
+            setOnEditorActionListener { textView, _, _ ->
+                val key = textView?.text.toString()
+                val res = servers.filter { it.name.contains(key) }
+                if (key.isNotEmpty()) {
+                    context?.run { listView?.adapter = ServerBaseAdapter(this, res) }
+                }
+                false
             }
         }
 
@@ -62,10 +71,7 @@ class ServerInfoFragment : Fragment() {
             }
         }
 
-        context?.run {
-            val adapter = ServerBaseAdapter(this, servers)
-            listView?.adapter = adapter
-        }
+        context?.run { listView?.adapter = ServerBaseAdapter(this, servers) }
 
         return view
     }

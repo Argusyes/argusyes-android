@@ -2,31 +2,35 @@
     <!-- Base application theme. -->
     <style name="Theme.Argusyes" parent="Theme.AppCompat.Light">
         <!-- 重点 -->
-        <item name="colorPrimary">@color/red</item>
+        <item name="highlightRed">@color/red</item>
         <!-- 重点 -->
-        <item name="colorSecondary">@color/green</item>
+        <item name="highlightGreen">@color/green</item>
         <!-- 大背景 -->
-        <item name="colorOnBackground">@color/grey_0</item>
+        <item name="myBackColor">@color/grey_0</item>
         <!-- 文字 -->
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="myTextColor">@color/black</item>
         <!-- 次要文字 -->
-        <item name="colorOnSecondary">@color/grey_30</item>
+        <item name="myTextSecondaryColor">@color/grey_30</item>
         <!-- hint -->
-        <item name="colorOnSurface">@color/grey_20</item>
+        <item name="myHintColor">@color/grey_20</item>
         <!-- 主要容器背景 -->
-        <item name="colorOnPrimaryContainer">@color/white</item>
+        <item name="myContainerColor">@color/white</item>
         <!-- 次要容器背景 -->
-        <item name="colorOnSecondaryContainer">@color/grey_10</item>
-
+        @<item name="myContainerSecondaryColor">@color/grey_10</item>
 
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
+
         <!-- Status bar color. -->
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">?colorOnBackground</item>
-        <item name="android:navigationBarColor">?colorOnBackground</item>
-        <!-- Customize your theme here. -->
-        <item name="android:background">?colorOnBackground</item>
+        <item name="android:statusBarColor">?myBackColor</item>
+
+        <!-- status nav color. -->
+        <item name="android:navigationBarColor">?myBackColor</item>
         <item name="android:windowActionBar">false</item>
+
+        <!-- menu -->
+        <item name="colorPrimary">?highlightRed</item>
+
     </style>
 </resources>

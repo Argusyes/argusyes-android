@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="highlightRed" format="color"/>
+    <attr name="highlightGreen" format="color"/>
+    <attr name="myBackColor" format="color"/>
+    <attr name="myTextColor" format="color"/>
+    <attr name="myTextSecondaryColor" format="color"/>
+    <attr name="myHintColor" format="color"/>
+    <attr name="myContainerColor" format="color"/>
+    <attr name="myContainerSecondaryColor" format="color"/>
+</resources>
