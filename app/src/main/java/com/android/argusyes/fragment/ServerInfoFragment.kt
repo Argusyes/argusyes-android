@@ -67,7 +67,10 @@ class ServerInfoFragment : Fragment() {
 
         searchCancelButton?.apply {
             setOnClickListener {
-                searchInput?.clearFocus()
+                searchInput?.apply {
+                    setText("")
+                    clearFocus()
+                }
             }
         }
 
