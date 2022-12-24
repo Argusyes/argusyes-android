@@ -8,16 +8,14 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.android.argusyes.R
 import com.android.argusyes.dao.ServerDao
 import com.android.argusyes.dao.entity.Server
 import com.google.android.material.textfield.TextInputEditText
-import java.util.LinkedList
+import java.util.*
 
 class ServerInfoFragment : Fragment() {
 
@@ -39,10 +37,8 @@ class ServerInfoFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_server_info, container, false)
         titleLayout = view.findViewById(R.id.server_info_title_layout)
         titleTitleButton = view.findViewById<ImageButton>(R.id.server_info_title_button)
-        titleTitleButton?.setColorFilter(ContextCompat.getColor(requireContext(), R.color.red))
         titleTitleButton?.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_serverInfoFragment_to_serverAddFragment))
 
-        view.findViewById<ImageView>(R.id.server_info_search_view).setColorFilter(ContextCompat.getColor(requireContext(), R.color.grey_50))
         searchInput = view.findViewById(R.id.server_info_search_input)
         searchCancelButton = view.findViewById(R.id.server_info_search_cancel_button)
 
