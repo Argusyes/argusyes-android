@@ -10,6 +10,7 @@ import androidx.navigation.findNavController
 import com.android.argusyes.R
 import com.android.argusyes.dao.ServerDao
 import com.android.argusyes.dao.entity.Server
+import com.android.argusyes.utils.AlertUtils
 import com.google.android.material.textfield.TextInputEditText
 
 
@@ -41,13 +42,30 @@ class ServerAddFragment : Fragment() {
         usernameTextInput = view.findViewById(R.id.server_add_username_input)
         passwordTextInput = view.findViewById(R.id.server_add_password_input)
 
-        val name = nameTextInput?.text.toString()
-        val host = hostTextInput?.text.toString()
-        val port = portTextInput?.text.toString().toInt()
-        val username = usernameTextInput?.text.toString()
-        val password = passwordTextInput?.text.toString()
-        val server = Server(name = name, host = host, port = port, userName = username, password = password)
         saveButton?.setOnClickListener {
+            val name = nameTextInput?.text.toString()
+            if (name.isEmpty()) {
+                AlertUtils.alter("名称不能为空", context)
+                return@setOnClickListener
+            }
+            val host = hostTextInput?.text.toString()
+            if (host.isEmpty()) {
+                AlertUtils.alter("主机不能为空", context)
+                return@setOnClickListener
+            }
+            val portString = portTextInput?.text.toString()
+            if (portString.isEmpty()) {
+                AlertUtils.alter("端口不能为空", context)
+                return@setOnClickListener
+            }
+            val port = portString.toInt()
+            val username = usernameTextInput?.text.toString()
+            if (host.isEmpty()) {
+                AlertUtils.alter("用户不能为空", context)
+                return@setOnClickListener
+            }
+            val password = passwordTextInput?.text.toString()
+            val server = Server(name = name, host = host, port = port, userName = username, password = password)
             serverDao?.add(server)
             it.findNavController().popBackStack()
         }

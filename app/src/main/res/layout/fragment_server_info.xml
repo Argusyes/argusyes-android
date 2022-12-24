@@ -31,7 +31,7 @@
             android:background="@color/trans"
             android:src="@drawable/ic_plus"
             android:theme="@style/myFragmentTitleImageButton"
-            app:tint="@color/red" />
+            app:tint="?colorPrimary" />
 
     </LinearLayout>
 
@@ -81,8 +81,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20sp"
-        android:background="@drawable/corners_bg_black"
-        android:padding="10sp"
+        android:background="@drawable/corners_bg_white"
+        android:padding="0sp"
         android:scrollbars="none"
         />
 

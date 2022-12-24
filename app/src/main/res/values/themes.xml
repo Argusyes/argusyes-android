@@ -1,20 +1,23 @@
 <resources>
     <!-- Base application theme. -->
     <style name="Theme.Argusyes" parent="Theme.AppCompat.Light">
-        <!-- 重点文字 -->
+        <!-- 重点 -->
         <item name="colorPrimary">@color/red</item>
-        <!-- 重点文字2 -->
+        <!-- 重点 -->
         <item name="colorSecondary">@color/green</item>
         <!-- 大背景 -->
         <item name="colorOnBackground">@color/grey_0</item>
         <!-- 文字 -->
-        <item name="colorOnSurface">@color/black</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <!-- 次要文字 -->
+        <item name="colorOnSecondary">@color/grey_30</item>
         <!-- hint -->
-        <item name="colorOnSecondary">@color/grey_20</item>
-        <!--次要容器背景 -->
-        <item name="colorOnSecondaryContainer">@color/grey_10</item>
+        <item name="colorOnSurface">@color/grey_20</item>
         <!-- 主要容器背景 -->
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimaryContainer">@color/white</item>
+        <!-- 次要容器背景 -->
+        <item name="colorOnSecondaryContainer">@color/grey_10</item>
+
 
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>

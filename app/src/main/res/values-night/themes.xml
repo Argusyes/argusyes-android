@@ -4,10 +4,12 @@
         <item name="colorPrimary">@color/red</item>
         <item name="colorSecondary">@color/green</item>
         <item name="colorOnBackground">@color/black</item>
-        <item name="colorOnSurface">@color/white</item>
-        <item name="colorOnSecondary">@color/grey_50</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnSecondary">@color/grey_40</item>
+        <item name="colorOnSurface">@color/grey_50</item>
+        <item name="colorOnPrimaryContainer">@color/grey_100</item>
         <item name="colorOnSecondaryContainer">@color/grey_100</item>
-        <item name="colorOnPrimary">@color/grey_100</item>
+
 
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>

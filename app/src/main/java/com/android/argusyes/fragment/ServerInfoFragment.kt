@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.LinearLayout
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.android.argusyes.R
@@ -17,6 +15,7 @@ import com.android.argusyes.dao.entity.Server
 import com.google.android.material.textfield.TextInputEditText
 import java.util.*
 
+
 class ServerInfoFragment : Fragment() {
 
     private var servers : MutableList<Server> = LinkedList<Server>()
@@ -24,9 +23,9 @@ class ServerInfoFragment : Fragment() {
 
     private var titleLayout : LinearLayout? = null
     private var titleTitleButton : ImageButton? = null
-
     private var searchInput : TextInputEditText? = null
     private var searchCancelButton : Button? = null
+    private var listView : ListView ? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,16 +36,11 @@ class ServerInfoFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_server_info, container, false)
         titleLayout = view.findViewById(R.id.server_info_title_layout)
         titleTitleButton = view.findViewById<ImageButton>(R.id.server_info_title_button)
-        titleTitleButton?.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_serverInfoFragment_to_serverAddFragment))
-
         searchInput = view.findViewById(R.id.server_info_search_input)
         searchCancelButton = view.findViewById(R.id.server_info_search_cancel_button)
+        listView = view.findViewById(R.id.server_info_list_view)
 
-        searchCancelButton?.apply {
-            setOnClickListener {
-                searchInput?.clearFocus()
-            }
-        }
+        titleTitleButton?.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_serverInfoFragment_to_serverAddFragment))
 
         searchInput?.apply {
             onFocusChangeListener = View.OnFocusChangeListener { view, isFocus ->
@@ -61,6 +55,18 @@ class ServerInfoFragment : Fragment() {
                 }
             }
         }
+
+        searchCancelButton?.apply {
+            setOnClickListener {
+                searchInput?.clearFocus()
+            }
+        }
+
+        context?.run {
+            val adapter = ServerBaseAdapter(this, servers)
+            listView?.adapter = adapter
+        }
+
         return view
     }
 
@@ -69,4 +75,46 @@ class ServerInfoFragment : Fragment() {
         servers.clear()
         serverDao?.let { servers.addAll(it.list()) }
     }
+}
+
+class ServerBaseAdapter (context: Context, private val servers: List<Server>) : BaseAdapter () {
+
+    private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
+
+    override fun getCount(): Int {
+        return servers.size
+    }
+
+    override fun getItem(index: Int): Any {
+        return servers[index]
+    }
+
+    override fun getItemId(index: Int): Long {
+       return index.toLong()
+    }
+
+    override fun getView(index: Int, convertView: View?, parent: ViewGroup?): View {
+        var view = convertView
+        val holder: ServerViewHolder?
+        if (view == null) {
+            view = layoutInflater.inflate(R.layout.item_server, parent, false)
+            holder = ServerViewHolder()
+            holder.mNameTextView = view.findViewById(R.id.item_name_text_view)
+            holder.mIdentifyTextView = view.findViewById(R.id.item_identify_text_view)
+            view.tag = holder
+        } else {
+            holder = view.tag as ServerViewHolder
+        }
+        val server = servers[index]
+        holder.mNameTextView?.text = server.name
+        val identify = "${server.userName}@${server.host}:${server.port}"
+        holder.mIdentifyTextView?.text = identify
+        assert(view != null)
+        return view!!
+    }
+}
+
+class ServerViewHolder {
+    var mNameTextView: TextView? = null
+    var mIdentifyTextView: TextView? = null
 }
