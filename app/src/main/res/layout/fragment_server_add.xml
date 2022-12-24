@@ -70,6 +70,7 @@
                 android:text="@string/name"/>
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/server_add_name_input"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="end"
@@ -101,6 +102,7 @@
                 android:text="@string/host"/>
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/server_add_host_input"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="end"
@@ -132,6 +134,7 @@
                 android:text="@string/port"/>
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/server_add_port_input"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="end"
@@ -171,6 +174,7 @@
                 android:text="@string/user"/>
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/server_add_username_input"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="end"
@@ -203,6 +207,7 @@
                 android:text="@string/password"/>
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/server_add_password_input"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="end"
