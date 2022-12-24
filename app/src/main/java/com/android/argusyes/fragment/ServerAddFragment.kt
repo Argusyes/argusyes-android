@@ -46,12 +46,11 @@ class ServerAddFragment : Fragment() {
         val port = portTextInput?.text.toString().toInt()
         val username = usernameTextInput?.text.toString()
         val password = passwordTextInput?.text.toString()
-        val server = Server(id = null, name, host, port, username, password)
+        val server = Server(name = name, host = host, port = port, userName = username, password = password)
         saveButton?.setOnClickListener {
             serverDao?.add(server)
             it.findNavController().popBackStack()
         }
-
 
         cancelButton?.setOnClickListener { it.findNavController().popBackStack() }
         return view

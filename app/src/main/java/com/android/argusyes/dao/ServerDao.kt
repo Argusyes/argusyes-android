@@ -24,7 +24,6 @@ class ServerDao private constructor(context: Context){
     }
 
     fun add(server: Server) {
-        assert(server.id == null)
         db.insert(TABLE_NAME, null, buildContentValues(server))
     }
 
@@ -37,7 +36,7 @@ class ServerDao private constructor(context: Context){
         val res = LinkedList<Server>()
         while (cursor.moveToNext()) {
             res.add(
-                Server(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
+                Server(cursor.getString(0), cursor.getString(1), cursor.getString(2),
                 cursor.getInt(3), cursor.getString(4), cursor.getString(5))
             )
         }
@@ -63,7 +62,7 @@ class ServerDao private constructor(context: Context){
 
         val serverCreateSQL = """
             create table ${TABLE_NAME}(
-                $COLUMN_NAME_ID int,
+                $COLUMN_NAME_ID varchar,
                 $COLUMN_NAME_NAME varchar,
                 $COLUMN_NAME_HOST varchar,
                 $COLUMN_NAME_PORT int,
