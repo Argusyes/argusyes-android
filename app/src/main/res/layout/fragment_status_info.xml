@@ -64,10 +64,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20sp"
-        android:background="@drawable/corners_bg_white"
+        android:background="@color/trans"
         android:padding="0sp"
         android:scrollbars="none"
         android:listSelector="@color/trans"
+        android:divider="@color/trans"
+        android:dividerHeight="20dp"
         />
 
 </LinearLayout>

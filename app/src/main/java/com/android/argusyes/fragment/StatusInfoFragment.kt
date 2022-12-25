@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.BaseAdapter
 import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
@@ -47,7 +48,7 @@ class StatusInfoFragment : Fragment() {
                     titleText?.visibility = View.VISIBLE
                     val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(view.windowToken, 0)
-                    context?.run { listView?.adapter = sshManager?.getServers()?.let { ServerBaseAdapter(this, it) } }
+                    context?.run { listView?.adapter = sshManager?.getServers()?.let { StatusBaseAdapter(this, it) } }
                 }
             }
 
@@ -56,9 +57,9 @@ class StatusInfoFragment : Fragment() {
                 val servers = sshManager?.getServers()
                 val res : List<Server> = servers?.filter { it.name.contains(key) } as List<Server>
                 if (key.isNotEmpty()) {
-                    context?.run { listView?.adapter = ServerBaseAdapter(this, res) }
+                    context?.run { listView?.adapter = StatusBaseAdapter(this, res) }
                 } else {
-                    context?.run { listView?.adapter = sshManager?.getServers()?.let { ServerBaseAdapter(this, it) } }
+                    context?.run { listView?.adapter = sshManager?.getServers()?.let { StatusBaseAdapter(this, it) } }
                 }
                 false
             }
@@ -72,7 +73,46 @@ class StatusInfoFragment : Fragment() {
             }
         }
 
-        context?.run { listView?.adapter = sshManager?.getServers()?.let { ServerBaseAdapter(this, it) } }
+        context?.run { listView?.adapter = sshManager?.getServers()?.let { StatusBaseAdapter(this, it) } }
         return view
     }
+}
+
+class StatusBaseAdapter (context: Context, private val servers: List<Server>) : BaseAdapter() {
+
+    private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
+
+    override fun getCount(): Int {
+        return servers.size
+    }
+
+    override fun getItem(index: Int): Any {
+        return servers[index]
+    }
+
+    override fun getItemId(index: Int): Long {
+        return index.toLong()
+    }
+
+    override fun getView(index: Int, convertView: View?, parent: ViewGroup?): View {
+        var view = convertView
+        val holder: StatusViewHolder?
+        if (view == null) {
+            view = layoutInflater.inflate(R.layout.item_status, parent, false)
+            holder = StatusViewHolder()
+            holder.nameTextView = view.findViewById(R.id.item_name_text_view)
+            view.tag = holder
+        } else {
+            holder = view.tag as StatusViewHolder
+        }
+        val server = servers[index]
+        holder.nameTextView?.text = server.name
+
+        assert(view != null)
+        return view!!
+    }
+}
+
+class StatusViewHolder {
+    var nameTextView: TextView? = null
 }
