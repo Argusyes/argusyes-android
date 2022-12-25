@@ -21,6 +21,7 @@ class SSHManager private constructor(context: Context){
         }
         serverDao.save(server)
         servers.add(server)
+        serverMap[server.id] = server
     }
 
     fun removeServerById(id: String) {
@@ -35,8 +36,8 @@ class SSHManager private constructor(context: Context){
         servers[index] = server
     }
 
-    fun getServerById(id: String) : Server {
-        return servers.first { it.id == id }
+    fun getServerById(id: String) : Server? {
+        return serverMap[id]
     }
 
     companion object {

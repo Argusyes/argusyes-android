@@ -24,6 +24,7 @@ class StatusInfoFragment : Fragment() {
     private var searchInput : TextInputEditText? = null
     private var searchCancelButton : Button? = null
     private var listView : ListView? = null
+    private var adapter : StatusBaseAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         sshManager = context?.let { SSHManager.getInstance(it)}
@@ -48,7 +49,7 @@ class StatusInfoFragment : Fragment() {
                     titleText?.visibility = View.VISIBLE
                     val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(view.windowToken, 0)
-                    context?.run { listView?.adapter = sshManager?.getServers()?.let { StatusBaseAdapter(this, it) } }
+                    adapter?.run { listView?.adapter = this  }
                 }
             }
 
@@ -59,7 +60,7 @@ class StatusInfoFragment : Fragment() {
                 if (key.isNotEmpty()) {
                     context?.run { listView?.adapter = StatusBaseAdapter(this, res) }
                 } else {
-                    context?.run { listView?.adapter = sshManager?.getServers()?.let { StatusBaseAdapter(this, it) } }
+                    adapter?.run { listView?.adapter = this  }
                 }
                 false
             }
@@ -73,8 +74,16 @@ class StatusInfoFragment : Fragment() {
             }
         }
 
-        context?.run { listView?.adapter = sshManager?.getServers()?.let { StatusBaseAdapter(this, it) } }
+        context?.run {
+            adapter = sshManager?.getServers()?.let { StatusBaseAdapter(this, it) }
+            adapter?.let { listView?.adapter = adapter }
+        }
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adapter?.notifyDataSetChanged()
     }
 }
 
