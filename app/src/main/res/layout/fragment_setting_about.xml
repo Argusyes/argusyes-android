@@ -27,7 +27,8 @@
             android:id="@+id/setting_about_title_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAlignment="textEnd"
+            android:layout_gravity="center"
+            android:gravity="center_vertical|end"
             android:background="@color/trans"
             android:text="@string/back"
             android:theme="@style/myPrimaryText" />
