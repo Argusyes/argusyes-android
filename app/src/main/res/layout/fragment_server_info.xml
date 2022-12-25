@@ -78,15 +78,36 @@
 
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/server_info_list_view"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20sp"
-        android:background="@drawable/corners_bg_white"
+        android:layout_height="match_parent"
         android:padding="0sp"
+        android:layout_marginTop="20sp"
         android:scrollbars="none"
-        android:listSelector="@color/trans"
-        />
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="0sp">
+
+            <com.android.argusyes.ui.ListViewForScrollView
+                android:id="@+id/server_info_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/corners_bg_white"
+                android:padding="0sp"
+                android:scrollbars="none"
+                android:listSelector="@color/trans" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                android:background="@color/trans"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>
