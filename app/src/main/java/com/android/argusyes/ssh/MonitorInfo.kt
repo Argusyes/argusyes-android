@@ -1,4 +1,4 @@
-package com.android.argusyes.dao.entity
+package com.android.argusyes.ssh
 
 data class MonitorInfo (
     @Volatile var cpus: Cpus = Cpus(),
@@ -10,7 +10,7 @@ data class Cpus(
     @Volatile var totalTime: Int = 0,
     @Volatile var TotalTimeUnit: String = "",
 
-)
+    )
 
 data class Cpu(
     @Volatile var processor: Int = 0,
