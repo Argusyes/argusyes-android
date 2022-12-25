@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:theme="@style/myFragment"
+    tools:context=".fragment.StatusInfoFragment">
+
+    <TextView
+        android:id="@+id/status_info_title"
+        android:layout_width="wrap_content"
+        android:padding="0sp"
+        android:layout_height="wrap_content"
+        android:text="@string/nav_title_status"
+        android:theme="@style/myFragmentTitleText"/>
+
+</LinearLayout>

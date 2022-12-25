@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/setting_navigation"
+    app:startDestination="@id/status_info_fragment">
+
+    <fragment
+        android:id="@+id/status_info_fragment"
+        android:name="com.android.argusyes.fragment.StatusInfoFragment"
+        android:label="status_info_fragment"
+        tools:layout="@layout/fragment_status_info" >
+        <action
+            android:id="@+id/action_statusInfoFragment_to_statusDetailFragment"
+            app:destination="@id/status_detail_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/status_detail_fragment"
+        android:name="com.android.argusyes.fragment.StatusDetailFragment"
+        android:label="status_detail_fragment"
+        tools:layout="@layout/fragment_status_detail" />
+</navigation>
