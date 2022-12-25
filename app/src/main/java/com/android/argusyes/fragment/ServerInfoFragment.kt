@@ -46,6 +46,7 @@ class ServerInfoFragment : Fragment() {
                     searchCancelButton?.visibility = View.VISIBLE
                     titleLayout?.visibility = View.GONE
                 } else {
+                    setText("")
                     searchCancelButton?.visibility = View.GONE
                     titleLayout?.visibility = View.VISIBLE
                     val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -63,14 +64,13 @@ class ServerInfoFragment : Fragment() {
                 } else {
                     context?.run { listView?.adapter = sshManager?.getServers()?.let { ServerBaseAdapter(this, it) } }
                 }
-                false
+                return@setOnEditorActionListener false
             }
         }
 
         searchCancelButton?.apply {
             setOnClickListener {
                 searchInput?.apply {
-                    setText("")
                     clearFocus()
                 }
             }
