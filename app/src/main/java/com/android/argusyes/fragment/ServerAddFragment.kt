@@ -8,13 +8,15 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.android.argusyes.R
-import com.android.argusyes.dao.ServerDao
 import com.android.argusyes.dao.entity.Server
+import com.android.argusyes.ssh.SSHManager
 import com.android.argusyes.utils.AlertUtils
 import com.google.android.material.textfield.TextInputEditText
 
 
 class ServerAddFragment : Fragment() {
+
+    private var sshManager: SSHManager? = null
 
     private var saveButton : Button? = null
     private var cancelButton : Button? = null
@@ -27,11 +29,10 @@ class ServerAddFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sshManager = context?.let { SSHManager.getInstance(it) }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        val serverDao = activity?.let { ServerDao.getInstance(it) }
 
         val view = inflater.inflate(R.layout.fragment_server_add, container, false)
         saveButton = view.findViewById(R.id.server_add_title_save_button)
@@ -66,7 +67,7 @@ class ServerAddFragment : Fragment() {
             }
             val password = passwordTextInput?.text.toString()
             val server = Server(name = name, host = host, port = port, userName = username, password = password)
-            serverDao?.save(server)
+            sshManager?.addServer(server)
             it.findNavController().popBackStack()
         }
 

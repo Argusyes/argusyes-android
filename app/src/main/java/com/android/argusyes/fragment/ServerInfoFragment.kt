@@ -2,22 +2,22 @@ package com.android.argusyes.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.android.argusyes.R
-import com.android.argusyes.dao.ServerDao
 import com.android.argusyes.dao.entity.Server
+import com.android.argusyes.ssh.SSHManager
 import com.google.android.material.textfield.TextInputEditText
-import java.util.*
 
 
 class ServerInfoFragment : Fragment() {
 
-    private var servers : MutableList<Server> = LinkedList<Server>()
-    private var serverDao: ServerDao? = null
+    private var sshManager: SSHManager? = null
 
     private var titleLayout : LinearLayout? = null
     private var titleTitleButton : ImageButton? = null
@@ -26,8 +26,8 @@ class ServerInfoFragment : Fragment() {
     private var listView : ListView ? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        sshManager = context?.let { SSHManager.getInstance(it)}
         super.onCreate(savedInstanceState)
-        serverDao = context?.let { ServerDao.getInstance(it)}
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -50,14 +50,14 @@ class ServerInfoFragment : Fragment() {
                     titleLayout?.visibility = View.VISIBLE
                     val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(view.windowToken, 0)
-
-                    context?.run { listView?.adapter = ServerBaseAdapter(this, servers) }
+                    context?.run { listView?.adapter = sshManager?.getServers()?.let { ServerBaseAdapter(this, it) } }
                 }
             }
 
             setOnEditorActionListener { textView, _, _ ->
                 val key = textView?.text.toString()
-                val res : MutableList<Server> = servers.filter { it.name.contains(key) } as MutableList<Server>
+                val servers = sshManager?.getServers()
+                val res : List<Server> = servers?.filter { it.name.contains(key) } as List<Server>
                 if (key.isNotEmpty()) {
                     context?.run { listView?.adapter = ServerBaseAdapter(this, res) }
                 }
@@ -74,22 +74,20 @@ class ServerInfoFragment : Fragment() {
             }
         }
 
-        context?.run { listView?.adapter = ServerBaseAdapter(this, servers) }
+        context?.run { listView?.adapter = sshManager?.getServers()?.let { ServerBaseAdapter(this, it) } }
         return view
     }
 
     override fun onResume() {
         super.onResume()
-        servers.clear()
-        serverDao?.let { servers.addAll(it.list()) }
     }
 }
 
-class ServerBaseAdapter (context: Context, private val servers: MutableList<Server>) : BaseAdapter () {
+class ServerBaseAdapter (context: Context, private val servers: List<Server>) : BaseAdapter () {
 
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
 
-    private val serverDao = ServerDao.getInstance(context)
+    private val sshManager = SSHManager.getInstance(context)
 
     override fun getCount(): Int {
         return servers.size
@@ -123,8 +121,7 @@ class ServerBaseAdapter (context: Context, private val servers: MutableList<Serv
         holder.identifyTextView?.text = identify
 
         holder.deleteImageButton?.setOnClickListener {
-            serverDao.removeById(server.id)
-            servers.removeAt(index)
+            sshManager.removeServerById(server.id)
             notifyDataSetChanged()
         }
 
