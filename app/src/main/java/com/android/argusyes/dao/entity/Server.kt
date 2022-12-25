@@ -8,4 +8,5 @@ data class Server(
     var host:String,
     var port:Int,
     var userName:String,
-    var password:String)
+    var password:String
+)
