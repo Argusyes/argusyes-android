@@ -124,6 +124,12 @@ class ServerBaseAdapter (context: Context, private val servers: List<Server>) : 
             sshManager.removeServerById(server.id)
             notifyDataSetChanged()
         }
+        holder.changeImageButton?.setOnClickListener(
+            Navigation.createNavigateOnClickListener(R.id.action_serverInfoFragment_to_serverAddFragment,
+            Bundle().apply {
+                putString(SERVER_ID, server.id)
+            }
+        ))
 
         assert(view != null)
         return view!!

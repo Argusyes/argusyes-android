@@ -13,14 +13,16 @@ import com.android.argusyes.ssh.SSHManager
 import com.android.argusyes.utils.AlertUtils
 import com.google.android.material.textfield.TextInputEditText
 
+const val SERVER_ID = "SERVER_ID"
 
 class ServerAddFragment : Fragment() {
+
+    private var serverId: String? = null
 
     private var sshManager: SSHManager? = null
 
     private var saveButton : Button? = null
     private var cancelButton : Button? = null
-
     private var nameTextInput : TextInputEditText? = null
     private var hostTextInput : TextInputEditText? = null
     private var portTextInput : TextInputEditText? = null
@@ -30,6 +32,9 @@ class ServerAddFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sshManager = context?.let { SSHManager.getInstance(it) }
+        arguments?.let {
+            serverId = it.getString(SERVER_ID)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -66,12 +71,25 @@ class ServerAddFragment : Fragment() {
                 return@setOnClickListener
             }
             val password = passwordTextInput?.text.toString()
-            val server = Server(name = name, host = host, port = port, userName = username, password = password)
-            sshManager?.addServer(server)
+            if (serverId == null) {
+                sshManager?.addServer(Server(name = name, host = host, port = port, userName = username, password = password))
+            } else {
+                sshManager?.updateServerById(Server(id = serverId!!, name = name, host = host, port = port, userName = username, password = password))
+            }
+
             it.findNavController().popBackStack()
         }
 
         cancelButton?.setOnClickListener { it.findNavController().popBackStack() }
+
+        val server = serverId?.let { sshManager?.getServerById(it) }
+        server?.run {
+            nameTextInput?.setText(server.name)
+            hostTextInput?.setText(server.host)
+            portTextInput?.setText(server.port.toString())
+            usernameTextInput?.setText(server.userName)
+            passwordTextInput?.setText(server.password)
+        }
         return view
     }
 

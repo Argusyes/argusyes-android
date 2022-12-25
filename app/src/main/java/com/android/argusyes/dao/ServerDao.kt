@@ -48,6 +48,10 @@ class ServerDao private constructor(context: Context){
         db.delete(TABLE_NAME, "$COLUMN_NAME_ID=?", listOf(id).toTypedArray())
     }
 
+    fun updateById(server: Server) {
+        db.update(TABLE_NAME, buildContentValues(server), "$COLUMN_NAME_ID=?", listOf(server.id).toTypedArray())
+    }
+
     companion object {
 
         @Volatile private var instance: ServerDao? = null
