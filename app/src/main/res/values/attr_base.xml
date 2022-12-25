@@ -3,6 +3,7 @@
     <attr name="highlightRed" format="color"/>
     <attr name="highlightGreen" format="color"/>
     <attr name="myBackColor" format="color"/>
+    <attr name="myTransBackColor" format="color"/>
     <attr name="myTextColor" format="color"/>
     <attr name="myTextSecondaryColor" format="color"/>
     <attr name="myHintColor" format="color"/>

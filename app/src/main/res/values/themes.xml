@@ -7,6 +7,8 @@
         <item name="highlightGreen">@color/green</item>
         <!-- 大背景 -->
         <item name="myBackColor">@color/grey_0</item>
+        <!-- 半透明背景 -->
+        <item name="myTransBackColor">@color/half_trans_grey_0</item>
         <!-- 文字 -->
         <item name="myTextColor">@color/black</item>
         <!-- 次要文字 -->
