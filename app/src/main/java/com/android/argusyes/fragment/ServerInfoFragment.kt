@@ -60,6 +60,8 @@ class ServerInfoFragment : Fragment() {
                 val res : List<Server> = servers?.filter { it.name.contains(key) } as List<Server>
                 if (key.isNotEmpty()) {
                     context?.run { listView?.adapter = ServerBaseAdapter(this, res) }
+                } else {
+                    context?.run { listView?.adapter = sshManager?.getServers()?.let { ServerBaseAdapter(this, it) } }
                 }
                 false
             }
