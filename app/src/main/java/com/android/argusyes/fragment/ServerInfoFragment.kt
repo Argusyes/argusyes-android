@@ -57,7 +57,7 @@ class ServerInfoFragment : Fragment() {
 
             setOnEditorActionListener { textView, _, _ ->
                 val key = textView?.text.toString()
-                val res = servers.filter { it.name.contains(key) }
+                val res : MutableList<Server> = servers.filter { it.name.contains(key) } as MutableList<Server>
                 if (key.isNotEmpty()) {
                     context?.run { listView?.adapter = ServerBaseAdapter(this, res) }
                 }
@@ -75,7 +75,6 @@ class ServerInfoFragment : Fragment() {
         }
 
         context?.run { listView?.adapter = ServerBaseAdapter(this, servers) }
-
         return view
     }
 
@@ -86,9 +85,11 @@ class ServerInfoFragment : Fragment() {
     }
 }
 
-class ServerBaseAdapter (context: Context, private val servers: List<Server>) : BaseAdapter () {
+class ServerBaseAdapter (context: Context, private val servers: MutableList<Server>) : BaseAdapter () {
 
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
+
+    private val serverDao = ServerDao.getInstance(context)
 
     override fun getCount(): Int {
         return servers.size
@@ -108,22 +109,33 @@ class ServerBaseAdapter (context: Context, private val servers: List<Server>) : 
         if (view == null) {
             view = layoutInflater.inflate(R.layout.item_server, parent, false)
             holder = ServerViewHolder()
-            holder.mNameTextView = view.findViewById(R.id.item_name_text_view)
-            holder.mIdentifyTextView = view.findViewById(R.id.item_identify_text_view)
+            holder.nameTextView = view.findViewById(R.id.item_name_text_view)
+            holder.identifyTextView = view.findViewById(R.id.item_identify_text_view)
+            holder.changeImageButton = view.findViewById(R.id.item_change_button)
+            holder.deleteImageButton = view.findViewById(R.id.item_delete_button)
             view.tag = holder
         } else {
             holder = view.tag as ServerViewHolder
         }
         val server = servers[index]
-        holder.mNameTextView?.text = server.name
+        holder.nameTextView?.text = server.name
         val identify = "${server.userName}@${server.host}:${server.port}"
-        holder.mIdentifyTextView?.text = identify
+        holder.identifyTextView?.text = identify
+
+        holder.deleteImageButton?.setOnClickListener {
+            serverDao.removeById(server.id)
+            servers.removeAt(index)
+            notifyDataSetChanged()
+        }
+
         assert(view != null)
         return view!!
     }
 }
 
 class ServerViewHolder {
-    var mNameTextView: TextView? = null
-    var mIdentifyTextView: TextView? = null
+    var nameTextView: TextView? = null
+    var identifyTextView: TextView? = null
+    var changeImageButton: ImageButton? = null
+    var deleteImageButton: ImageButton? = null
 }

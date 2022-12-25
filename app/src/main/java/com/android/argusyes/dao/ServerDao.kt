@@ -23,7 +23,7 @@ class ServerDao private constructor(context: Context){
         return values
     }
 
-    fun add(server: Server) {
+    fun save(server: Server) {
         db.insert(TABLE_NAME, null, buildContentValues(server))
     }
 
@@ -42,6 +42,10 @@ class ServerDao private constructor(context: Context){
         }
         cursor.close()
         return res
+    }
+
+    fun removeById(id: String) {
+        db.delete(TABLE_NAME, "$COLUMN_NAME_ID=?", listOf(id).toTypedArray())
     }
 
     companion object {

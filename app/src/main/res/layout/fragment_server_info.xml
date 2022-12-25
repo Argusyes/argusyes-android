@@ -85,6 +85,7 @@
         android:background="@drawable/corners_bg_white"
         android:padding="0sp"
         android:scrollbars="none"
+        android:listSelector="@color/trans"
         />
 
 </LinearLayout>

@@ -21,4 +21,5 @@
     <string name="user">用户</string>
     <string name="password">密码</string>
     <string name="root">root</string>
+    <string name="identify">identify</string>
 </resources>

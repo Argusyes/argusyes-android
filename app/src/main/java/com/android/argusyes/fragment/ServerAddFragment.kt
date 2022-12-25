@@ -66,7 +66,7 @@ class ServerAddFragment : Fragment() {
             }
             val password = passwordTextInput?.text.toString()
             val server = Server(name = name, host = host, port = port, userName = username, password = password)
-            serverDao?.add(server)
+            serverDao?.save(server)
             it.findNavController().popBackStack()
         }
 

@@ -1,23 +1,58 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/trans"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:padding="20sp"
     android:gravity="center_vertical">
 
-    <TextView
-        android:id="@+id/item_name_text_view"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="@integer/material_motion_duration_long_1"
         android:background="@color/trans"
-        android:theme="@style/myText" />
-    <TextView
-        android:id="@+id/item_identify_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="0sp"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/item_name_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/trans"
+            android:text="@string/name"
+            android:theme="@style/myText" />
+        <TextView
+            android:id="@+id/item_identify_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/trans"
+            android:text="@string/identify"
+            android:theme="@style/myHintSmallText" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/item_change_button"
         android:background="@color/trans"
-        android:theme="@style/myHintSmallText" />
+        android:layout_width="40sp"
+        android:layout_height="40sp"
+        android:scaleType="fitCenter"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_change"
+        android:padding="10sp"
+        app:tint="?highlightRed" />
+
+    <ImageButton
+        android:id="@+id/item_delete_button"
+        android:background="@color/trans"
+        android:layout_width="40sp"
+        android:layout_height="40sp"
+        android:scaleType="fitCenter"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_delete"
+        android:padding="10sp"
+        app:tint="?highlightRed" />
 
 </LinearLayout>
