@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/setting_navigation"
+    app:startDestination="@id/setting_main_fragment">
+
+    <fragment
+        android:id="@+id/setting_main_fragment"
+        android:name="com.android.argusyes.fragment.SettingMainFragment"
+        android:label="setting_main_fragment"
+        tools:layout="@layout/fragment_setting_main" >
+        <action
+            android:id="@+id/action_settingMainFragment_to_settingAboutFragment"
+            app:destination="@id/setting_about_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/setting_about_fragment"
+        android:name="com.android.argusyes.fragment.SettingAboutFragment"
+        android:label="setting_about_fragment"
+        tools:layout="@layout/fragment_setting_about" />
+</navigation>

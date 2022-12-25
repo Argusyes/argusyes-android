@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:theme="@style/myFragment"
+    tools:context=".fragment.SettingMainFragment">
+
+    <TextView
+        android:id="@+id/setting_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="0sp"
+        android:text="@string/nav_title_setting"
+        android:theme="@style/myFragmentTitleText"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/noPaddingLayout"
+        android:layout_marginTop="10sp"
+        android:background="@drawable/corners_bg_white"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/setting_main_about_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:clickable="true"
+            android:background="@color/trans"
+            android:theme="@style/mySearchLayout"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30sp"
+                android:layout_weight="1"
+                android:text="@string/about"
+                android:layout_gravity="center"
+                android:gravity="center_vertical|start"
+                android:padding="5sp"
+                android:background="@color/trans"
+                android:theme="@style/myText" />
+
+            <ImageButton
+                android:layout_width="18sp"
+                android:layout_height="18sp"
+                android:layout_gravity="center_vertical|end"
+                android:background="@color/trans"
+                android:src="@drawable/ic_right_arrow"
+                app:tint="?myHintColor"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

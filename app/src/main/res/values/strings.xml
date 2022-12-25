@@ -22,4 +22,7 @@
     <string name="password">密码</string>
     <string name="root">root</string>
     <string name="identify">identify</string>
+    <string name="about">About</string>
+    <string name="back">返回</string>
+    <string name="about_github">https://github.com/Argusyes/argusyes-android</string>
 </resources>
