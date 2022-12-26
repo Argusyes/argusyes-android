@@ -6,14 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.BaseAdapter
-import android.widget.Button
-import android.widget.ListView
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.android.argusyes.R
 import com.android.argusyes.dao.entity.Server
 import com.android.argusyes.ssh.SSHManager
+import com.android.argusyes.utils.FlipUtils
 import com.google.android.material.textfield.TextInputEditText
 
 class StatusInfoFragment : Fragment() {
@@ -110,6 +108,11 @@ class StatusBaseAdapter (context: Context, private val servers: List<Server>) : 
             view = layoutInflater.inflate(R.layout.item_status, parent, false)
             holder = StatusViewHolder()
             holder.nameTextView = view.findViewById(R.id.item_name_text_view)
+
+            holder.textView1 = view.findViewById(R.id.textview1)
+            holder.textView2 = view.findViewById(R.id.textview2)
+            holder.textViewLayout = view.findViewById(R.id.textviewlayout)
+
             view.tag = holder
         } else {
             holder = view.tag as StatusViewHolder
@@ -117,11 +120,19 @@ class StatusBaseAdapter (context: Context, private val servers: List<Server>) : 
         val server = servers[index]
         holder.nameTextView?.text = server.name
 
+        holder.textViewLayout?.setOnClickListener {
+            FlipUtils.flipAnimation(holder.textView1, holder.textView2)
+        }
+
         assert(view != null)
         return view!!
     }
+
 }
 
 class StatusViewHolder {
     var nameTextView: TextView? = null
+    var textView1 : TextView? = null
+    var textView2 : TextView? = null
+    var textViewLayout : LinearLayout? = null
 }
