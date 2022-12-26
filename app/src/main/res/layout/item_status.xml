@@ -24,7 +24,7 @@
             android:text="@string/name"
             android:theme="@style/myText" />
 
-        <ImageView
+        <TextView
             android:layout_width="0sp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -85,8 +85,6 @@
         android:layout_height="match_parent"
         android:background="@color/trans"
         android:orientation="horizontal"
-        android:gravity="center"
-
         android:padding="0sp"
         android:baselineAligned="false">
 
@@ -94,7 +92,6 @@
             android:id="@+id/status_info_cpu_load_flip_layout"
             android:layout_width="70sp"
             android:layout_height="100sp"
-            android:gravity="center"
             android:clickable="true"
             android:background="@color/trans"
             android:orientation="horizontal"
@@ -187,7 +184,6 @@
             android:id="@+id/status_info_mem_swap_flip_layout"
             android:layout_width="70sp"
             android:layout_height="100sp"
-            android:gravity="center"
             android:clickable="true"
             android:background="@color/trans"
             android:orientation="horizontal"
@@ -282,7 +278,6 @@
             android:id="@+id/status_info_net_flip_layout"
             android:layout_width="70sp"
             android:layout_height="100sp"
-            android:gravity="center"
             android:clickable="true"
             android:background="@color/trans"
             android:orientation="horizontal"
@@ -293,29 +288,28 @@
                 android:layout_width="70sp"
                 android:layout_height="90sp"
                 android:orientation="vertical"
-                android:padding="6sp"
+                android:padding="5sp"
                 android:layout_gravity="center" >
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="0sp"
                     android:layout_gravity="center" >
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical|end"
-                        android:layout_gravity="center"
+                        android:layout_height="22sp"
+                        android:layout_marginEnd="2sp"
+                        android:gravity="bottom"
                         android:background="@color/trans"
                         android:text="@string/zero"
-                        android:theme="@style/myHintSmallText" />
+                        android:theme="@style/myText" />
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="22sp"
                         android:gravity="center_vertical|start"
                         android:layout_gravity="center"
                         android:background="@color/trans"
@@ -326,29 +320,32 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="@string/up_second"
                     android:theme="@style/myHintTinyText"/>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp" 
+                    android:layout_weight="1"/> 
+
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="0sp"
                     android:layout_gravity="center" >
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical|end"
-                        android:layout_gravity="center"
+                        android:layout_height="22sp"
+                        android:layout_marginEnd="2sp"
                         android:background="@color/trans"
+                        android:gravity="bottom"
                         android:text="@string/zero"
-                        android:theme="@style/myHintSmallText" />
+                        android:theme="@style/myText" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -363,8 +360,7 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="@string/down_second"
@@ -378,25 +374,24 @@
                 android:layout_height="90sp"
                 android:orientation="vertical"
                 android:visibility="gone"
-                android:padding="6sp"
+                android:padding="5sp"
                 android:layout_gravity="center" >
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="0sp"
                     android:layout_gravity="center" >
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical|end"
-                        android:layout_gravity="center"
+                        android:layout_height="22sp"
+                        android:layout_marginEnd="2sp"
+                        android:gravity="bottom"
                         android:background="@color/trans"
                         android:text="@string/zero"
-                        android:theme="@style/myHintSmallText" />
+                        android:theme="@style/myText" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -411,29 +406,32 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="@string/upload"
                     android:theme="@style/myHintTinyText"/>
 
-                <LinearLayout
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="1"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="0sp"
                     android:layout_gravity="center" >
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical|end"
-                        android:layout_gravity="center"
+                        android:layout_height="22sp"
+                        android:layout_marginEnd="2sp"
+                        android:gravity="bottom"
                         android:background="@color/trans"
                         android:text="@string/zero"
-                        android:theme="@style/myHintSmallText" />
+                        android:theme="@style/myText" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -448,8 +446,7 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="@string/download"
@@ -469,7 +466,6 @@
             android:id="@+id/status_info_store_flip_layout"
             android:layout_width="70sp"
             android:layout_height="100sp"
-            android:gravity="center"
             android:clickable="true"
             android:background="@color/trans"
             android:orientation="horizontal"
@@ -480,25 +476,24 @@
                 android:layout_width="70sp"
                 android:layout_height="90sp"
                 android:orientation="vertical"
-                android:padding="6sp"
+                android:padding="5sp"
                 android:layout_gravity="center" >
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="0sp"
                     android:layout_gravity="center" >
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical|end"
-                        android:layout_gravity="center"
+                        android:layout_height="22sp"
+                        android:layout_marginEnd="2sp"
+                        android:gravity="bottom"
                         android:background="@color/trans"
                         android:text="@string/zero"
-                        android:theme="@style/myHintSmallText" />
+                        android:theme="@style/myText" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -513,29 +508,32 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="@string/read_second"
                     android:theme="@style/myHintTinyText"/>
 
-                <LinearLayout
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="1"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="0sp"
                     android:layout_gravity="center" >
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical|end"
-                        android:layout_gravity="center"
+                        android:layout_height="22sp"
+                        android:layout_marginEnd="2sp"
+                        android:gravity="bottom"
                         android:background="@color/trans"
                         android:text="@string/zero"
-                        android:theme="@style/myHintSmallText" />
+                        android:theme="@style/myText" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -550,9 +548,8 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/write_second"
                     android:theme="@style/myHintTinyText" />
@@ -565,25 +562,24 @@
                 android:layout_height="90sp"
                 android:orientation="vertical"
                 android:visibility="gone"
-                android:padding="6sp"
+                android:padding="5sp"
                 android:layout_gravity="center" >
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="0sp"
                     android:layout_gravity="center" >
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical|end"
-                        android:layout_gravity="center"
+                        android:layout_height="22sp"
+                        android:layout_marginEnd="2sp"
+                        android:gravity="bottom"
                         android:background="@color/trans"
                         android:text="@string/zero"
-                        android:theme="@style/myHintSmallText" />
+                        android:theme="@style/myText" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -598,29 +594,32 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="@string/read"
                     android:theme="@style/myHintTinyText"/>
 
-                <LinearLayout
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="1"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="0sp"
                     android:layout_gravity="center" >
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical|end"
-                        android:layout_gravity="center"
+                        android:layout_height="22sp"
+                        android:layout_marginEnd="2sp"
+                        android:gravity="bottom"
                         android:background="@color/trans"
                         android:text="@string/zero"
-                        android:theme="@style/myHintSmallText" />
+                        android:theme="@style/myText" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -635,8 +634,7 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="@string/write"
