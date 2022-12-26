@@ -67,6 +67,12 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="myHintTinyText">
+        <item name="android:textColor">?myTextSecondaryColor</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
     <style name="myServerAddTextInputLayout">
         <item name="android:background">@color/trans</item>
     </style>

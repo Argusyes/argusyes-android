@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ThreeCircleProgress">
+        <attr name="myTCPArcWidth" format="dimension" />
+        <attr name="myTCPProgress" format="float" />
+        <attr name="myTCPProgressSecond" format="float" />
+        <attr name="myTCPProgressThree" format="float" />
+        <attr name="myTCPMax" format="float" />
+        <attr name="myTCPProgressColor" format="color" />
+        <attr name="myTCPBackgroundColor" format="color" />
+
+    </declare-styleable>
+</resources>

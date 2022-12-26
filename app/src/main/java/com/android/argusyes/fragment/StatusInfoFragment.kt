@@ -12,6 +12,7 @@ import com.android.argusyes.R
 import com.android.argusyes.dao.entity.Server
 import com.android.argusyes.ssh.SSHManager
 import com.android.argusyes.ui.CircleProgress
+import com.android.argusyes.ui.ThreeCircleProgress
 import com.android.argusyes.utils.FlipUtils
 import com.google.android.material.textfield.TextInputEditText
 
@@ -108,16 +109,29 @@ class StatusBaseAdapter (context: Context, private val servers: List<Server>) : 
         if (view == null) {
             view = layoutInflater.inflate(R.layout.item_status, parent, false)
             holder = StatusViewHolder()
-            holder.nameTextView = view.findViewById(R.id.item_name_text_view)
+            holder.nameTextView = view.findViewById(R.id.status_item_name_text_view)
 
             holder.cpuLoadFlipOutLayout = view.findViewById(R.id.status_info_cpu_load_flip_layout)
             holder.cpuFlipLayout = view.findViewById(R.id.status_info_cpu_flip_layout)
             holder.loadFlipLayout = view.findViewById(R.id.status_info_load_flip_layout)
 
             holder.cpuBar = view.findViewById(R.id.status_info_cpu_bar)
-            holder.loadBar1 = view.findViewById(R.id.status_info_load_bar_1)
-            holder.loadBar2 = view.findViewById(R.id.status_info_load_bar_2)
-            holder.loadBar3 = view.findViewById(R.id.status_info_load_bar_3)
+            holder.loadBar = view.findViewById(R.id.status_info_load_bar)
+
+            holder.memSwapFlipOutLayout = view.findViewById(R.id.status_info_mem_swap_flip_layout)
+            holder.memFlipLayout = view.findViewById(R.id.status_info_mem_flip_layout)
+            holder.swapFlipLayout = view.findViewById(R.id.status_info_swap_flip_layout)
+
+            holder.memBar = view.findViewById(R.id.status_info_mem_bar)
+            holder.swapBar = view.findViewById(R.id.status_info_swap_bar)
+
+            holder.netFlipOutLayout = view.findViewById(R.id.status_info_net_flip_layout)
+            holder.netSpeedFlipLayout = view.findViewById(R.id.status_info_net_speed_flip_layout)
+            holder.netTotalFlipLayout = view.findViewById(R.id.status_info_net_total_flip_layout)
+
+            holder.storeFlipOutLayout = view.findViewById(R.id.status_info_store_flip_layout)
+            holder.storeSpeedFlipLayout = view.findViewById(R.id.status_info_store_speed_flip_layout)
+            holder.storeTotalFlipLayout = view.findViewById(R.id.status_info_store_total_flip_layout)
 
             view.tag = holder
         } else {
@@ -130,15 +144,24 @@ class StatusBaseAdapter (context: Context, private val servers: List<Server>) : 
             FlipUtils.flipAnimation(holder.cpuFlipLayout, holder.loadFlipLayout)
         }
 
-        holder.loadBar1?.progress = 50
-        holder.loadBar2?.progress = 50
-        holder.loadBar3?.progress = 50
-        holder.cpuBar?.setProgress(50F)
-        holder.cpuBar?.setProgress(50F)
+        holder.memSwapFlipOutLayout?.setOnClickListener {
+            FlipUtils.flipAnimation(holder.memFlipLayout, holder.swapFlipLayout)
+        }
 
-        holder.loadBar1?.secondaryProgress = 80
-        holder.loadBar2?.secondaryProgress = 80
-        holder.loadBar3?.secondaryProgress = 80
+        holder.netFlipOutLayout?.setOnClickListener {
+            FlipUtils.flipAnimation(holder.netSpeedFlipLayout, holder.netTotalFlipLayout)
+        }
+
+        holder.storeFlipOutLayout?.setOnClickListener {
+            FlipUtils.flipAnimation(holder.storeSpeedFlipLayout, holder.storeTotalFlipLayout)
+        }
+
+        holder.loadBar?.setProgress(50F)
+        holder.loadBar?.setProgressSecond(60F)
+        holder.loadBar?.setProgressThree(90F)
+
+        holder.cpuBar?.setProgress(50F)
+        holder.cpuBar?.setProgressSecond(50F)
 
         assert(view != null)
         return view!!
@@ -148,12 +171,26 @@ class StatusBaseAdapter (context: Context, private val servers: List<Server>) : 
 
 class StatusViewHolder {
     var nameTextView: TextView? = null
+
     var cpuFlipLayout : LinearLayout? = null
     var loadFlipLayout : LinearLayout? = null
     var cpuLoadFlipOutLayout : LinearLayout? = null
 
     var cpuBar : CircleProgress? = null
-    var loadBar1 : ProgressBar? = null
-    var loadBar2 : ProgressBar? = null
-    var loadBar3 : ProgressBar? = null
+    var loadBar : ThreeCircleProgress? = null
+
+    var memFlipLayout : LinearLayout? = null
+    var swapFlipLayout : LinearLayout? = null
+    var memSwapFlipOutLayout : LinearLayout? = null
+
+    var memBar : CircleProgress? = null
+    var swapBar : CircleProgress? = null
+
+    var netSpeedFlipLayout : LinearLayout? = null
+    var netTotalFlipLayout : LinearLayout? = null
+    var netFlipOutLayout : LinearLayout? = null
+
+    var storeSpeedFlipLayout : LinearLayout? = null
+    var storeTotalFlipLayout : LinearLayout? = null
+    var storeFlipOutLayout : LinearLayout? = null
 }

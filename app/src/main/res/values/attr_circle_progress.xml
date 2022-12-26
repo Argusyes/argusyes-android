@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="CircleProgress">
-        <attr name="arcWidth" format="dimension" />
-        <attr name="progress" format="float" />
-        <attr name="progressSecond" format="float" />
-        <attr name="max" format="float" />
+        <attr name="myCPArcWidth" format="dimension" />
+        <attr name="myCPProgress" format="float" />
+        <attr name="myCPProgressSecond" format="float" />
+        <attr name="myCPMax" format="float" />
         <attr name="myCPProgressColor" format="color" />
         <attr name="myCPProgressSecondColor" format="color" />
         <attr name="myCPBackgroundColor" format="color" />

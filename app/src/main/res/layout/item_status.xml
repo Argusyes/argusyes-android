@@ -85,14 +85,15 @@
         android:layout_height="match_parent"
         android:background="@color/trans"
         android:orientation="horizontal"
+        android:gravity="center"
+
         android:padding="0sp"
         android:baselineAligned="false">
 
         <LinearLayout
             android:id="@+id/status_info_cpu_load_flip_layout"
-            android:layout_width="0sp"
+            android:layout_width="70sp"
             android:layout_height="100sp"
-            android:layout_weight="1"
             android:gravity="center"
             android:clickable="true"
             android:background="@color/trans"
@@ -101,7 +102,7 @@
 
             <LinearLayout
                 android:id="@+id/status_info_cpu_flip_layout"
-                android:layout_width="90sp"
+                android:layout_width="70sp"
                 android:layout_height="90sp"
                 android:orientation="vertical"
                 android:padding="0sp"
@@ -115,9 +116,9 @@
                     android:background="@color/trans"
                     android:indeterminate="true"
                     android:indeterminateOnly="true"
-                    app:progress="50"
-                    app:progressSecond="30"
-                    app:max="100"
+                    app:myCPProgress="50"
+                    app:myCPProgressSecond="30"
+                    app:myCPMax="100"
                     app:myCPBackgroundColor="?myHintColor"
                     app:myCPProgressColor="?highlightGreen"
                     app:myCPProgressSecondColor="?myTextSecondaryColor"
@@ -139,51 +140,31 @@
 
             <LinearLayout
                 android:id="@+id/status_info_load_flip_layout"
-                android:layout_width="90sp"
+                android:layout_width="70sp"
                 android:layout_height="90sp"
                 android:orientation="vertical"
                 android:padding="0sp"
                 android:visibility="gone"
                 android:layout_gravity="center" >
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <com.android.argusyes.ui.ThreeCircleProgress
+                    android:id="@+id/status_info_load_bar"
                     android:layout_width="70sp"
                     android:layout_height="70sp"
                     android:layout_gravity="center"
-                    android:padding="0sp">
-
-                    <ProgressBar
-                        android:id="@+id/status_info_load_bar_1"
-                        android:layout_width="70sp"
-                        android:layout_height="70sp"
-                        android:background="@color/trans"
-                        android:max="100"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-                    <ProgressBar
-                        android:id="@+id/status_info_load_bar_2"
-                        android:layout_width="54sp"
-                        android:layout_height="54sp"
-                        android:background="@color/trans"
-                        android:max="100"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                    <ProgressBar
-                        android:id="@+id/status_info_load_bar_3"
-                        android:layout_width="41sp"
-                        android:layout_height="41sp"
-                        android:background="@color/trans"
-                        android:max="100"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:background="@color/trans"
+                    android:indeterminate="true"
+                    android:indeterminateOnly="true"
+                    app:myTCPProgress="50"
+                    app:myTCPProgressSecond="30"
+                    app:myTCPProgressThree="30"
+                    app:myTCPMax="100"
+                    app:myTCPBackgroundColor="?myHintColor"
+                    app:myTCPProgressColor="?highlightGreen"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -191,6 +172,475 @@
                     android:layout_gravity="center"
                     android:text="@string/load"
                     android:theme="@style/myHintSmallText"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="0sp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/trans" />
+
+        <LinearLayout
+            android:id="@+id/status_info_mem_swap_flip_layout"
+            android:layout_width="70sp"
+            android:layout_height="100sp"
+            android:gravity="center"
+            android:clickable="true"
+            android:background="@color/trans"
+            android:orientation="horizontal"
+            android:padding="0sp" >
+
+            <LinearLayout
+                android:id="@+id/status_info_mem_flip_layout"
+                android:layout_width="70sp"
+                android:layout_height="90sp"
+                android:orientation="vertical"
+                android:padding="0sp"
+                android:layout_gravity="center" >
+
+                <com.android.argusyes.ui.CircleProgress
+                    android:id="@+id/status_info_mem_bar"
+                    android:layout_width="70sp"
+                    android:layout_height="70sp"
+                    android:layout_gravity="center"
+                    android:background="@color/trans"
+                    android:indeterminate="true"
+                    android:indeterminateOnly="true"
+                    app:myCPProgress="50"
+                    app:myCPProgressSecond="30"
+                    app:myCPMax="100"
+                    app:myCPBackgroundColor="?myHintColor"
+                    app:myCPProgressColor="?highlightGreen"
+                    app:myCPProgressSecondColor="?myTextSecondaryColor"
+                    app:myCPTextSize="14sp"
+                    app:myCPTextColor="?myTextSecondaryColor"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20sp"
+                    android:layout_gravity="center"
+                    android:text="@string/mem"
+                    android:theme="@style/myHintSmallText"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/status_info_swap_flip_layout"
+                android:layout_width="70sp"
+                android:layout_height="90sp"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:padding="0sp"
+                android:layout_gravity="center" >
+
+                <com.android.argusyes.ui.CircleProgress
+                    android:id="@+id/status_info_swap_bar"
+                    android:layout_width="70sp"
+                    android:layout_height="70sp"
+                    android:layout_gravity="center"
+                    android:background="@color/trans"
+                    android:indeterminate="true"
+                    android:indeterminateOnly="true"
+                    app:myCPProgress="50"
+                    app:myCPProgressSecond="30"
+                    app:myCPMax="100"
+                    app:myCPBackgroundColor="?myHintColor"
+                    app:myCPProgressColor="?highlightGreen"
+                    app:myCPProgressSecondColor="?myTextSecondaryColor"
+                    app:myCPTextSize="14sp"
+                    app:myCPTextColor="?myTextSecondaryColor"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20sp"
+                    android:layout_gravity="center"
+                    android:text="@string/swap"
+                    android:theme="@style/myHintSmallText"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="0sp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/trans" />
+
+        <LinearLayout
+            android:id="@+id/status_info_net_flip_layout"
+            android:layout_width="70sp"
+            android:layout_height="100sp"
+            android:gravity="center"
+            android:clickable="true"
+            android:background="@color/trans"
+            android:orientation="horizontal"
+            android:padding="0sp" >
+
+            <LinearLayout
+                android:id="@+id/status_info_net_speed_flip_layout"
+                android:layout_width="70sp"
+                android:layout_height="90sp"
+                android:orientation="vertical"
+                android:padding="6sp"
+                android:layout_gravity="center" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="0sp"
+                    android:layout_gravity="center" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|end"
+                        android:layout_gravity="center"
+                        android:background="@color/trans"
+                        android:text="@string/zero"
+                        android:theme="@style/myHintSmallText" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|start"
+                        android:layout_gravity="center"
+                        android:background="@color/trans"
+                        android:text="@string/mem_unit"
+                        android:theme="@style/myHintSmallText" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/up_second"
+                    android:theme="@style/myHintTinyText"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="0sp"
+                    android:layout_gravity="center" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|end"
+                        android:layout_gravity="center"
+                        android:background="@color/trans"
+                        android:text="@string/zero"
+                        android:theme="@style/myHintSmallText" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|start"
+                        android:layout_gravity="center"
+                        android:background="@color/trans"
+                        android:text="@string/mem_unit"
+                        android:theme="@style/myHintSmallText" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/down_second"
+                    android:theme="@style/myHintTinyText"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/status_info_net_total_flip_layout"
+                android:layout_width="70sp"
+                android:layout_height="90sp"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:padding="6sp"
+                android:layout_gravity="center" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="0sp"
+                    android:layout_gravity="center" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|end"
+                        android:layout_gravity="center"
+                        android:background="@color/trans"
+                        android:text="@string/zero"
+                        android:theme="@style/myHintSmallText" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|start"
+                        android:layout_gravity="center"
+                        android:background="@color/trans"
+                        android:text="@string/mem_unit"
+                        android:theme="@style/myHintSmallText" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/upload"
+                    android:theme="@style/myHintTinyText"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="0sp"
+                    android:layout_gravity="center" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|end"
+                        android:layout_gravity="center"
+                        android:background="@color/trans"
+                        android:text="@string/zero"
+                        android:theme="@style/myHintSmallText" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|start"
+                        android:layout_gravity="center"
+                        android:background="@color/trans"
+                        android:text="@string/mem_unit"
+                        android:theme="@style/myHintSmallText" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/download"
+                    android:theme="@style/myHintTinyText"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="0sp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/trans" />
+
+        <LinearLayout
+            android:id="@+id/status_info_store_flip_layout"
+            android:layout_width="70sp"
+            android:layout_height="100sp"
+            android:gravity="center"
+            android:clickable="true"
+            android:background="@color/trans"
+            android:orientation="horizontal"
+            android:padding="0sp" >
+
+            <LinearLayout
+                android:id="@+id/status_info_store_speed_flip_layout"
+                android:layout_width="70sp"
+                android:layout_height="90sp"
+                android:orientation="vertical"
+                android:padding="6sp"
+                android:layout_gravity="center" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="0sp"
+                    android:layout_gravity="center" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|end"
+                        android:layout_gravity="center"
+                        android:background="@color/trans"
+                        android:text="@string/zero"
+                        android:theme="@style/myHintSmallText" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|start"
+                        android:layout_gravity="center"
+                        android:background="@color/trans"
+                        android:text="@string/mem_unit"
+                        android:theme="@style/myHintSmallText" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/read_second"
+                    android:theme="@style/myHintTinyText"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="0sp"
+                    android:layout_gravity="center" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|end"
+                        android:layout_gravity="center"
+                        android:background="@color/trans"
+                        android:text="@string/zero"
+                        android:theme="@style/myHintSmallText" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|start"
+                        android:layout_gravity="center"
+                        android:background="@color/trans"
+                        android:text="@string/mem_unit"
+                        android:theme="@style/myHintSmallText" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/write_second"
+                    android:theme="@style/myHintTinyText" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/status_info_store_total_flip_layout"
+                android:layout_width="70sp"
+                android:layout_height="90sp"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:padding="6sp"
+                android:layout_gravity="center" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="0sp"
+                    android:layout_gravity="center" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|end"
+                        android:layout_gravity="center"
+                        android:background="@color/trans"
+                        android:text="@string/zero"
+                        android:theme="@style/myHintSmallText" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|start"
+                        android:layout_gravity="center"
+                        android:background="@color/trans"
+                        android:text="@string/mem_unit"
+                        android:theme="@style/myHintSmallText" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/read"
+                    android:theme="@style/myHintTinyText"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="0sp"
+                    android:layout_gravity="center" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|end"
+                        android:layout_gravity="center"
+                        android:background="@color/trans"
+                        android:text="@string/zero"
+                        android:theme="@style/myHintSmallText" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|start"
+                        android:layout_gravity="center"
+                        android:background="@color/trans"
+                        android:text="@string/mem_unit"
+                        android:theme="@style/myHintSmallText" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/write"
+                    android:theme="@style/myHintTinyText"/>
 
             </LinearLayout>
 

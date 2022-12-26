@@ -14,7 +14,7 @@ class CircleProgress : View {
     private var rect: Rect = Rect()
 
     //圆弧的宽度
-    private var arcWidth = 16.0f
+    private var arcWidth = 14.0f
     private var progress = 0f
     private var progressSecond = 0f
     private var max = 100f
@@ -36,10 +36,10 @@ class CircleProgress : View {
     private fun setAttr(context: Context, attrs: AttributeSet) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.CircleProgress)
 
-        arcWidth = typedArray.getDimension(R.styleable.CircleProgress_arcWidth, arcWidth)
-        progress = typedArray.getFloat(R.styleable.CircleProgress_progress, progress)
-        progressSecond = typedArray.getFloat(R.styleable.CircleProgress_progressSecond, progressSecond)
-        max = typedArray.getFloat(R.styleable.CircleProgress_max, max)
+        arcWidth = typedArray.getDimension(R.styleable.CircleProgress_myCPArcWidth, arcWidth)
+        progress = typedArray.getFloat(R.styleable.CircleProgress_myCPProgress, progress)
+        progressSecond = typedArray.getFloat(R.styleable.CircleProgress_myCPProgressSecond, progressSecond)
+        max = typedArray.getFloat(R.styleable.CircleProgress_myCPMax, max)
         myCPProgressColor = typedArray.getColor(R.styleable.CircleProgress_myCPProgressColor, myCPProgressColor)
         myCPProgressSecondColor = typedArray.getColor(R.styleable.CircleProgress_myCPProgressSecondColor, myCPProgressSecondColor)
         myCPBackgroundColor = typedArray.getColor(R.styleable.CircleProgress_myCPBackgroundColor, myCPBackgroundColor)

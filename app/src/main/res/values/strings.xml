@@ -24,8 +24,19 @@
     <string name="about_github">https://github.com/Argusyes/argusyes-android</string>
     <string name="zero">0</string>
     <string name="temp_unit">℃</string>
+    <string name="mem_unit">M</string>
     <string name="connect_fail">连接失败</string>
-    <string name="load">负载</string>
+    <string name="load">LOAD</string>
     <string name="cpu">CPU</string>
     <string name="percent_sign">%</string>
+    <string name="mem">MEM</string>
+    <string name="swap">SWAP</string>
+    <string name="up_second">↑/ S</string>
+    <string name="down_second">↓/ S</string>
+    <string name="upload">upload</string>
+    <string name="download">download</string>
+    <string name="read_second">read/S</string>
+    <string name="write_second">write/S</string>
+    <string name="read">Read</string>
+    <string name="write">Write</string>
 </resources>
