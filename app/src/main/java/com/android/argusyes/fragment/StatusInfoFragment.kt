@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.android.argusyes.R
 import com.android.argusyes.dao.entity.Server
 import com.android.argusyes.ssh.SSHManager
+import com.android.argusyes.ui.CircleProgress
 import com.android.argusyes.utils.FlipUtils
 import com.google.android.material.textfield.TextInputEditText
 
@@ -109,9 +110,14 @@ class StatusBaseAdapter (context: Context, private val servers: List<Server>) : 
             holder = StatusViewHolder()
             holder.nameTextView = view.findViewById(R.id.item_name_text_view)
 
-            holder.textView1 = view.findViewById(R.id.textview1)
-            holder.textView2 = view.findViewById(R.id.textview2)
-            holder.textViewLayout = view.findViewById(R.id.textviewlayout)
+            holder.cpuLoadFlipOutLayout = view.findViewById(R.id.status_info_cpu_load_flip_layout)
+            holder.cpuFlipLayout = view.findViewById(R.id.status_info_cpu_flip_layout)
+            holder.loadFlipLayout = view.findViewById(R.id.status_info_load_flip_layout)
+
+            holder.cpuBar = view.findViewById(R.id.status_info_cpu_bar)
+            holder.loadBar1 = view.findViewById(R.id.status_info_load_bar_1)
+            holder.loadBar2 = view.findViewById(R.id.status_info_load_bar_2)
+            holder.loadBar3 = view.findViewById(R.id.status_info_load_bar_3)
 
             view.tag = holder
         } else {
@@ -120,9 +126,19 @@ class StatusBaseAdapter (context: Context, private val servers: List<Server>) : 
         val server = servers[index]
         holder.nameTextView?.text = server.name
 
-        holder.textViewLayout?.setOnClickListener {
-            FlipUtils.flipAnimation(holder.textView1, holder.textView2)
+        holder.cpuLoadFlipOutLayout?.setOnClickListener {
+            FlipUtils.flipAnimation(holder.cpuFlipLayout, holder.loadFlipLayout)
         }
+
+        holder.loadBar1?.progress = 50
+        holder.loadBar2?.progress = 50
+        holder.loadBar3?.progress = 50
+        holder.cpuBar?.setProgress(50F)
+        holder.cpuBar?.setProgress(50F)
+
+        holder.loadBar1?.secondaryProgress = 80
+        holder.loadBar2?.secondaryProgress = 80
+        holder.loadBar3?.secondaryProgress = 80
 
         assert(view != null)
         return view!!
@@ -132,7 +148,12 @@ class StatusBaseAdapter (context: Context, private val servers: List<Server>) : 
 
 class StatusViewHolder {
     var nameTextView: TextView? = null
-    var textView1 : TextView? = null
-    var textView2 : TextView? = null
-    var textViewLayout : LinearLayout? = null
+    var cpuFlipLayout : LinearLayout? = null
+    var loadFlipLayout : LinearLayout? = null
+    var cpuLoadFlipOutLayout : LinearLayout? = null
+
+    var cpuBar : CircleProgress? = null
+    var loadBar1 : ProgressBar? = null
+    var loadBar2 : ProgressBar? = null
+    var loadBar3 : ProgressBar? = null
 }

@@ -18,7 +18,7 @@
         <!-- 主要容器背景 -->
         <item name="myContainerColor">@color/white</item>
         <!-- 次要容器背景 -->
-        @<item name="myContainerSecondaryColor">@color/grey_10</item>
+        <item name="myContainerSecondaryColor">@color/grey_10</item>
 
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
