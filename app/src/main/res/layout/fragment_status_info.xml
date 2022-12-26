@@ -78,9 +78,11 @@
                 android:id="@+id/status_info_list_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/corners_bg_white"
+                android:background="@color/trans"
                 android:padding="0sp"
                 android:scrollbars="none"
+                android:divider="@color/trans"
+                android:dividerHeight="20dp"
                 android:listSelector="@color/trans" />
 
             <ImageView

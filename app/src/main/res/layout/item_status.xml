@@ -3,27 +3,80 @@
     android:layout_width="match_parent"
     android:layout_height="150sp"
     android:background="@drawable/corners_bg_white"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:baselineAligned="false"
-    android:padding="20sp"
-    android:gravity="center_vertical">
+    android:padding="15sp" >
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="@integer/material_motion_duration_long_1"
         android:background="@color/trans"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:padding="0sp">
 
         <TextView
-            android:id="@+id/item_name_text_view"
+            android:id="@+id/status_item_name_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/trans"
             android:text="@string/name"
             android:theme="@style/myText" />
 
+        <ImageView
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/trans"/>
+
+        <LinearLayout
+            android:id="@+id/status_item_temp_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/status_item_temp_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|end"
+                android:layout_gravity="center"
+                android:background="@color/trans"
+                android:text="@string/zero"
+                android:theme="@style/myHintSmallText" />
+
+            <TextView
+                android:id="@+id/status_item_temp_unit_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|start"
+                android:layout_gravity="center"
+                android:background="@color/trans"
+                android:text="@string/temp_unit"
+                android:theme="@style/myHintSmallText" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/status_item_connect_fail_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:background="@color/trans"
+            android:text="@string/connect_fail"
+            android:visibility="gone"
+            android:theme="@style/myHintSmallText" />
+
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/status_item_loading_gif"
+            android:layout_width="15sp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:src="@drawable/loading"
+            android:visibility="gone"
+            android:tint="?highlightRed"/>
+
     </LinearLayout>
+
 
 </LinearLayout>
