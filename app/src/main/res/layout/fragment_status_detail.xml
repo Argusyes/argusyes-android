@@ -3,7 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/myFragment"
     tools:context=".fragment.StatusDetailFragment">
 
+    <LinearLayout
+        android:id="@+id/status_detail_title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:theme="@style/noPaddingLayout">
+
+        <TextView
+            android:id="@+id/status_detail_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="@integer/material_motion_duration_long_1"
+            android:text="@string/name"
+            android:theme="@style/myFragmentTitleText"/>
+
+        <Button
+            android:id="@+id/status_detail_title_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_vertical|end"
+            android:background="@color/trans"
+            android:text="@string/back"
+            android:theme="@style/myPrimaryText" />
+
+    </LinearLayout>
 
 </FrameLayout>
