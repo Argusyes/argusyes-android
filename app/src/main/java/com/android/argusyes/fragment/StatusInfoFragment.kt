@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import com.android.argusyes.R
 import com.android.argusyes.dao.entity.Server
 import com.android.argusyes.ssh.SSHManager
@@ -109,6 +110,9 @@ class StatusBaseAdapter (context: Context, private val servers: List<Server>) : 
         if (view == null) {
             view = layoutInflater.inflate(R.layout.item_status, parent, false)
             holder = StatusViewHolder()
+
+            holder.itemLayout = view.findViewById(R.id.status_item_layout)
+
             holder.nameTextView = view.findViewById(R.id.status_item_name_text_view)
 
             holder.cpuLoadFlipOutLayout = view.findViewById(R.id.status_info_cpu_load_flip_layout)
@@ -138,6 +142,14 @@ class StatusBaseAdapter (context: Context, private val servers: List<Server>) : 
             holder = view.tag as StatusViewHolder
         }
         val server = servers[index]
+
+        holder.itemLayout?.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_statusInfoFragment_to_statusDetailFragment,
+                Bundle().apply {
+                    putString(SERVER_ID, server.id)
+                }
+            )
+        )
+
         holder.nameTextView?.text = server.name
 
         holder.cpuLoadFlipOutLayout?.setOnClickListener {
@@ -170,6 +182,9 @@ class StatusBaseAdapter (context: Context, private val servers: List<Server>) : 
 }
 
 class StatusViewHolder {
+
+    var itemLayout : LinearLayout? = null
+
     var nameTextView: TextView? = null
 
     var cpuFlipLayout : LinearLayout? = null
