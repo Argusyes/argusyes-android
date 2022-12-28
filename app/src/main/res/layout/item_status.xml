@@ -45,7 +45,7 @@
                 android:layout_gravity="center"
                 android:background="@color/trans"
                 android:text="@string/zero"
-                android:theme="@style/myHintSmallText" />
+                android:theme="@style/mySmallTextSecondary" />
 
             <TextView
                 android:id="@+id/status_item_temp_unit_text_view"
@@ -55,7 +55,7 @@
                 android:layout_gravity="center"
                 android:background="@color/trans"
                 android:text="@string/temp_unit"
-                android:theme="@style/myHintSmallText" />
+                android:theme="@style/mySmallTextSecondary" />
 
         </LinearLayout>
 
@@ -68,7 +68,7 @@
             android:background="@color/trans"
             android:text="@string/connect_fail"
             android:visibility="gone"
-            android:theme="@style/myHintSmallText" />
+            android:theme="@style/mySmallTextSecondary" />
 
         <pl.droidsonroids.gif.GifImageView
             android:id="@+id/status_item_loading_gif"
@@ -132,7 +132,7 @@
                     android:layout_height="20sp"
                     android:layout_gravity="center"
                     android:text="@string/cpu"
-                    android:theme="@style/myHintSmallText"/>
+                    android:theme="@style/mySmallTextSecondary"/>
 
             </LinearLayout>
 
@@ -169,7 +169,7 @@
                     android:layout_height="20sp"
                     android:layout_gravity="center"
                     android:text="@string/load"
-                    android:theme="@style/myHintSmallText"/>
+                    android:theme="@style/mySmallTextSecondary"/>
 
             </LinearLayout>
 
@@ -224,7 +224,7 @@
                     android:layout_height="20sp"
                     android:layout_gravity="center"
                     android:text="@string/mem"
-                    android:theme="@style/myHintSmallText"/>
+                    android:theme="@style/mySmallTextSecondary"/>
 
             </LinearLayout>
 
@@ -263,7 +263,7 @@
                     android:layout_height="20sp"
                     android:layout_gravity="center"
                     android:text="@string/swap"
-                    android:theme="@style/myHintSmallText"/>
+                    android:theme="@style/mySmallTextSecondary"/>
 
             </LinearLayout>
 
@@ -315,7 +315,7 @@
                         android:layout_gravity="center"
                         android:background="@color/trans"
                         android:text="@string/mem_unit"
-                        android:theme="@style/myHintSmallText" />
+                        android:theme="@style/mySmallTextSecondary" />
 
                 </LinearLayout>
 
@@ -325,7 +325,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="@string/up_second"
-                    android:theme="@style/myHintTinyText"/>
+                    android:theme="@style/myTinyTextSecondary"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -355,7 +355,7 @@
                         android:layout_gravity="center"
                         android:background="@color/trans"
                         android:text="@string/mem_unit"
-                        android:theme="@style/myHintSmallText" />
+                        android:theme="@style/mySmallTextSecondary" />
 
                 </LinearLayout>
 
@@ -365,7 +365,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="@string/down_second"
-                    android:theme="@style/myHintTinyText"/>
+                    android:theme="@style/myTinyTextSecondary"/>
 
             </LinearLayout>
 
@@ -401,7 +401,7 @@
                         android:layout_gravity="center"
                         android:background="@color/trans"
                         android:text="@string/mem_unit"
-                        android:theme="@style/myHintSmallText" />
+                        android:theme="@style/mySmallTextSecondary" />
 
                 </LinearLayout>
 
@@ -411,7 +411,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="@string/upload"
-                    android:theme="@style/myHintTinyText"/>
+                    android:theme="@style/myTinyTextSecondary"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -441,7 +441,7 @@
                         android:layout_gravity="center"
                         android:background="@color/trans"
                         android:text="@string/mem_unit"
-                        android:theme="@style/myHintSmallText" />
+                        android:theme="@style/mySmallTextSecondary" />
 
                 </LinearLayout>
 
@@ -451,7 +451,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="@string/download"
-                    android:theme="@style/myHintTinyText"/>
+                    android:theme="@style/myTinyTextSecondary"/>
 
             </LinearLayout>
 
@@ -503,7 +503,7 @@
                         android:layout_gravity="center"
                         android:background="@color/trans"
                         android:text="@string/mem_unit"
-                        android:theme="@style/myHintSmallText" />
+                        android:theme="@style/mySmallTextSecondary" />
 
                 </LinearLayout>
 
@@ -513,7 +513,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="@string/read_second"
-                    android:theme="@style/myHintTinyText"/>
+                    android:theme="@style/myTinyTextSecondary"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -543,7 +543,7 @@
                         android:layout_gravity="center"
                         android:background="@color/trans"
                         android:text="@string/mem_unit"
-                        android:theme="@style/myHintSmallText" />
+                        android:theme="@style/mySmallTextSecondary" />
 
                 </LinearLayout>
 
@@ -553,7 +553,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="@string/write_second"
-                    android:theme="@style/myHintTinyText" />
+                    android:theme="@style/myTinyTextSecondary" />
 
             </LinearLayout>
 
@@ -589,7 +589,7 @@
                         android:layout_gravity="center"
                         android:background="@color/trans"
                         android:text="@string/mem_unit"
-                        android:theme="@style/myHintSmallText" />
+                        android:theme="@style/mySmallTextSecondary" />
 
                 </LinearLayout>
 
@@ -599,7 +599,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="@string/read"
-                    android:theme="@style/myHintTinyText"/>
+                    android:theme="@style/myTinyTextSecondary"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -629,7 +629,7 @@
                         android:layout_gravity="center"
                         android:background="@color/trans"
                         android:text="@string/mem_unit"
-                        android:theme="@style/myHintSmallText" />
+                        android:theme="@style/mySmallTextSecondary" />
 
                 </LinearLayout>
 
@@ -639,7 +639,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="@string/write"
-                    android:theme="@style/myHintTinyText"/>
+                    android:theme="@style/myTinyTextSecondary"/>
 
             </LinearLayout>
 

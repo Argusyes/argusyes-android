@@ -3,6 +3,8 @@
     <style name="Theme.Argusyes" parent="Theme.AppCompat.DayNight">
         <item name="highlightRed">@color/red</item>
         <item name="highlightGreen">@color/green</item>
+        <item name="highlightPurple">@color/purple</item>
+        <item name="highlightYellow">@color/yellow</item>
         <item name="myBackColor">@color/black</item>
         <item name="myTransBackColor">@color/half_trans_black</item>
         <item name="myTextColor">@color/white</item>

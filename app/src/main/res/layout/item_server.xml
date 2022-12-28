@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:background="@color/trans"
             android:text="@string/identify"
-            android:theme="@style/myHintSmallText" />
+            android:theme="@style/mySmallTextSecondary" />
     </LinearLayout>
 
     <ImageButton

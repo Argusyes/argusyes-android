@@ -18,7 +18,8 @@ data class Cpu(
     @Volatile var free: Double = 0.0,
     @Volatile var system: Double = 0.0,
     @Volatile var user: Double = 0.0,
-    @Volatile var IO: Double = 0.0,
+    @Volatile var nice: Double = 0.0,
+    @Volatile var ioWait: Double = 0.0,
     @Volatile var steal: Double = 0.0,
 )
 

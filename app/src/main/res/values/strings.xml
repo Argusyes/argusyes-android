@@ -39,4 +39,7 @@
     <string name="write_second">write/S</string>
     <string name="read">Read</string>
     <string name="write">Write</string>
+    <string name="system">系统</string>
+    <string name="io_wait">IO等待</string>
+    <string name="nice">NICE</string>
 </resources>

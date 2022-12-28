@@ -5,6 +5,10 @@
         <item name="highlightRed">@color/red</item>
         <!-- 重点 -->
         <item name="highlightGreen">@color/green</item>
+        <!-- 重点 -->
+        <item name="highlightPurple">@color/purple</item>
+        <!-- 重点 -->
+        <item name="highlightYellow">@color/yellow</item>
         <!-- 大背景 -->
         <item name="myBackColor">@color/grey_0</item>
         <!-- 半透明背景 -->

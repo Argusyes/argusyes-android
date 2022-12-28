@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:theme="@style/myFragment"
     tools:context=".fragment.StatusDetailFragment">
 
@@ -33,4 +34,297 @@
 
     </LinearLayout>
 
-</FrameLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_marginTop="20sp"
+        android:scrollbars="none"
+        android:padding="0sp" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="0sp" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10sp"
+                android:background="@drawable/corners_bg_white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp"
+                    android:orientation="horizontal"
+                    android:padding="0sp"
+                    android:baselineAligned="false">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="0sp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/zero"
+                            android:padding="0sp"
+                            android:theme="@style/myFragmentTitleText" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/percent_sign"
+                            android:padding="0sp"
+                            android:theme="@style/myTextSecondary" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:padding="0sp" >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="20sp"
+                            android:padding="0sp">
+
+                            <TextView
+                                android:layout_width="6sp"
+                                android:layout_height="12sp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/corners_bg_red" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="20sp"
+                                android:background="@color/trans"
+                                android:padding="0sp"
+                                android:layout_marginStart="5sp"
+                                android:layout_gravity="center"
+                                android:text="@string/system"
+                                android:theme="@style/mySmallTextSecondary" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="20sp"
+                            android:padding="0sp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/zero"
+                                android:padding="0sp"
+                                android:theme="@style/myText" />
+                            
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/percent_sign"
+                                android:padding="0sp"
+                                android:layout_marginStart="2sp"
+                                android:theme="@style/myTextSecondary" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:padding="0sp" >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="20sp"
+                            android:padding="0sp">
+
+                           <TextView
+                                android:layout_width="6sp"
+                                android:layout_height="12sp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/corners_bg_green" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="20sp"
+                                android:background="@color/trans"
+                                android:padding="0sp"
+                                 android:layout_marginStart="5sp"
+                                android:layout_gravity="center"
+                                android:text="@string/user"
+                                android:theme="@style/mySmallTextSecondary" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="20sp"
+                            android:padding="0sp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/zero"
+                                android:padding="0sp"
+                                android:theme="@style/myText" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/percent_sign"
+                                android:padding="0sp"
+                                android:layout_marginStart="2sp"
+                                android:theme="@style/myTextSecondary" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:padding="0sp" >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="20sp"
+                            android:padding="0sp">
+
+                            <TextView
+                                android:layout_width="6sp"
+                                android:layout_height="12sp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/corners_bg_purple" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="20sp"
+                                android:layout_gravity="center"
+                                 android:layout_marginStart="5sp"
+                                android:background="@color/trans"
+                                android:padding="0sp"
+                                android:text="@string/io_wait"
+                                android:theme="@style/mySmallTextSecondary" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="20sp"
+                            android:padding="0sp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/zero"
+                                android:padding="0sp"
+                                android:theme="@style/myText" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/percent_sign"
+                                android:padding="0sp"
+                                android:layout_marginStart="2sp"
+                                android:theme="@style/myTextSecondary" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:padding="0sp" >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="20sp"
+                            android:padding="0sp">
+
+                           <TextView
+                                android:layout_width="6sp"
+                                android:layout_height="12sp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/corners_bg_yellow" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="20sp"
+                                android:background="@color/trans"
+                                android:padding="0sp"
+                                 android:layout_marginStart="5sp"
+                                android:layout_gravity="center"
+                                android:text="@string/nice"
+                                android:theme="@style/mySmallTextSecondary" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="20sp"
+                            android:padding="0sp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/zero"
+                                android:padding="0sp"
+                                android:theme="@style/myText" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/percent_sign"
+                                android:padding="0sp"
+                                android:layout_marginStart="2sp"
+                                android:theme="@style/myTextSecondary" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <com.android.argusyes.ui.ListViewForScrollView
+                    android:id="@+id/status_detail_cpu_core_list_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/trans"
+                    android:padding="0sp"
+                    android:layout_marginTop="10sp"
+                    android:scrollbars="none"
+                    android:divider="@color/trans"
+                    android:dividerHeight="4sp"
+                    android:listSelector="@color/trans" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="60sp"
+                android:background="@color/trans"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
