@@ -132,9 +132,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/percent_sign"
-                                android:layout_gravity="bottom"
                                 android:padding="0sp"
-                                android:layout_marginStart="2sp"
+                                android:layout_marginStart="4sp"
                                 android:theme="@style/mySmallTextSecondary" />
 
                         </LinearLayout>
@@ -188,7 +187,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/percent_sign"
                                 android:padding="0sp"
-                                android:layout_marginStart="2sp"
+                                android:layout_marginStart="4sp"
                                 android:theme="@style/mySmallTextSecondary" />
 
                         </LinearLayout>
@@ -242,7 +241,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/percent_sign"
                                 android:padding="0sp"
-                                android:layout_marginStart="2sp"
+                                android:layout_marginStart="4sp"
                                 android:theme="@style/mySmallTextSecondary" />
 
                         </LinearLayout>
@@ -296,7 +295,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/percent_sign"
                                 android:padding="0sp"
-                                android:layout_marginStart="2sp"
+                                android:layout_marginStart="4sp"
                                 android:theme="@style/mySmallTextSecondary" />
 
                         </LinearLayout>
@@ -445,7 +444,7 @@
                             android:layout_height="20sp"
                             android:background="@color/trans"
                             android:padding="0sp"
-                            android:text="@string/load"
+                            android:text="@string/loadavg"
                             android:theme="@style/mySmallTextSecondary" />
 
                         <TextView
@@ -539,9 +538,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/mem_unit"
-                            android:layout_gravity="bottom"
                             android:padding="0sp"
-                            android:layout_marginStart="2sp"
+                            android:layout_marginStart="4sp"
                             android:theme="@style/mySmallTextSecondary" />
 
                     </LinearLayout>
@@ -595,9 +593,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/mem_unit"
-                            android:layout_gravity="bottom"
                             android:padding="0sp"
-                            android:layout_marginStart="2sp"
+                            android:layout_marginStart="4sp"
                             android:theme="@style/mySmallTextSecondary" />
 
                     </LinearLayout>
@@ -651,9 +648,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/mem_unit"
-                            android:layout_gravity="bottom"
                             android:padding="0sp"
-                            android:layout_marginStart="2sp"
+                            android:layout_marginStart="4sp"
                             android:theme="@style/mySmallTextSecondary" />
 
                     </LinearLayout>

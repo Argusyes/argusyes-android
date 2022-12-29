@@ -50,4 +50,5 @@
     <string name="available">可用</string>
     <string name="used">已用</string>
     <string name="page_cache">页面缓存</string>
+    <string name="loadavg">负载</string>
 </resources>
