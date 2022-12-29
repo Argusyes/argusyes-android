@@ -47,4 +47,7 @@
     <string name="run_time">运行事件</string>
     <string name="d">D</string>
     <string name="_1_5_15m">1,5,15m</string>
+    <string name="available">可用</string>
+    <string name="used">已用</string>
+    <string name="page_cache">页面缓存</string>
 </resources>
