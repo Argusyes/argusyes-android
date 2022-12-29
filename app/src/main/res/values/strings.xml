@@ -42,4 +42,9 @@
     <string name="system">系统</string>
     <string name="io_wait">IO等待</string>
     <string name="nice">NICE</string>
+    <string name="core_num">核数</string>
+    <string name="free">空闲</string>
+    <string name="run_time">运行事件</string>
+    <string name="d">D</string>
+    <string name="_1_5_15m">1,5,15m</string>
 </resources>

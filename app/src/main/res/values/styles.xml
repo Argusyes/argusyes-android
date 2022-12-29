@@ -67,6 +67,12 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="mySmallText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?myTextColor</item>
+    </style>
+
     <style name="mySmallTextSecondary">
         <item name="android:textColor">?myTextSecondaryColor</item>
         <item name="android:textStyle">bold</item>
