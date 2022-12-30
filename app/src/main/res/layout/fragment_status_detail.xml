@@ -687,6 +687,8 @@
                 android:background="@drawable/corners_bg_white"
                 android:padding="10sp"
                 android:scrollbars="none"
+                android:divider="?myHintColor"
+                android:dividerHeight="1sp"
                 android:listSelector="@color/trans" />
 
             <com.android.argusyes.ui.ListViewForScrollView

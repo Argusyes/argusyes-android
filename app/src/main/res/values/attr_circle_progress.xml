@@ -10,6 +10,7 @@
         <attr name="myCPBackgroundColor" format="color" />
         <attr name="myCPTextSize" format="dimension" />
         <attr name="myCPTextColor" format="color" />
+        <attr name="myCPPTextShow" format="boolean" />
 
     </declare-styleable>
 </resources>

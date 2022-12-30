@@ -23,6 +23,7 @@ class CircleProgress : View {
     private var myCPBackgroundColor = Color.GRAY
     private var myCPTextSize = 16f
     private var myCPTextColor = Color.GRAY
+    private var myCPPTextShow = true
 
     constructor(context: Context): super(context)
     constructor(context: Context, attrs: AttributeSet): super(context, attrs) {
@@ -45,6 +46,7 @@ class CircleProgress : View {
         myCPBackgroundColor = typedArray.getColor(R.styleable.CircleProgress_myCPBackgroundColor, myCPBackgroundColor)
         myCPTextSize = typedArray.getDimension(R.styleable.CircleProgress_myCPTextSize, myCPTextSize)
         myCPTextColor = typedArray.getColor(R.styleable.CircleProgress_myCPTextColor, myCPTextColor)
+        myCPPTextShow = typedArray.getBoolean(R.styleable.CircleProgress_myCPPTextShow, myCPPTextShow)
         typedArray.recycle()
     }
 
@@ -92,15 +94,19 @@ class CircleProgress : View {
         paint.color =  myCPProgressSecondColor
         canvas.drawArc(rectF, 90F + (progress * 360 / max), ((progressSecond) * 360 / max), false, paint)
 
-        val txt = "${(progress * 100 / max).toInt()}%"
-        paint.textSize = myCPTextSize
-        paint.color = myCPTextColor
-        paint.style = Paint.Style.FILL
-        paint.typeface = Typeface.DEFAULT_BOLD
-        paint.getTextBounds(txt, 0, txt.length, rect)
-        canvas.drawText(txt,
-            (bigCircleRadius - rect.width() / 2),
-            (bigCircleRadius + rect.height() / 2), paint)
+        if (myCPPTextShow) {
+            val txt = "${(progress * 100 / max).toInt()}%"
+            paint.textSize = myCPTextSize
+            paint.color = myCPTextColor
+            paint.style = Paint.Style.FILL
+            paint.typeface = Typeface.DEFAULT_BOLD
+            paint.getTextBounds(txt, 0, txt.length, rect)
+            canvas.drawText(
+                txt,
+                (bigCircleRadius - rect.width() / 2),
+                (bigCircleRadius + rect.height() / 2), paint
+            )
+        }
     }
 
 }
