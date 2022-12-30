@@ -685,7 +685,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/corners_bg_white"
-                android:padding="10sp"
+                android:padding="0sp"
                 android:scrollbars="none"
                 android:divider="?myHintColor"
                 android:dividerHeight="1sp"
