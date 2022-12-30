@@ -58,4 +58,11 @@
     <string name="active_opens">主动建连</string>
     <string name="passive_opens">被动建连</string>
     <string name="fail_opens">建连失败</string>
+    <string name="mount">mount</string>
+    <string name="filesystem">FileSystem</string>
+    <string name="speed">速率</string>
+    <string name="bytes">字节</string>
+    <string name="split">/</string>
+    <string name="iops">IOPS</string>
+    <string name="delay">延迟</string>
 </resources>
