@@ -679,6 +679,28 @@
 
             </LinearLayout>
 
+            <com.android.argusyes.ui.ListViewForScrollView
+                android:layout_marginTop="10sp"
+                android:id="@+id/status_detail_net_dev_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/corners_bg_white"
+                android:padding="10sp"
+                android:scrollbars="none"
+                android:listSelector="@color/trans" />
+
+            <com.android.argusyes.ui.ListViewForScrollView
+                android:layout_marginTop="10sp"
+                android:id="@+id/status_detail_store_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/trans"
+                android:padding="0sp"
+                android:scrollbars="none"
+                android:divider="@color/trans"
+                android:dividerHeight="10dp"
+                android:listSelector="@color/trans" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="60sp"

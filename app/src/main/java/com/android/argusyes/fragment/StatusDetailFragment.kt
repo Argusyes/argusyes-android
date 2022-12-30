@@ -11,6 +11,8 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import com.android.argusyes.R
 import com.android.argusyes.ssh.Cpu
+import com.android.argusyes.ssh.Disk
+import com.android.argusyes.ssh.NetDev
 import com.android.argusyes.ssh.SSHManager
 import com.android.argusyes.ui.ListViewForScrollView
 import java.util.*
@@ -22,6 +24,8 @@ class StatusDetailFragment : Fragment() {
     private var sshManager: SSHManager? = null
 
     private var cpuCoreListView: ListViewForScrollView? = null
+    private var netDevListView: ListViewForScrollView? = null
+    private var storeListView: ListViewForScrollView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,11 +38,112 @@ class StatusDetailFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_status_detail, container, false)
         cpuCoreListView = view.findViewById(R.id.status_detail_cpu_core_list_view)
+        netDevListView = view.findViewById(R.id.status_detail_net_dev_list_view)
+        storeListView = view.findViewById(R.id.status_detail_store_list_view)
+
         context?.run {
             cpuCoreListView?.adapter = StatusCpuCoreBaseAdapter(this, getFakeCpuCore())
+            netDevListView?.adapter = StatusNetDevBaseAdapter(this, getFakeNetDev())
+            storeListView?.adapter = StatusStoreBaseAdapter(this, getFakeDisk())
         }
+
+        val netDevHeaderView = inflater.inflate(R.layout.item_status_net_header, container, false)
+        netDevListView?.addHeaderView(netDevHeaderView)
         return view
     }
+}
+
+private fun getFakeDisk(): List<Disk> {
+    val res = LinkedList<Disk>()
+    res.add(Disk("1", "/ff", "aa", 2.0, 2.0, "M"))
+    res.add(Disk("1", "/ff", "aa", 2.0, 2.0, "M"))
+    res.add(Disk("1", "/ff", "aa", 2.0, 2.0, "M"))
+    res.add(Disk("1", "/ff", "aa", 2.0, 2.0, "M"))
+    return res
+}
+
+class StatusStoreBaseAdapter (context: Context, private val disks: List<Disk>) : BaseAdapter() {
+
+    private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
+
+    override fun getCount(): Int {
+        return disks.size
+    }
+
+    override fun getItem(index: Int): Any {
+        return disks[index]
+    }
+
+    override fun getItemId(index: Int): Long {
+        return index.toLong()
+    }
+
+    override fun getView(index: Int, convertView: View?, parent: ViewGroup?): View {
+        var view = convertView
+        val holder: StatusStoreViewHolder?
+        if (view == null) {
+            view = layoutInflater.inflate(R.layout.item_status_store, parent, false)
+            holder = StatusStoreViewHolder()
+            view.tag = holder
+
+        } else {
+            holder = view.tag as StatusStoreViewHolder
+        }
+
+        assert(view != null)
+        return view!!
+    }
+}
+
+class StatusStoreViewHolder {
+
+}
+
+private fun getFakeNetDev(): List<NetDev> {
+    val res = LinkedList<NetDev>()
+    res.add(NetDev("1", listOf("192.168.0.1"), true, 0.0, "M", 2, 0.0, "M", 2))
+    res.add(NetDev("1", listOf("192.168.0.1"), true, 0.0, "M", 2, 0.0, "M", 2))
+    res.add(NetDev("1", listOf("192.168.0.1"), true, 0.0, "M", 2, 0.0, "M", 2))
+    res.add(NetDev("1", listOf("192.168.0.1"), true, 0.0, "M", 2, 0.0, "M", 2))
+    res.add(NetDev("1", listOf("192.168.0.1"), true, 0.0, "M", 2, 0.0, "M", 2))
+    return res
+}
+
+class StatusNetDevBaseAdapter (context: Context, private val netDevs: List<NetDev>) : BaseAdapter() {
+
+    private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
+
+    override fun getCount(): Int {
+        return netDevs.size
+    }
+
+    override fun getItem(index: Int): Any {
+        return netDevs[index]
+    }
+
+    override fun getItemId(index: Int): Long {
+        return index.toLong()
+    }
+
+    override fun getView(index: Int, convertView: View?, parent: ViewGroup?): View {
+        var view = convertView
+        val holder: StatusNetDevViewHolder?
+        if (view == null) {
+            view = layoutInflater.inflate(R.layout.item_status_net, parent, false)
+            holder = StatusNetDevViewHolder()
+            view.tag = holder
+
+        } else {
+            holder = view.tag as StatusNetDevViewHolder
+        }
+
+        assert(view != null)
+        return view!!
+    }
+}
+
+class StatusNetDevViewHolder {
+
 }
 
 private fun getFakeCpuCore(): List<Cpu> {
@@ -53,6 +158,7 @@ private fun getFakeCpuCore(): List<Cpu> {
     res.add(Cpu(7, 0.96, 0.045, 0.1, 0.1, 0.1, 0.5, 0.16))
     return res
 }
+
 
 class StatusCpuCoreBaseAdapter (context: Context, private val cpus: List<Cpu>) : BaseAdapter() {
 
