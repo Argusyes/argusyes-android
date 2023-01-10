@@ -37,6 +37,7 @@ class SSHManager private constructor(context: Context){
         val old = sshMap.put(ssh.data.id, ssh)
         val index = sshs.indexOf(old)
         sshs[index] = ssh
+        old?.monitor?.stopMonitor()
     }
 
     fun getServerById(id: String) : SSH? {

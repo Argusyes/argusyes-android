@@ -14,11 +14,8 @@ data class MonitorInfo (
 )
 
 data class Cpus(
-    @Volatile var map: Map<Int, Cpu> = HashMap(),
+    @Volatile var map: MutableMap<Int, Cpu> = HashMap(),
     @Volatile var total: Cpu = Cpu(),
-    @Volatile var totalTime: Int = 0,
-    @Volatile var TotalTimeUnit: String = "",
-
 )
 
 data class Cpu(

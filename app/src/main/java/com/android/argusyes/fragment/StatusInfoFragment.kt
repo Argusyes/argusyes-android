@@ -196,14 +196,11 @@ class StatusBaseAdapter (context: Context, private val sshs: List<SSH>) : BaseAd
             FlipUtils.flipAnimation(holder.storeSpeedFlipLayout, holder.storeTotalFlipLayout)
         }
 
-        holder
+        holder.cpuBar?.setProgress(ssh.monitor.monitorInfo.cpus.total.utilization.toFloat())
 
         holder.loadBar?.setProgress(50F)
         holder.loadBar?.setProgressSecond(60F)
         holder.loadBar?.setProgressThree(90F)
-
-        holder.cpuBar?.setProgress(50F)
-        holder.cpuBar?.setProgressSecond(50F)
 
         assert(view != null)
         return view!!
