@@ -196,7 +196,13 @@ class StatusBaseAdapter (context: Context, private val sshs: List<SSH>) : BaseAd
             FlipUtils.flipAnimation(holder.storeSpeedFlipLayout, holder.storeTotalFlipLayout)
         }
 
-        holder.cpuBar?.setProgress(ssh.monitor.monitorInfo.cpus.total.utilization.toFloat())
+        holder.cpuBar?.setProgress(ssh.monitor.monitorInfo.cpus.total.utilization)
+
+        holder.memBar?.setProgress(ssh.monitor.monitorInfo.mem.usedOccupy)
+        holder.memBar?.setProgressSecond(ssh.monitor.monitorInfo.mem.cacheOccupy)
+
+        holder.swapBar?.setProgress(ssh.monitor.monitorInfo.mem.usedSwapOccupy)
+        holder.swapBar?.setProgressSecond(ssh.monitor.monitorInfo.mem.cachedSwapOccupy)
 
         holder.loadBar?.setProgress(50F)
         holder.loadBar?.setProgressSecond(60F)

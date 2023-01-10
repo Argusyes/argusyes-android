@@ -17,6 +17,8 @@ enum class ConnectStatus {
 
 const val ROUND_FLOAT2 = "%.2f"
 
+data class MemRounded (var data: Float, var unit: String)
+
 class Monitor (var server: Server){
 
     var connectStatus = ConnectStatus.INIT
@@ -53,6 +55,7 @@ class Monitor (var server: Server){
             connectStatus = ConnectStatus.SUCCESS
 
             jobs.add(parse(sftp, ::parseCpu, "/proc/stat"))
+            jobs.add(parse(sftp, ::parseMem, "/proc/meminfo"))
             jobs.forEach { it.join() }
 
             connectStatus = ConnectStatus.FAIL
@@ -70,6 +73,21 @@ class Monitor (var server: Server){
         job.cancel()
     }
 
+    private fun roundMem(b: Long): MemRounded {
+        return if (b > 1024L*1024*1024*1024) {
+            MemRounded(ROUND_FLOAT2.format(b.toDouble()/1024/1024/1024/1024).toFloat(), "T")
+        } else if (b > 1024L*1024*1024) {
+            MemRounded(ROUND_FLOAT2.format(b.toDouble()/1024/1024/1024).toFloat(), "G")
+        } else if (b > 1024*1024) {
+            MemRounded(ROUND_FLOAT2.format(b.toDouble()/1024/1024).toFloat(), "M")
+        } else if (b > 1024) {
+            MemRounded(ROUND_FLOAT2.format(b.toDouble()/1024).toFloat(), "K")
+        } else {
+            MemRounded(ROUND_FLOAT2.format(b.toDouble()).toFloat(), "B")
+        }
+    }
+
+
     @OptIn(DelicateCoroutinesApi::class)
     private fun parse(sftp: ChannelSftp, func: (MonitorContext) -> Unit, where: String): Job {
         val context = MonitorContext(sftp, old = "", new = "", oldTime = LocalDateTime.now(), newTime = LocalDateTime.now(), where)
@@ -81,7 +99,7 @@ class Monitor (var server: Server){
                     delay(2000)
                 }
             } catch (e : Exception) {
-                Log.d("parse", e.message?: "error")
+                Log.d("parse:${context.where}", e.message?: "error")
             }
         }
     }
@@ -116,12 +134,12 @@ class Monitor (var server: Server){
             totalDiffTime++
         }
 
-        monitorInfo.cpus.total.utilization = ROUND_FLOAT2.format(100.0 - 100.0*(new[0][5].toDouble() - old[0][5].toDouble()) / totalDiffTime).toDouble()
-        monitorInfo.cpus.total.free = ROUND_FLOAT2.format(100.0*(new[0][5].toDouble() - old[0][5].toDouble()) / totalDiffTime).toDouble()
-        monitorInfo.cpus.total.system = ROUND_FLOAT2.format(100.0*(new[0][4].toDouble() - old[0][4].toDouble()) / totalDiffTime).toDouble()
-        monitorInfo.cpus.total.user = ROUND_FLOAT2.format(100.0*(new[0][2].toDouble() - old[0][2].toDouble()) / totalDiffTime).toDouble()
-        monitorInfo.cpus.total.ioWait = ROUND_FLOAT2.format(100.0*(new[0][6].toDouble() - old[0][6].toDouble()) / totalDiffTime).toDouble()
-        monitorInfo.cpus.total.steal = ROUND_FLOAT2.format(100.0*(new[0][9].toDouble() - old[0][9].toDouble()) / totalDiffTime).toDouble()
+        monitorInfo.cpus.total.utilization = ROUND_FLOAT2.format(100.0 - 100.0*(new[0][5].toDouble() - old[0][5].toDouble()) / totalDiffTime).toFloat()
+        monitorInfo.cpus.total.free = ROUND_FLOAT2.format(100.0*(new[0][5].toDouble() - old[0][5].toDouble()) / totalDiffTime).toFloat()
+        monitorInfo.cpus.total.system = ROUND_FLOAT2.format(100.0*(new[0][4].toDouble() - old[0][4].toDouble()) / totalDiffTime).toFloat()
+        monitorInfo.cpus.total.user = ROUND_FLOAT2.format(100.0*(new[0][2].toDouble() - old[0][2].toDouble()) / totalDiffTime).toFloat()
+        monitorInfo.cpus.total.ioWait = ROUND_FLOAT2.format(100.0*(new[0][6].toDouble() - old[0][6].toDouble()) / totalDiffTime).toFloat()
+        monitorInfo.cpus.total.steal = ROUND_FLOAT2.format(100.0*(new[0][9].toDouble() - old[0][9].toDouble()) / totalDiffTime).toFloat()
 
         for (i in 1 until old.size) {
             var pNewTotalCpuTime = 0.0
@@ -141,15 +159,93 @@ class Monitor (var server: Server){
             val processor = old[i][1].toInt()
             val cpu = monitorInfo.cpus.map.getOrDefault(processor, Cpu())
             cpu.processor = processor
-            cpu.utilization = ROUND_FLOAT2.format(100.0 - 100.0*(new[i][5].toDouble() - old[i][5].toDouble()) / pTotalDiffTime).toDouble()
-            cpu.free = ROUND_FLOAT2.format(100.0*(new[i][5].toDouble() - old[i][5].toDouble()) / pTotalDiffTime).toDouble()
-            cpu.system = ROUND_FLOAT2.format(100.0*(new[i][4].toDouble() - old[i][4].toDouble()) / pTotalDiffTime).toDouble()
-            cpu.user = ROUND_FLOAT2.format(100.0*(new[i][2].toDouble() - old[i][2].toDouble()) / pTotalDiffTime).toDouble()
-            cpu.ioWait = ROUND_FLOAT2.format(100.0*(new[i][6].toDouble() - old[i][6].toDouble()) / pTotalDiffTime).toDouble()
-            cpu.steal = ROUND_FLOAT2.format(100.0*(new[i][9].toDouble() - old[i][9].toDouble()) / pTotalDiffTime).toDouble()
+            cpu.utilization = ROUND_FLOAT2.format(100.0 - 100.0*(new[i][5].toDouble() - old[i][5].toDouble()) / pTotalDiffTime).toFloat()
+            cpu.free = ROUND_FLOAT2.format(100.0*(new[i][5].toDouble() - old[i][5].toDouble()) / pTotalDiffTime).toFloat()
+            cpu.system = ROUND_FLOAT2.format(100.0*(new[i][4].toDouble() - old[i][4].toDouble()) / pTotalDiffTime).toFloat()
+            cpu.user = ROUND_FLOAT2.format(100.0*(new[i][2].toDouble() - old[i][2].toDouble()) / pTotalDiffTime).toFloat()
+            cpu.ioWait = ROUND_FLOAT2.format(100.0*(new[i][6].toDouble() - old[i][6].toDouble()) / pTotalDiffTime).toFloat()
+            cpu.steal = ROUND_FLOAT2.format(100.0*(new[i][9].toDouble() - old[i][9].toDouble()) / pTotalDiffTime).toFloat()
             monitorInfo.cpus.map[processor] = cpu
         }
     }
+
+    private fun parseMem(context: MonitorContext) {
+        context.getNew()
+        val totalMemReg = """MemTotal:\D+(\d+) kB\n""".toRegex()
+        val totalMem = totalMemReg.findAll(context.new).map { it.groupValues } .toList()[0][1].toLong()
+        val roundedTotalMem = roundMem(totalMem * 1024L)
+        monitorInfo.mem.total = roundedTotalMem.data
+        monitorInfo.mem.totalUnit = roundedTotalMem.unit
+
+        val totalSwapReg = """SwapTotal:\D+(\d+) kB\n""".toRegex()
+        val totalSwap = totalSwapReg.findAll(context.new).map { it.groupValues } .toList()[0][1].toLong()
+        val roundedTotalSwap = roundMem(totalSwap * 1024L)
+        monitorInfo.mem.totalSwap = roundedTotalSwap.data
+        monitorInfo.mem.totalSwapUnit = roundedTotalSwap.unit
+
+        val freeMemReg = """MemFree:\D+(\d+) kB\n""".toRegex()
+        val freeMem = freeMemReg.findAll(context.new).map { it.groupValues } .toList()[0][1].toLong()
+        val roundedFreeMem = roundMem(freeMem * 1024L)
+        monitorInfo.mem.free = roundedFreeMem.data
+        monitorInfo.mem.freeUnit = roundedFreeMem.unit
+        monitorInfo.mem.freeOccupy = ROUND_FLOAT2.format(100*freeMem.toDouble()/totalMem.toDouble()).toFloat()
+
+        val availableMemReg = """MemAvailable:\D+(\d+) kB\n""".toRegex()
+        val availableMem = availableMemReg.findAll(context.new).map { it.groupValues } .toList()[0][1].toLong()
+        val roundedAvailableMem = roundMem(availableMem * 1024L)
+        monitorInfo.mem.available = roundedAvailableMem.data
+        monitorInfo.mem.availableUnit = roundedAvailableMem.unit
+        monitorInfo.mem.availableOccupy = ROUND_FLOAT2.format(100*availableMem.toDouble()/totalMem.toDouble()).toFloat()
+
+        val usedMem = totalMem - availableMem
+        val roundedUsedMem = roundMem(usedMem * 1024L)
+        monitorInfo.mem.used = roundedUsedMem.data
+        monitorInfo.mem.usedUnit = roundedUsedMem.unit
+        monitorInfo.mem.usedOccupy = ROUND_FLOAT2.format(100*usedMem.toDouble()/totalMem.toDouble()).toFloat()
+
+        val bufferMemReg = """Buffers:\D+(\d+) kB\n""".toRegex()
+        val bufferMem = bufferMemReg.findAll(context.new).map { it.groupValues } .toList()[0][1].toLong()
+        val roundedBufferMem = roundMem(bufferMem * 1024L)
+        monitorInfo.mem.buffer = roundedBufferMem.data
+        monitorInfo.mem.bufferUnit = roundedBufferMem.unit
+        monitorInfo.mem.bufferOccupy = ROUND_FLOAT2.format(100*bufferMem.toDouble()/totalMem.toDouble()).toFloat()
+
+        val cachedMemReg = """Cached:\D+(\d+) kB\n""".toRegex()
+        val cachedMem = cachedMemReg.findAll(context.new).map { it.groupValues } .toList()[0][1].toLong()
+        val roundedCachedMem = roundMem(cachedMem * 1024L)
+        monitorInfo.mem.cache = roundedCachedMem.data
+        monitorInfo.mem.cacheUnit = roundedCachedMem.unit
+        monitorInfo.mem.cacheOccupy = ROUND_FLOAT2.format(100*cachedMem.toDouble()/totalMem.toDouble()).toFloat()
+
+        val dirtyMemReg = """Dirty:\D+(\d+) kB\n""".toRegex()
+        val dirtyMem = dirtyMemReg.findAll(context.new).map { it.groupValues } .toList()[0][1].toLong()
+        val roundedDirtyMem = roundMem(dirtyMem * 1024L)
+        monitorInfo.mem.dirty = roundedDirtyMem.data
+        monitorInfo.mem.dirtyUnit = roundedDirtyMem.unit
+        monitorInfo.mem.dirtyOccupy = ROUND_FLOAT2.format(100*dirtyMem.toDouble()/totalMem.toDouble()).toFloat()
+
+        val cachedSwapReg = """SwapCached:\D+(\d+) kB\n""".toRegex()
+        val cachedSwap = cachedSwapReg.findAll(context.new).map { it.groupValues } .toList()[0][1].toLong()
+        val roundedCachedSwap = roundMem(cachedSwap * 1024L)
+        monitorInfo.mem.cachedSwap = roundedCachedSwap.data
+        monitorInfo.mem.cachedSwapUnit = roundedCachedSwap.unit
+        monitorInfo.mem.cachedSwapOccupy = ROUND_FLOAT2.format(100*cachedSwap.toDouble()/totalSwap.toDouble()).toFloat()
+
+        val freeSwapReg = """SwapFree:\D+(\d+) kB\n""".toRegex()
+        val freeSwap = freeSwapReg.findAll(context.new).map { it.groupValues } .toList()[0][1].toLong()
+        val roundedFreeSwap = roundMem(freeSwap * 1024L)
+        monitorInfo.mem.freeSwap = roundedFreeSwap.data
+        monitorInfo.mem.freeSwapUnit = roundedFreeSwap.unit
+        monitorInfo.mem.freeSwapOccupy = ROUND_FLOAT2.format(100*freeSwap.toDouble()/totalSwap.toDouble()).toFloat()
+
+        val usedSwap = totalSwap - freeSwap - cachedSwap
+        val roundedUsedSwap = roundMem(usedSwap * 1024L)
+        monitorInfo.mem.usedSwap = roundedUsedSwap.data
+        monitorInfo.mem.usedSwapUnit = roundedUsedSwap.unit
+        monitorInfo.mem.usedSwapOccupy = ROUND_FLOAT2.format(100*usedSwap.toDouble()/totalSwap.toDouble()).toFloat()
+
+    }
+
 }
 
 class MonitorContext(

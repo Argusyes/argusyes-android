@@ -55,10 +55,10 @@ class StatusDetailFragment : Fragment() {
 
 private fun getFakeDisk(): List<Disk> {
     val res = LinkedList<Disk>()
-    res.add(Disk("1", "/ff", "aa", 2.0, 2.0, "M"))
-    res.add(Disk("1", "/ff", "aa", 2.0, 2.0, "M"))
-    res.add(Disk("1", "/ff", "aa", 2.0, 2.0, "M"))
-    res.add(Disk("1", "/ff", "aa", 2.0, 2.0, "M"))
+    res.add(Disk("1", "/ff", "aa", 2f, 2f, "M"))
+    res.add(Disk("1", "/ff", "aa", 2f, 2f, "M"))
+    res.add(Disk("1", "/ff", "aa", 2f, 2f, "M"))
+    res.add(Disk("1", "/ff", "aa", 2f, 2f, "M"))
     return res
 }
 
@@ -101,11 +101,11 @@ class StatusStoreViewHolder {
 
 private fun getFakeNetDev(): List<NetDev> {
     val res = LinkedList<NetDev>()
-    res.add(NetDev("1", listOf("192.168.0.1"), true, 0.0, "M", 2, 0.0, "M", 2))
-    res.add(NetDev("1", listOf("192.168.0.1"), true, 0.0, "M", 2, 0.0, "M", 2))
-    res.add(NetDev("1", listOf("192.168.0.1"), true, 0.0, "M", 2, 0.0, "M", 2))
-    res.add(NetDev("1", listOf("192.168.0.1"), true, 0.0, "M", 2, 0.0, "M", 2))
-    res.add(NetDev("1", listOf("192.168.0.1"), true, 0.0, "M", 2, 0.0, "M", 2))
+    res.add(NetDev("1", listOf("192.168.0.1"), true, 0f, "M", 2, 0f, "M", 2))
+    res.add(NetDev("1", listOf("192.168.0.1"), true, 0f, "M", 2, 0f, "M", 2))
+    res.add(NetDev("1", listOf("192.168.0.1"), true, 0f, "M", 2, 0f, "M", 2))
+    res.add(NetDev("1", listOf("192.168.0.1"), true, 0f, "M", 2, 0f, "M", 2))
+    res.add(NetDev("1", listOf("192.168.0.1"), true, 0f, "M", 2, 0f, "M", 2))
     return res
 }
 
@@ -148,14 +148,14 @@ class StatusNetDevViewHolder {
 
 private fun getFakeCpuCore(): List<Cpu> {
     val res = LinkedList<Cpu>()
-    res.add(Cpu(0, 0.96, 0.045, 0.0, 0.3, 0.2, 0.2, 0.16))
-    res.add(Cpu(1, 0.96, 0.045, 0.1, 0.0, 0.2, 0.2, 0.16))
-    res.add(Cpu(2, 0.96, 0.045, 0.1, 0.3, 0.0, 0.2, 0.16))
-    res.add(Cpu(3, 0.96, 0.045, 0.1, 0.3, 0.2, 0.0, 0.16))
-    res.add(Cpu(4, 0.96, 0.045, 0.4, 0.3, 0.2, 0.1, 0.16))
-    res.add(Cpu(5, 0.96, 0.045, 0.4, 0.2, 0.1, 0.1, 0.16))
-    res.add(Cpu(6, 0.96, 0.045, 0.5, 0.1, 0.1, 0.1, 0.16))
-    res.add(Cpu(7, 0.96, 0.045, 0.1, 0.1, 0.1, 0.5, 0.16))
+    res.add(Cpu(0, 0.96f, 0.45f, 0f, 0.3f, 0.2f, 0.2f, 0.16f))
+    res.add(Cpu(1, 0.96f, 0.45f, 0.1f, 0f, 0.2f, 0.2f, 0.16f))
+    res.add(Cpu(2, 0.96f, 0.45f, 0.1f, 0.3f, 0f, 0.2f, 0.16f))
+    res.add(Cpu(3, 0.96f, 0.45f, 0.1f, 0.3f, 0.2f, 0f, 0.16f))
+    res.add(Cpu(4, 0.96f, 0.45f, 0.4f, 0.3f, 0.2f, 0.1f, 0.16f))
+    res.add(Cpu(5, 0.96f, 0.45f, 0.4f, 0.2f, 0.1f, 0.1f, 0.16f))
+    res.add(Cpu(6, 0.96f, 0.45f, 0.5f, 0.1f, 0.1f, 0.1f, 0.16f))
+    res.add(Cpu(7, 0.96f, 0.45f, 0.1f, 0.1f, 0.1f, 0.5f, 0.16f))
     return res
 }
 
