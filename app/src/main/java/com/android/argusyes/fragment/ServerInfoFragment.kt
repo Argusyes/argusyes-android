@@ -10,7 +10,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.android.argusyes.R
-import com.android.argusyes.dao.entity.Server
+import com.android.argusyes.ssh.SSH
 import com.android.argusyes.ssh.SSHManager
 import com.google.android.material.textfield.TextInputEditText
 
@@ -51,18 +51,18 @@ class ServerInfoFragment : Fragment() {
                     titleLayout?.visibility = View.VISIBLE
                     val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(view.windowToken, 0)
-                    context?.run { listView?.adapter = sshManager?.getServers()?.let { ServerBaseAdapter(this, it) } }
+                    context?.run { listView?.adapter = sshManager?.getSSH()?.let { ServerBaseAdapter(this, it) } }
                 }
             }
 
             setOnEditorActionListener { textView, _, _ ->
                 val key = textView?.text.toString()
-                val servers = sshManager?.getServers()
-                val res : List<Server> = servers?.filter { it.name.contains(key) } as List<Server>
+                val servers = sshManager?.getSSH()
+                val res : List<SSH> = servers?.filter { it.data.name.contains(key) } as List<SSH>
                 if (key.isNotEmpty()) {
                     context?.run { listView?.adapter = ServerBaseAdapter(this, res) }
                 } else {
-                    context?.run { listView?.adapter = sshManager?.getServers()?.let { ServerBaseAdapter(this, it) } }
+                    context?.run { listView?.adapter = sshManager?.getSSH()?.let { ServerBaseAdapter(this, it) } }
                 }
                 return@setOnEditorActionListener false
             }
@@ -76,7 +76,7 @@ class ServerInfoFragment : Fragment() {
             }
         }
 
-        context?.run { listView?.adapter = sshManager?.getServers()?.let { ServerBaseAdapter(this, it) } }
+        context?.run { listView?.adapter = sshManager?.getSSH()?.let { ServerBaseAdapter(this, it) } }
         return view
     }
 
@@ -85,18 +85,18 @@ class ServerInfoFragment : Fragment() {
     }
 }
 
-class ServerBaseAdapter (context: Context, private val servers: List<Server>) : BaseAdapter () {
+class ServerBaseAdapter (context: Context, private val sshs: List<SSH>) : BaseAdapter () {
 
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
 
     private val sshManager = SSHManager.getInstance(context)
 
     override fun getCount(): Int {
-        return servers.size
+        return sshs.size
     }
 
     override fun getItem(index: Int): Any {
-        return servers[index]
+        return sshs[index]
     }
 
     override fun getItemId(index: Int): Long {
@@ -117,19 +117,19 @@ class ServerBaseAdapter (context: Context, private val servers: List<Server>) : 
         } else {
             holder = view.tag as ServerViewHolder
         }
-        val server = servers[index]
-        holder.nameTextView?.text = server.name
-        val identify = "${server.userName}@${server.host}:${server.port}"
+        val ssh = sshs[index]
+        holder.nameTextView?.text = ssh.data.name
+        val identify = "${ssh.data.userName}@${ssh.data.host}:${ssh.data.port}"
         holder.identifyTextView?.text = identify
 
         holder.deleteImageButton?.setOnClickListener {
-            sshManager.removeServerById(server.id)
+            sshManager.removeServerById(ssh.data.id)
             notifyDataSetChanged()
         }
         holder.changeImageButton?.setOnClickListener(
             Navigation.createNavigateOnClickListener(R.id.action_serverInfoFragment_to_serverAddFragment,
             Bundle().apply {
-                putString(SERVER_ID, server.id)
+                putString(SERVER_ID, ssh.data.id)
             }
         ))
 

@@ -82,13 +82,13 @@ class ServerAddFragment : Fragment() {
 
         cancelButton?.setOnClickListener { it.findNavController().popBackStack() }
 
-        val server = serverId?.let { sshManager?.getServerById(it) }
-        server?.run {
-            nameTextInput?.setText(server.name)
-            hostTextInput?.setText(server.host)
-            portTextInput?.setText(server.port.toString())
-            usernameTextInput?.setText(server.userName)
-            passwordTextInput?.setText(server.password)
+        val ssh = serverId?.let { sshManager?.getServerById(it) }
+        ssh?.run {
+            nameTextInput?.setText(data.name)
+            hostTextInput?.setText(data.host)
+            portTextInput?.setText(data.port.toString())
+            usernameTextInput?.setText(data.userName)
+            passwordTextInput?.setText(data.password)
         }
         return view
     }

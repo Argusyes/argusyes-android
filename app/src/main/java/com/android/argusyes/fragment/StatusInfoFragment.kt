@@ -10,16 +10,25 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.android.argusyes.R
-import com.android.argusyes.dao.entity.Server
+import com.android.argusyes.ssh.SSH
 import com.android.argusyes.ssh.SSHManager
 import com.android.argusyes.ui.CircleProgress
 import com.android.argusyes.ui.ThreeCircleProgress
 import com.android.argusyes.utils.FlipUtils
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.*
 
 class StatusInfoFragment : Fragment() {
 
     private var sshManager: SSHManager? = null
+
+    @OptIn(DelicateCoroutinesApi::class)
+    private var job: Job = GlobalScope.launch(Dispatchers.Main) {
+        while (isActive) {
+            delay(2000)
+            adapter?.notifyDataSetChanged()
+        }
+    }
 
     private var titleText : TextView? = null
     private var searchInput : TextInputEditText? = null
@@ -56,8 +65,8 @@ class StatusInfoFragment : Fragment() {
 
             setOnEditorActionListener { textView, _, _ ->
                 val key = textView?.text.toString()
-                val servers = sshManager?.getServers()
-                val res : List<Server> = servers?.filter { it.name.contains(key) } as List<Server>
+                val sshs = sshManager?.getSSH()
+                val res : List<SSH> = sshs?.filter { it.data.name.contains(key) } as List<SSH>
                 if (key.isNotEmpty()) {
                     context?.run { listView?.adapter = StatusBaseAdapter(this, res) }
                 } else {
@@ -76,7 +85,7 @@ class StatusInfoFragment : Fragment() {
         }
 
         context?.run {
-            adapter = sshManager?.getServers()?.let { StatusBaseAdapter(this, it) }
+            adapter = sshManager?.getSSH()?.let { StatusBaseAdapter(this, it) }
             adapter?.let { listView?.adapter = adapter }
         }
         return view
@@ -84,20 +93,22 @@ class StatusInfoFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        adapter?.notifyDataSetChanged()
+        if (!job.isActive) {
+            job.start()
+        }
     }
 }
 
-class StatusBaseAdapter (context: Context, private val servers: List<Server>) : BaseAdapter() {
+class StatusBaseAdapter (context: Context, private val sshs: List<SSH>) : BaseAdapter() {
 
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun getCount(): Int {
-        return servers.size
+        return sshs.size
     }
 
     override fun getItem(index: Int): Any {
-        return servers[index]
+        return sshs[index]
     }
 
     override fun getItemId(index: Int): Long {
@@ -141,16 +152,16 @@ class StatusBaseAdapter (context: Context, private val servers: List<Server>) : 
         } else {
             holder = view.tag as StatusViewHolder
         }
-        val server = servers[index]
+        val ssh = sshs[index]
 
         holder.itemLayout?.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_statusInfoFragment_to_statusDetailFragment,
                 Bundle().apply {
-                    putString(SERVER_ID, server.id)
+                    putString(SERVER_ID, ssh.data.id)
                 }
             )
         )
 
-        holder.nameTextView?.text = server.name
+        holder.nameTextView?.text = ssh.monitor.monitorInfo.cpus.total.processor.toString()
 
         holder.cpuLoadFlipOutLayout?.setOnClickListener {
             FlipUtils.flipAnimation(holder.cpuFlipLayout, holder.loadFlipLayout)

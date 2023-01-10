@@ -3,41 +3,42 @@ package com.android.argusyes.ssh
 import android.content.Context
 import com.android.argusyes.dao.ServerDao
 import com.android.argusyes.dao.entity.Server
-import java.util.*
 
 class SSHManager private constructor(context: Context){
 
     private val serverDao = ServerDao.getInstance(context)
-    private val servers = LinkedList<Server>(serverDao.list())
-    private val serverMap = servers.associateBy { server: Server -> server.id } as MutableMap
+    private val sshs: MutableList<SSH> = serverDao.list().map { SSH(it) } as MutableList<SSH>
+    private val sshMap: MutableMap<String, SSH> = sshs.associateBy { it.data.id } as MutableMap<String, SSH>
 
-    fun getServers() : List<Server> {
-        return this.servers
+    fun getSSH() : List<SSH> {
+        return this.sshs
     }
 
     fun addServer(server: Server) {
-        if (serverMap.containsKey(server.id)) {
+        if (sshMap.containsKey(server.id)) {
             return
         }
         serverDao.save(server)
-        servers.add(server)
-        serverMap[server.id] = server
+        val ssh = SSH(server)
+        sshs.add(ssh)
+        sshMap[ssh.data.id] = ssh
     }
 
     fun removeServerById(id: String) {
         serverDao.removeById(id)
-        servers.remove(serverMap.remove(id))
+        sshs.remove(sshMap.remove(id))
     }
 
     fun updateServerById(server: Server) {
         serverDao.updateById(server)
-        val old = serverMap.put(server.id, server)
-        val index = servers.indexOf(old)
-        servers[index] = server
+        val ssh = SSH(server)
+        val old = sshMap.put(ssh.data.id, ssh)
+        val index = sshs.indexOf(old)
+        sshs[index] = ssh
     }
 
-    fun getServerById(id: String) : Server? {
-        return serverMap[id]
+    fun getServerById(id: String) : SSH? {
+        return sshMap[id]
     }
 
     companion object {
