@@ -10,6 +10,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.android.argusyes.R
+import com.android.argusyes.ssh.ConnectStatus
 import com.android.argusyes.ssh.SSH
 import com.android.argusyes.ssh.SSHManager
 import com.android.argusyes.ui.CircleProgress
@@ -17,6 +18,7 @@ import com.android.argusyes.ui.ThreeCircleProgress
 import com.android.argusyes.utils.FlipUtils
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.*
+import pl.droidsonroids.gif.GifImageView
 
 class StatusInfoFragment : Fragment() {
 
@@ -93,6 +95,7 @@ class StatusInfoFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        adapter?.notifyDataSetChanged()
         if (!job.isActive) {
             job.start()
         }
@@ -125,6 +128,10 @@ class StatusBaseAdapter (context: Context, private val sshs: List<SSH>) : BaseAd
             holder.itemLayout = view.findViewById(R.id.status_item_layout)
 
             holder.nameTextView = view.findViewById(R.id.status_item_name_text_view)
+
+            holder.tempLayout = view.findViewById(R.id.status_item_temp_layout)
+            holder.connectFailTextView = view.findViewById(R.id.status_item_connect_fail_text_view)
+            holder.connectingGif = view.findViewById(R.id.status_item_loading_gif)
 
             holder.cpuLoadFlipOutLayout = view.findViewById(R.id.status_info_cpu_load_flip_layout)
             holder.cpuFlipLayout = view.findViewById(R.id.status_info_cpu_flip_layout)
@@ -161,7 +168,17 @@ class StatusBaseAdapter (context: Context, private val sshs: List<SSH>) : BaseAd
             )
         )
 
-        holder.nameTextView?.text = ssh.monitor.monitorInfo.cpus.total.processor.toString()
+        holder.nameTextView?.text = ssh.data.name
+
+        holder.connectingGif?.visibility = View.GONE
+        holder.tempLayout?.visibility = View.GONE
+        holder.connectFailTextView?.visibility = View.GONE
+
+        when (ssh.monitor.connectStatus) {
+            ConnectStatus.INIT -> holder.connectingGif?.visibility = View.VISIBLE
+            ConnectStatus.SUCCESS -> holder.tempLayout?.visibility = View.VISIBLE
+            ConnectStatus.FAIL -> holder.connectFailTextView?.visibility = View.VISIBLE
+        }
 
         holder.cpuLoadFlipOutLayout?.setOnClickListener {
             FlipUtils.flipAnimation(holder.cpuFlipLayout, holder.loadFlipLayout)
@@ -178,6 +195,8 @@ class StatusBaseAdapter (context: Context, private val sshs: List<SSH>) : BaseAd
         holder.storeFlipOutLayout?.setOnClickListener {
             FlipUtils.flipAnimation(holder.storeSpeedFlipLayout, holder.storeTotalFlipLayout)
         }
+
+        holder
 
         holder.loadBar?.setProgress(50F)
         holder.loadBar?.setProgressSecond(60F)
@@ -197,6 +216,10 @@ class StatusViewHolder {
     var itemLayout : LinearLayout? = null
 
     var nameTextView: TextView? = null
+
+    var tempLayout: LinearLayout? = null
+    var connectFailTextView: TextView? = null
+    var connectingGif: GifImageView? = null
 
     var cpuFlipLayout : LinearLayout? = null
     var loadFlipLayout : LinearLayout? = null

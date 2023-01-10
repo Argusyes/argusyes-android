@@ -51,7 +51,7 @@ dependencies {
 
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.25'
 
-    implementation 'com.hierynomus:sshj:0.34.0'
+    implementation 'com.jcraft:jsch:0.1.55'
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'

@@ -26,7 +26,9 @@ class SSHManager private constructor(context: Context){
 
     fun removeServerById(id: String) {
         serverDao.removeById(id)
-        sshs.remove(sshMap.remove(id))
+        val ssh = sshMap.remove(id)
+        sshs.remove(ssh)
+        ssh?.monitor?.stopMonitor()
     }
 
     fun updateServerById(server: Server) {
