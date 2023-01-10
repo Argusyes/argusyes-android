@@ -56,6 +56,7 @@ class Monitor (var server: Server){
 
             jobs.add(parse(sftp, ::parseCpu, "/proc/stat"))
             jobs.add(parse(sftp, ::parseMem, "/proc/meminfo"))
+            jobs.add(parse(sftp, ::parseUptime, "/proc/uptime"))
             jobs.forEach { it.join() }
 
             connectStatus = ConnectStatus.FAIL
@@ -246,6 +247,17 @@ class Monitor (var server: Server){
 
     }
 
+    private fun parseUptime(context: MonitorContext) {
+        context.getNew()
+        var uptime = context.new.split(" ")[0].toFloat().toInt()
+        monitorInfo.uptime.upDay = uptime / (60*60*24)
+        uptime %= (60 * 60 * 24)
+        monitorInfo.uptime.upHour = uptime / (60*60)
+        uptime %= (60 * 60)
+        monitorInfo.uptime.upMin = uptime / (60)
+        uptime %= (60)
+        monitorInfo.uptime.upSec = uptime
+    }
 }
 
 class MonitorContext(
