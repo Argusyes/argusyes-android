@@ -84,7 +84,7 @@ data class Loadavg (
 
 data class NetDevs (
     @Volatile var total: NetDev = NetDev(),
-    @Volatile var devs: List<NetDev> = LinkedList(),
+    @Volatile var devs: MutableList<NetDev> = LinkedList(),
 )
 
 data class NetDev (
@@ -92,17 +92,17 @@ data class NetDev (
     @Volatile var ips: List<String> = LinkedList(),
     @Volatile var virtual: Boolean = true,
     @Volatile var upBytesH: Float = 0f,
-    @Volatile var upBytesHUnit: String = "",
-    @Volatile var upBytes: Int = 0,
+    @Volatile var upBytesHUnit: String = "M",
+    @Volatile var upBytes: Long = 0,
     @Volatile var downBytesH: Float = 0f,
-    @Volatile var downBytesHUnit: String = "",
-    @Volatile var downBytes: Int = 0,
-    @Volatile var upPackets: Int = 0,
-    @Volatile var downPackets: Int = 0,
+    @Volatile var downBytesHUnit: String = "M",
+    @Volatile var downBytes: Long = 0,
+    @Volatile var upPackets: Long = 0,
+    @Volatile var downPackets: Long = 0,
     @Volatile var upSpeed: Float = 0f,
-    @Volatile var upSpeedUnit: String = "",
+    @Volatile var upSpeedUnit: String = "M/S",
     @Volatile var downSpeed: Float = 0f,
-    @Volatile var downSpeedUnit: String = "",
+    @Volatile var downSpeedUnit: String = "M/S",
 )
 
 data class NetStats (
@@ -129,7 +129,7 @@ data class NetStatsUDP (
 )
 
 data class Temp (
-    @Volatile var map : Map<String, Int> = HashMap()
+    @Volatile var map : MutableMap<String, Int> = HashMap()
 )
 
 data class Disks (
@@ -167,6 +167,7 @@ data class Disk (
     @Volatile var writeSpeed: Float = 0f,
     @Volatile var writeSpeedUnit: String = "",
     @Volatile var readSpeed: Float = 0f,
-    @Volatile var writeIOPS: String = "",
+    @Volatile var readSpeedUnit: String = "",
+    @Volatile var writeIOPS: Int = 0,
     @Volatile var readIOPS: Int = 0,
 )

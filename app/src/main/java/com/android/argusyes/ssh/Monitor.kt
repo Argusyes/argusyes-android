@@ -2,11 +2,11 @@ package com.android.argusyes.ssh
 
 import android.util.Log
 import com.android.argusyes.dao.entity.Server
-import com.jcraft.jsch.ChannelSftp
-import com.jcraft.jsch.JSch
+import com.jcraft.jsch.*
 import kotlinx.coroutines.*
 import java.io.ByteArrayOutputStream
 import java.nio.charset.StandardCharsets
+import java.time.Duration
 import java.time.LocalDateTime
 import java.util.*
 
@@ -17,7 +17,7 @@ enum class ConnectStatus {
 
 const val ROUND_FLOAT2 = "%.2f"
 
-data class MemRounded (var data: Float, var unit: String)
+data class UnitData (var data: Float, var unit: String)
 
 class Monitor (var server: Server){
 
@@ -79,33 +79,46 @@ class Monitor (var server: Server){
         job.cancel()
     }
 
-    private fun roundMem(b: Long): MemRounded {
+    private fun roundSpeed(b: Long): UnitData {
+        val u = roundMem(b)
+        u.unit += "/S"
+        return u
+    }
+
+    private fun roundMem(b: Long): UnitData {
         return if (b > 1024L*1024*1024*1024) {
-            MemRounded(ROUND_FLOAT2.format(b.toDouble()/1024/1024/1024/1024).toFloat(), "T")
+            UnitData(ROUND_FLOAT2.format(b.toDouble()/1024/1024/1024/1024).toFloat(), "T")
         } else if (b > 1024L*1024*1024) {
-            MemRounded(ROUND_FLOAT2.format(b.toDouble()/1024/1024/1024).toFloat(), "G")
+            UnitData(ROUND_FLOAT2.format(b.toDouble()/1024/1024/1024).toFloat(), "G")
         } else if (b > 1024*1024) {
-            MemRounded(ROUND_FLOAT2.format(b.toDouble()/1024/1024).toFloat(), "M")
+            UnitData(ROUND_FLOAT2.format(b.toDouble()/1024/1024).toFloat(), "M")
         } else if (b > 1024) {
-            MemRounded(ROUND_FLOAT2.format(b.toDouble()/1024).toFloat(), "K")
+            UnitData(ROUND_FLOAT2.format(b.toDouble()/1024).toFloat(), "K")
         } else {
-            MemRounded(ROUND_FLOAT2.format(b.toDouble()).toFloat(), "B")
+            UnitData(ROUND_FLOAT2.format(b.toDouble()).toFloat(), "B")
         }
     }
 
+    private fun intToBytesBig(value: Int):List<UByte> {
+        return listOf((value and 0xFF).toUByte(), ((value shr 8) and 0xFF).toUByte(),
+            ((value shr 16) and 0xFF).toUByte(), ((value shr 24) and 0xFF).toUByte())
+    }
 
     @OptIn(DelicateCoroutinesApi::class)
     private fun parse(sftp: ChannelSftp, func: (MonitorContext) -> Unit, where: String): Job {
         val context = MonitorContext(sftp, old = "", new = "", oldTime = LocalDateTime.now(), newTime = LocalDateTime.now(), where)
         return GlobalScope.launch(Dispatchers.IO) {
-            try {
-                while (isActive) {
+
+            while (isActive) {
+                try {
                     func(context)
                     context.newToOld()
+                    Log.d("parse:${context.where}", "success")
+                } catch (e: Exception) {
+                    Log.d("parse:${context.where}", e.message ?: "error")
+                } finally {
                     delay(2000)
                 }
-            } catch (e : Exception) {
-                Log.d("parse:${context.where}", e.message?: "error")
             }
         }
     }
@@ -286,19 +299,241 @@ class Monitor (var server: Server){
     }
 
     private fun parseNetDev(context: MonitorContext) {
+        context.getNew()
+        if (context.old.isBlank()) {
+            context.newToOld()
+            context.getNew()
+        }
 
+        val reg = """([^:\n]+):\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\n""".toRegex()
+        val old = reg.findAll(context.old).map { it.groupValues }.toList()
+        val new = reg.findAll(context.new).map { it.groupValues }.toList()
+
+        if(old.isEmpty() || new.isEmpty()) {
+            return
+        }
+
+        val route = context.readFile("/proc/net/route")
+        val fib = context.readFile("/proc/net/fib_trie")
+
+        val ipMap = route.split("\n")
+            // 去掉表头
+            .filterIndexed {index, s -> index != 0 && s.isNotBlank() }
+            // 每行
+            .map { it.split("\t") }
+            // 网关为0
+            .filter { it[2].toInt(16) == 0 }
+            // 按名字分组
+            .groupBy { it[0] }
+            .mapValues {
+                // 每组列表
+                it.value.map { l ->
+                    // 转化为 ip 前缀
+                    val ip = intToBytesBig(l[1].toInt(16))
+                    "${ip[0]}.${ip[1]}.${ip[2]}.${ip[3]}"
+                }.filter { s ->
+                    // 去除本地
+                    !s.startsWith("""169.254""")
+                }.map { s ->
+                    // 查找真正 ip
+                    val fibReg = ("""$s([^L]*)\n\s+/32 host LOCAL\n""").toRegex()
+                    val fibResult = fibReg.findAll(fib).map { r -> r.groupValues }.toList()
+                    """.* (\d+\.\d+\.\d+\.\d+)${'$'}""".toRegex().findAll(fibResult[0][1]).map { r -> r.groupValues }.toList()[0][1]
+                }.toSet()
+            }
+
+        var diffTime = Duration.between(context.oldTime, context.newTime).toMillis()
+        if (diffTime == 0L) diffTime++
+
+        val oldMap = old.associateBy { it[1].trim() }
+        var oldTotalUpBytes = 0L
+        var oldTotalDownBytes = 0L
+        val total = NetDev()
+        val devList = LinkedList<NetDev>()
+        for (it in new) {
+            val name = it[1].trim()
+            val oldIt = oldMap[name] ?: continue
+            val dev = NetDev()
+            dev.name = name
+            dev.ips = LinkedList(ipMap[name]?: setOf())
+            dev.virtual = true
+            try {
+                context.stat("""/sys/devices/virtual/net/$name""")
+            } catch (e : SftpException) {
+                dev.virtual = false
+            }
+            dev.downBytes = it[2].toLong()
+            dev.downPackets = it[3].toLong()
+            dev.upBytes = it[10].toLong()
+            dev.upPackets = it[11].toLong()
+            val downBytesRoundedMem = roundMem(dev.downBytes)
+            dev.downBytesH = downBytesRoundedMem.data
+            dev.downBytesHUnit = downBytesRoundedMem.unit
+            val upBytesRoundedMem = roundMem(dev.upBytes)
+            dev.upBytesH = upBytesRoundedMem.data
+            dev.upBytesHUnit = upBytesRoundedMem.unit
+
+            val oldDownBytes = oldIt[2].toLong()
+            val oldUpBytes = oldIt[10].toLong()
+
+            val downSpeedRoundedSpeed = roundSpeed((dev.downBytes - oldDownBytes) * 1000 / diffTime)
+            dev.downSpeed = downSpeedRoundedSpeed.data
+            dev.downSpeedUnit = downSpeedRoundedSpeed.unit
+
+            val upSpeedRoundedSpeed = roundSpeed((dev.upBytes - oldUpBytes) * 1000 / diffTime)
+            dev.upSpeed = upSpeedRoundedSpeed.data
+            dev.upSpeedUnit = upSpeedRoundedSpeed.unit
+            if (!dev.virtual) {
+                oldTotalDownBytes += oldDownBytes
+                oldTotalUpBytes += oldUpBytes
+                total.upBytes += dev.upBytes
+                total.downBytes += dev.downBytes
+                total.upPackets += dev.upPackets
+                total.downPackets += dev.downPackets
+            }
+            devList.add(dev)
+        }
+
+        val downBytesRoundedMem = roundMem(total.downBytes)
+        total.downBytesH = downBytesRoundedMem.data
+        total.downBytesHUnit = downBytesRoundedMem.unit
+        val upBytesRoundedMem = roundMem(total.upBytes)
+        total.upBytesH = upBytesRoundedMem.data
+        total.upBytesHUnit = upBytesRoundedMem.unit
+        val downSpeedRoundedSpeed = roundSpeed((total.downBytes - oldTotalDownBytes) * 1000 / diffTime)
+        total.downSpeed = downSpeedRoundedSpeed.data
+        total.downSpeedUnit = downSpeedRoundedSpeed.unit
+        val upSpeedRoundedSpeed = roundSpeed((total.upBytes - oldTotalUpBytes) * 1000 / diffTime)
+        total.upSpeed = upSpeedRoundedSpeed.data
+        total.upSpeedUnit = upSpeedRoundedSpeed.unit
+
+        devList.sortBy { it.name }
+        devList.sortBy { it.virtual }
+        monitorInfo.netDevs.devs = devList
+        monitorInfo.netDevs.total = total
     }
 
     private fun parseNetStat(context: MonitorContext) {
+        context.getNew()
+        val tcpReg = """Tcp:\s+(\d+)\s+(\d+)\s+(\d+)\s+([\d-]+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\n""".toRegex()
+        val tcp = tcpReg.findAll(context.new).map { r -> r.groupValues }.toList()
 
+        val udpReg = """Udp:\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)[^\n]+\n""".toRegex()
+        val udp = udpReg.findAll(context.new).map { r -> r.groupValues }.toList()
+
+        monitorInfo.netStats.tcp.activeOpens = tcp[0][5].toInt()
+        monitorInfo.netStats.tcp.passiveOpens = tcp[0][6].toInt()
+        monitorInfo.netStats.tcp.failOpens = tcp[0][7].toInt()
+        monitorInfo.netStats.tcp.currConn = tcp[0][9].toInt()
+        monitorInfo.netStats.tcp.inSegments = tcp[0][10].toInt()
+        monitorInfo.netStats.tcp.outSegments = tcp[0][11].toInt()
+        monitorInfo.netStats.tcp.reTransSegments = tcp[0][12].toInt()
+        if (monitorInfo.netStats.tcp.outSegments != 0) {
+            monitorInfo.netStats.tcp.reTransRate = ROUND_FLOAT2.format(100f * monitorInfo.netStats.tcp.reTransSegments.toFloat() / monitorInfo.netStats.tcp.outSegments.toFloat()).toFloat()
+        }
+
+        monitorInfo.netStats.udp.inDatagrams = udp[0][1].toInt()
+        monitorInfo.netStats.udp.outDatagrams = udp[0][4].toInt()
+        monitorInfo.netStats.udp.receiveBufErrors = udp[0][5].toInt()
+        monitorInfo.netStats.udp.sendBufErrors = udp[0][6].toInt()
     }
 
     private fun parseTemp(context: MonitorContext) {
-
+        context.getNew()
+        monitorInfo.temp.map["zone0"] = context.new.trim().toInt() / 1000
     }
 
     private fun parseDisk(context: MonitorContext) {
+        context.getNew()
+        if (context.old.isBlank()) {
+            context.newToOld()
+            context.getNew()
+        }
 
+        val mount = context.readFile("/proc/mounts")
+        val mountRegResult = """(\S+) (\S+) (\S+) (\S+) (\d+) (\d+)\n""".toRegex().findAll(mount).map { r -> r.groupValues }.toList()
+        val mountMap = mountRegResult.filter { it[3] == "ext4" || it[3] == "vfat" }.associateBy { it[1].trim() }
+
+        val diskReg = """(\d+)\s+(\d+)\s+(\S+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)[^\n]+\n""".toRegex()
+        val old = diskReg.findAll(context.old).map { r -> r.groupValues }.toList()
+        val new = diskReg.findAll(context.new).map { r -> r.groupValues }.toList()
+        var diffTime = Duration.between(context.oldTime, context.newTime).toMillis()
+        if (diffTime == 0L) diffTime++
+        val oldDiskMap = old.filter { mountMap.containsKey("""/dev/${it[3].trim()}""") } .associateBy { """/dev/${it[3].trim()}""" }
+        val newDiskMap = new.filter { mountMap.containsKey("""/dev/${it[3].trim()}""") } .associateBy { """/dev/${it[3].trim()}""" }
+
+        val sectorSize = 512L
+        var oldTotalWrite = 0L
+        var newTotalWrite = 0L
+        var oldTotalRead = 0L
+        var newTotalRead = 0L
+        val diskList = LinkedList<Disk>()
+        for (mountEntry in mountMap) {
+            val mountV = mountEntry.value
+            val oldV = oldDiskMap[mountEntry.key]?: continue
+            val newV = newDiskMap[mountEntry.key]?: continue
+            val d = Disk()
+            d.mount = mountV[2]
+            d.fileSystem = mountV[3]
+            val stat = context.statVFS(d.mount)
+            val totalRounded = roundMem(stat.size * 1024)
+            d.total = totalRounded.data
+            d.totalUnit = totalRounded.unit
+            val freeRounded = roundMem(stat.avail * 1024)
+            d.free = freeRounded.data
+            d.freeUnit = freeRounded.unit
+            d.freeOccupy = ROUND_FLOAT2.format(100f * stat.avail.toFloat() / stat.size.toFloat()).toFloat()
+            val usedRounded = roundMem(stat.used * 1024)
+            d.used = usedRounded.data
+            d.usedUnit = usedRounded.unit
+            d.usedOccupy = ROUND_FLOAT2.format(100f * stat.used.toFloat() / stat.size.toFloat()).toFloat()
+
+            val oldWrite = sectorSize * oldV[10].toLong()
+            val newWrite = sectorSize * newV[10].toLong()
+            val writeRounded = roundMem(newWrite)
+            d.write = writeRounded.data
+            d.writeUnit = writeRounded.unit
+            val writeSpeedRounded = roundSpeed((newWrite - oldWrite) * 1000 / diffTime)
+            d.writeSpeed = writeSpeedRounded.data
+            d.writeSpeedUnit = writeSpeedRounded.unit
+
+            val oldRead = sectorSize * oldV[6].toLong()
+            val newRead = sectorSize * newV[6].toLong()
+            val readRounded = roundMem(newRead)
+            d.read = readRounded.data
+            d.readUnit = readRounded.unit
+            val readSpeedRounded = roundSpeed((newRead - oldRead) * 1000 / diffTime)
+            d.readSpeed = readSpeedRounded.data
+            d.readSpeedUnit = readSpeedRounded.unit
+
+            oldTotalWrite += oldWrite
+            newTotalWrite += newWrite
+            oldTotalRead += oldRead
+            newTotalRead += newRead
+
+            d.writeIOPS = ((newV[8].toInt() - oldV[8].toInt()) * 1000 / diffTime).toInt()
+            d.readIOPS = ((newV[4].toInt() - oldV[4].toInt()) * 1000 / diffTime).toInt()
+            diskList.add(d)
+        }
+        val total = DiskTotal()
+        val writeRounded = roundMem(newTotalWrite)
+        total.write = writeRounded.data
+        total.writeUnit = writeRounded.unit
+
+        val readRounded = roundMem(newTotalRead)
+        total.read = readRounded.data
+        total.readUnit = readRounded.unit
+
+        val writeSpeedRounded = roundSpeed((newTotalWrite - oldTotalWrite) * 1000 / diffTime)
+        total.writeSpeed = writeSpeedRounded.data
+        total.writeSpeedUnit = writeSpeedRounded.unit
+
+        val readSpeedRounded = roundSpeed((newTotalRead - oldTotalRead) * 1000 / diffTime)
+        total.readSpeed = readSpeedRounded.data
+        total.readSpeedUnit = readSpeedRounded.unit
+
+        monitorInfo.disks.total = total
+        monitorInfo.disks.disks = diskList
     }
 }
 
@@ -309,6 +544,18 @@ class MonitorContext(
     var oldTime: LocalDateTime,
     var newTime: LocalDateTime,
     var where: String) {
+
+    fun statVFS(path: String): SftpStatVFS {
+        synchronized(sftp) {
+            return sftp.statVFS(path)
+        }
+    }
+
+    fun stat(path: String): SftpATTRS {
+        synchronized(sftp) {
+            return sftp.stat(path)
+        }
+    }
 
     fun readFile(fileName : String): String {
         val result = ByteArrayOutputStream()
