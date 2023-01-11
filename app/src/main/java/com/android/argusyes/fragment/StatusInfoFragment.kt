@@ -16,6 +16,7 @@ import com.android.argusyes.ssh.SSHManager
 import com.android.argusyes.ui.CircleProgress
 import com.android.argusyes.ui.ThreeCircleProgress
 import com.android.argusyes.utils.FlipUtils
+import com.android.argusyes.utils.formatPrint
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.*
 import pl.droidsonroids.gif.GifImageView
@@ -133,6 +134,8 @@ class StatusBaseAdapter (context: Context, private val sshs: List<SSH>) : BaseAd
             holder.connectFailTextView = view.findViewById(R.id.status_item_connect_fail_text_view)
             holder.connectingGif = view.findViewById(R.id.status_item_loading_gif)
 
+            holder.tempTextView = view.findViewById(R.id.status_item_temp_text_view)
+
             holder.cpuLoadFlipOutLayout = view.findViewById(R.id.status_info_cpu_load_flip_layout)
             holder.cpuFlipLayout = view.findViewById(R.id.status_info_cpu_flip_layout)
             holder.loadFlipLayout = view.findViewById(R.id.status_info_load_flip_layout)
@@ -151,14 +154,35 @@ class StatusBaseAdapter (context: Context, private val sshs: List<SSH>) : BaseAd
             holder.netSpeedFlipLayout = view.findViewById(R.id.status_info_net_speed_flip_layout)
             holder.netTotalFlipLayout = view.findViewById(R.id.status_info_net_total_flip_layout)
 
+            holder.netUpSpeedTextView = view.findViewById(R.id.status_info_net_up_speed_text_view)
+            holder.netUpSpeedUnitTextView = view.findViewById(R.id.status_info_net_up_speed_unit_text_view)
+            holder.netDownSpeedTextView = view.findViewById(R.id.status_info_net_down_speed_text_view)
+            holder.netDownSpeedUnitTextView = view.findViewById(R.id.status_info_net_down_speed_unit_text_view)
+
+            holder.netUpTextView = view.findViewById(R.id.status_info_net_up_text_view)
+            holder.netUpUnitTextView = view.findViewById(R.id.status_info_net_up_unit_text_view)
+            holder.netDownTextView = view.findViewById(R.id.status_info_net_down_text_view)
+            holder.netDownUnitTextView = view.findViewById(R.id.status_info_net_down_unit_text_view)
+
             holder.storeFlipOutLayout = view.findViewById(R.id.status_info_store_flip_layout)
             holder.storeSpeedFlipLayout = view.findViewById(R.id.status_info_store_speed_flip_layout)
             holder.storeTotalFlipLayout = view.findViewById(R.id.status_info_store_total_flip_layout)
+
+            holder.storeWriteSpeedTextView = view.findViewById(R.id.status_info_store_write_speed_text_view)
+            holder.storeWriteSpeedUnitTextView = view.findViewById(R.id.status_info_store_write_speed_unit_text_view)
+            holder.storeReadSpeedTextView = view.findViewById(R.id.status_info_store_read_speed_text_view)
+            holder.storeReadSpeedUnitTextView = view.findViewById(R.id.status_info_store_read_speed_unit_text_view)
+
+            holder.storeWriteTextView = view.findViewById(R.id.status_info_store_write_text_view)
+            holder.storeWriteUnitTextView = view.findViewById(R.id.status_info_store_write_unit_text_view)
+            holder.storeReadTextView = view.findViewById(R.id.status_info_store_read_text_view)
+            holder.storeReadUnitTextView = view.findViewById(R.id.status_info_store_read_unit_text_view)
 
             view.tag = holder
         } else {
             holder = view.tag as StatusViewHolder
         }
+
         val ssh = sshs[index]
 
         holder.itemLayout?.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_statusInfoFragment_to_statusDetailFragment,
@@ -179,6 +203,8 @@ class StatusBaseAdapter (context: Context, private val sshs: List<SSH>) : BaseAd
             ConnectStatus.SUCCESS -> holder.tempLayout?.visibility = View.VISIBLE
             ConnectStatus.FAIL -> holder.connectFailTextView?.visibility = View.VISIBLE
         }
+
+        holder.tempTextView?.text = ssh.monitor.monitorInfo.temp.map.values.takeIf { it.isNotEmpty() }?.max()?.toString() ?: "0"
 
         holder.cpuLoadFlipOutLayout?.setOnClickListener {
             FlipUtils.flipAnimation(holder.cpuFlipLayout, holder.loadFlipLayout)
@@ -208,11 +234,32 @@ class StatusBaseAdapter (context: Context, private val sshs: List<SSH>) : BaseAd
         holder.loadBar?.setProgressSecond(ssh.monitor.monitorInfo.loadavg.fiveOccupy)
         holder.loadBar?.setProgressThree(ssh.monitor.monitorInfo.loadavg.fifteenOccupy)
 
+        holder.netUpSpeedTextView?.text = ssh.monitor.monitorInfo.netDevs.total.upSpeed.formatPrint()
+        holder.netUpSpeedUnitTextView?.text = ssh.monitor.monitorInfo.netDevs.total.upSpeedUnit
+        holder.netDownSpeedTextView?.text = ssh.monitor.monitorInfo.netDevs.total.downSpeed.formatPrint()
+        holder.netDownSpeedUnitTextView?.text = ssh.monitor.monitorInfo.netDevs.total.downSpeedUnit
+
+        holder.netUpTextView?.text = ssh.monitor.monitorInfo.netDevs.total.upBytesH.formatPrint()
+        holder.netUpUnitTextView?.text = ssh.monitor.monitorInfo.netDevs.total.upBytesHUnit
+        holder.netDownTextView?.text = ssh.monitor.monitorInfo.netDevs.total.downBytesH.formatPrint()
+        holder.netDownUnitTextView?.text = ssh.monitor.monitorInfo.netDevs.total.downBytesHUnit
+
+        holder.storeWriteSpeedTextView?.text = ssh.monitor.monitorInfo.disks.total.writeSpeed.formatPrint()
+        holder.storeWriteSpeedUnitTextView?.text = ssh.monitor.monitorInfo.disks.total.writeSpeedUnit
+        holder.storeReadSpeedTextView?.text = ssh.monitor.monitorInfo.disks.total.readSpeed.formatPrint()
+        holder.storeReadSpeedUnitTextView?.text = ssh.monitor.monitorInfo.disks.total.readSpeedUnit
+
+        holder.storeWriteTextView?.text = ssh.monitor.monitorInfo.disks.total.write.formatPrint()
+        holder.storeWriteUnitTextView?.text = ssh.monitor.monitorInfo.disks.total.writeUnit
+        holder.storeReadTextView?.text = ssh.monitor.monitorInfo.disks.total.read.formatPrint()
+        holder.storeReadUnitTextView?.text = ssh.monitor.monitorInfo.disks.total.readUnit
+
         assert(view != null)
         return view!!
     }
 
 }
+
 
 class StatusViewHolder {
 
@@ -223,6 +270,8 @@ class StatusViewHolder {
     var tempLayout: LinearLayout? = null
     var connectFailTextView: TextView? = null
     var connectingGif: GifImageView? = null
+
+    var tempTextView : TextView? = null
 
     var cpuFlipLayout : LinearLayout? = null
     var loadFlipLayout : LinearLayout? = null
@@ -242,7 +291,27 @@ class StatusViewHolder {
     var netTotalFlipLayout : LinearLayout? = null
     var netFlipOutLayout : LinearLayout? = null
 
+    var netUpSpeedTextView : TextView? = null
+    var netUpSpeedUnitTextView : TextView? = null
+    var netDownSpeedTextView : TextView? = null
+    var netDownSpeedUnitTextView : TextView? = null
+
+    var netUpTextView : TextView? = null
+    var netUpUnitTextView : TextView? = null
+    var netDownTextView : TextView? = null
+    var netDownUnitTextView : TextView? = null
+
     var storeSpeedFlipLayout : LinearLayout? = null
     var storeTotalFlipLayout : LinearLayout? = null
     var storeFlipOutLayout : LinearLayout? = null
+
+    var storeWriteSpeedTextView : TextView? = null
+    var storeWriteSpeedUnitTextView : TextView? = null
+    var storeReadSpeedTextView : TextView? = null
+    var storeReadSpeedUnitTextView : TextView? = null
+
+    var storeWriteTextView : TextView? = null
+    var storeWriteUnitTextView : TextView? = null
+    var storeReadTextView : TextView? = null
+    var storeReadUnitTextView : TextView? = null
 }

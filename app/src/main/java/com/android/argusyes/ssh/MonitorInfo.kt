@@ -100,9 +100,9 @@ data class NetDev (
     @Volatile var upPackets: Long = 0,
     @Volatile var downPackets: Long = 0,
     @Volatile var upSpeed: Float = 0f,
-    @Volatile var upSpeedUnit: String = "M/S",
+    @Volatile var upSpeedUnit: String = "M",
     @Volatile var downSpeed: Float = 0f,
-    @Volatile var downSpeedUnit: String = "M/S",
+    @Volatile var downSpeedUnit: String = "M",
 )
 
 data class NetStats (

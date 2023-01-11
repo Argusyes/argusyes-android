@@ -400,10 +400,10 @@ class Monitor (var server: Server){
         val upBytesRoundedMem = roundMem(total.upBytes)
         total.upBytesH = upBytesRoundedMem.data
         total.upBytesHUnit = upBytesRoundedMem.unit
-        val downSpeedRoundedSpeed = roundSpeed((total.downBytes - oldTotalDownBytes) * 1000 / diffTime)
+        val downSpeedRoundedSpeed = roundMem((total.downBytes - oldTotalDownBytes) * 1000 / diffTime)
         total.downSpeed = downSpeedRoundedSpeed.data
         total.downSpeedUnit = downSpeedRoundedSpeed.unit
-        val upSpeedRoundedSpeed = roundSpeed((total.upBytes - oldTotalUpBytes) * 1000 / diffTime)
+        val upSpeedRoundedSpeed = roundMem((total.upBytes - oldTotalUpBytes) * 1000 / diffTime)
         total.upSpeed = upSpeedRoundedSpeed.data
         total.upSpeedUnit = upSpeedRoundedSpeed.unit
 
@@ -524,11 +524,11 @@ class Monitor (var server: Server){
         total.read = readRounded.data
         total.readUnit = readRounded.unit
 
-        val writeSpeedRounded = roundSpeed((newTotalWrite - oldTotalWrite) * 1000 / diffTime)
+        val writeSpeedRounded = roundMem((newTotalWrite - oldTotalWrite) * 1000 / diffTime)
         total.writeSpeed = writeSpeedRounded.data
         total.writeSpeedUnit = writeSpeedRounded.unit
 
-        val readSpeedRounded = roundSpeed((newTotalRead - oldTotalRead) * 1000 / diffTime)
+        val readSpeedRounded = roundMem((newTotalRead - oldTotalRead) * 1000 / diffTime)
         total.readSpeed = readSpeedRounded.data
         total.readSpeedUnit = readSpeedRounded.unit
 

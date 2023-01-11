@@ -300,6 +300,7 @@
                     android:layout_gravity="center" >
 
                     <TextView
+                        android:id="@+id/status_info_net_up_speed_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="22sp"
                         android:layout_marginEnd="2sp"
@@ -309,6 +310,7 @@
                         android:theme="@style/myText" />
 
                     <TextView
+                        android:id="@+id/status_info_net_up_speed_unit_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="22sp"
                         android:gravity="center_vertical|start"
@@ -340,6 +342,7 @@
                     android:layout_gravity="center" >
 
                     <TextView
+                        android:id="@+id/status_info_net_down_speed_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="22sp"
                         android:layout_marginEnd="2sp"
@@ -349,6 +352,7 @@
                         android:theme="@style/myText" />
 
                     <TextView
+                        android:id="@+id/status_info_net_down_speed_unit_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical|start"
@@ -386,6 +390,7 @@
                     android:layout_gravity="center" >
 
                     <TextView
+                        android:id="@+id/status_info_net_up_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="22sp"
                         android:layout_marginEnd="2sp"
@@ -395,6 +400,7 @@
                         android:theme="@style/myText" />
 
                     <TextView
+                        android:id="@+id/status_info_net_up_unit_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical|start"
@@ -426,6 +432,7 @@
                     android:layout_gravity="center" >
 
                     <TextView
+                        android:id="@+id/status_info_net_down_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="22sp"
                         android:layout_marginEnd="2sp"
@@ -435,6 +442,7 @@
                         android:theme="@style/myText" />
 
                     <TextView
+                        android:id="@+id/status_info_net_down_unit_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical|start"
@@ -488,6 +496,7 @@
                     android:layout_gravity="center" >
 
                     <TextView
+                        android:id="@+id/status_info_store_read_speed_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="22sp"
                         android:layout_marginEnd="2sp"
@@ -497,6 +506,7 @@
                         android:theme="@style/myText" />
 
                     <TextView
+                        android:id="@+id/status_info_store_read_speed_unit_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical|start"
@@ -528,6 +538,7 @@
                     android:layout_gravity="center" >
 
                     <TextView
+                        android:id="@+id/status_info_store_write_speed_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="22sp"
                         android:layout_marginEnd="2sp"
@@ -537,6 +548,7 @@
                         android:theme="@style/myText" />
 
                     <TextView
+                        android:id="@+id/status_info_store_write_speed_unit_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical|start"
@@ -574,6 +586,7 @@
                     android:layout_gravity="center" >
 
                     <TextView
+                        android:id="@+id/status_info_store_read_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="22sp"
                         android:layout_marginEnd="2sp"
@@ -583,6 +596,7 @@
                         android:theme="@style/myText" />
 
                     <TextView
+                        android:id="@+id/status_info_store_read_unit_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical|start"
@@ -614,6 +628,7 @@
                     android:layout_gravity="center" >
 
                     <TextView
+                        android:id="@+id/status_info_store_write_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="22sp"
                         android:layout_marginEnd="2sp"
@@ -623,6 +638,7 @@
                         android:theme="@style/myText" />
 
                     <TextView
+                        android:id="@+id/status_info_store_write_unit_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical|start"
