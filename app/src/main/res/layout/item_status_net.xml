@@ -16,25 +16,27 @@
         android:theme="@style/noPaddingLayout">
 
         <ImageView
+            android:id="@+id/net_virtual_image_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_wifi"
-            app:tint="?highlightGreen" />
+            android:src="@drawable/ic_wifi" />
 
         <TextView
+            android:id="@+id/net_name_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/name"
             android:theme="@style/mySmallTextSecondary"/>
+
         <TextView
             android:layout_width="0sp"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
 
         <TextView
+            android:id="@+id/net_ip_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ip"
             android:theme="@style/mySmallTextSecondary"/>
 
     </LinearLayout>
@@ -66,6 +68,7 @@
                 android:layout_gravity="center" >
 
                 <TextView
+                    android:id="@+id/net_up_speed_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="2sp"
@@ -74,10 +77,11 @@
                     android:theme="@style/mySmallText" />
 
                 <TextView
+                    android:id="@+id/net_up_speed_unit_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/trans"
-                    android:text="@string/k_s"
+                    android:text="@string/mem_unit"
                     android:theme="@style/mySmallTextSecondary" />
 
             </LinearLayout>
@@ -110,6 +114,7 @@
                 android:layout_gravity="center" >
 
                 <TextView
+                    android:id="@+id/net_down_speed_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="2sp"
@@ -118,10 +123,11 @@
                     android:theme="@style/mySmallText" />
 
                 <TextView
+                    android:id="@+id/net_down_speed_unit_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/trans"
-                    android:text="@string/k_s"
+                    android:text="@string/mem_unit"
                     android:theme="@style/mySmallTextSecondary" />
 
             </LinearLayout>
@@ -156,7 +162,8 @@
                     android:theme="@style/mySmallTextSecondary" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/net_down_text_view"
+                    android:layout_width="36sp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5sp"
                     android:background="@color/trans"
@@ -164,8 +171,9 @@
                     android:theme="@style/mySmallText" />
 
                 <TextView
+                    android:id="@+id/net_down_unit_text_view"
                     android:layout_marginStart="5sp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="14sp"
                     android:layout_height="wrap_content"
                     android:background="@color/trans"
                     android:text="@string/mem_unit"
@@ -195,7 +203,8 @@
                     android:theme="@style/mySmallTextSecondary" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/net_up_text_view"
+                    android:layout_width="36sp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5sp"
                     android:background="@color/trans"
@@ -203,8 +212,9 @@
                     android:theme="@style/mySmallText" />
 
                 <TextView
+                    android:id="@+id/net_up_unit_text_view"
                     android:layout_marginStart="5sp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="14sp"
                     android:layout_height="wrap_content"
                     android:background="@color/trans"
                     android:text="@string/mem_unit"
@@ -227,14 +237,15 @@
             android:layout_weight="0.4"/>
 
         <com.android.argusyes.ui.CircleProgress
+            android:id="@+id/net_bar"
             android:layout_width="45sp"
             android:layout_height="45sp"
             android:layout_gravity="center"
             android:background="@color/trans"
             android:indeterminate="true"
             android:indeterminateOnly="true"
-            app:myCPProgress="50"
-            app:myCPProgressSecond="30"
+            app:myCPProgress="0"
+            app:myCPProgressSecond="0"
             app:myCPMax="100"
             app:myCPBackgroundColor="?myHintColor"
             app:myCPProgressColor="?highlightYellow"

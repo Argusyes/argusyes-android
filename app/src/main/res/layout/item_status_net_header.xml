@@ -132,7 +132,7 @@
 
                 <TextView
                     android:id="@+id/net_head_down_text_view"
-                    android:layout_width="30sp"
+                    android:layout_width="36sp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5sp"
                     android:background="@color/trans"
@@ -173,7 +173,7 @@
 
                 <TextView
                     android:id="@+id/net_head_up_text_view"
-                    android:layout_width="30sp"
+                    android:layout_width="36sp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5sp"
                     android:background="@color/trans"

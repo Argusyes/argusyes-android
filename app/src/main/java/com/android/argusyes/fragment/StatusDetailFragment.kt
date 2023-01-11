@@ -1,14 +1,19 @@
 package com.android.argusyes.fragment
 
 import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.PorterDuff
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.widget.ImageViewCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.android.argusyes.R
@@ -19,6 +24,7 @@ import com.android.argusyes.ui.ThreeCircleProgress
 import com.android.argusyes.utils.formatPrint
 import kotlinx.coroutines.*
 import java.util.*
+
 
 class StatusDetailFragment : Fragment() {
 
@@ -140,11 +146,6 @@ class StatusDetailFragment : Fragment() {
 
         netDevListView?.addHeaderView(netDevHeaderView)
 
-        context?.run {
-            netDevListView?.adapter = StatusNetDevBaseAdapter(this, getFakeNetDev())
-            storeListView?.adapter = StatusStoreBaseAdapter(this, getFakeDisk())
-        }
-
         updateView()
         if (job == null) {
             job = GlobalScope.launch(Dispatchers.Main) {
@@ -229,18 +230,14 @@ class StatusDetailFragment : Fragment() {
             netActiveTextView?.text = it.monitor.monitorInfo.netStats.tcp.activeOpens.toString()
             netPassiveTextView?.text = it.monitor.monitorInfo.netStats.tcp.passiveOpens.toString()
             netFailTextView?.text = it.monitor.monitorInfo.netStats.tcp.failOpens.toString()
+
+            context?.run {
+                netDevListView?.adapter = StatusNetDevBaseAdapter(this, it.monitor.monitorInfo.netDevs.devs)
+                storeListView?.adapter = StatusStoreBaseAdapter(this, it.monitor.monitorInfo.disks.disks)
+            }
         }
     }
 
-}
-
-private fun getFakeDisk(): List<Disk> {
-    val res = LinkedList<Disk>()
-    res.add(Disk("1", "/ff", "aa", 2f, 2f, "M"))
-    res.add(Disk("1", "/ff", "aa", 2f, 2f, "M"))
-    res.add(Disk("1", "/ff", "aa", 2f, 2f, "M"))
-    res.add(Disk("1", "/ff", "aa", 2f, 2f, "M"))
-    return res
 }
 
 class StatusStoreBaseAdapter (context: Context, private val disks: List<Disk>) : BaseAdapter() {
@@ -280,20 +277,10 @@ class StatusStoreViewHolder {
 
 }
 
-private fun getFakeNetDev(): List<NetDev> {
-    val res = LinkedList<NetDev>()
-    res.add(NetDev("1", listOf("192.168.0.1"), true, 0f, "M", 2, 0f, "M", 2))
-    res.add(NetDev("1", listOf("192.168.0.1"), true, 0f, "M", 2, 0f, "M", 2))
-    res.add(NetDev("1", listOf("192.168.0.1"), true, 0f, "M", 2, 0f, "M", 2))
-    res.add(NetDev("1", listOf("192.168.0.1"), true, 0f, "M", 2, 0f, "M", 2))
-    res.add(NetDev("1", listOf("192.168.0.1"), true, 0f, "M", 2, 0f, "M", 2))
-    return res
-}
 
-class StatusNetDevBaseAdapter (context: Context, private val netDevs: List<NetDev>) : BaseAdapter() {
+class StatusNetDevBaseAdapter (private val context: Context, private val netDevs: List<NetDev>) : BaseAdapter() {
 
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
-
     override fun getCount(): Int {
         return netDevs.size
     }
@@ -312,10 +299,71 @@ class StatusNetDevBaseAdapter (context: Context, private val netDevs: List<NetDe
         if (view == null) {
             view = layoutInflater.inflate(R.layout.item_status_net, parent, false)
             holder = StatusNetDevViewHolder()
+
+            holder.virtualImageView = view.findViewById(R.id.net_virtual_image_view)
+            holder.nameTextView = view.findViewById(R.id.net_name_text_view)
+            holder.ipTextView = view.findViewById(R.id.net_ip_text_view)
+
+            holder.netUpSpeedTextView = view.findViewById(R.id.net_up_speed_text_view)
+            holder.netUpSpeedUnitTextView = view.findViewById(R.id.net_up_speed_unit_text_view)
+            holder.netDownSpeedTextView = view.findViewById(R.id.net_down_speed_text_view)
+            holder.netDownSpeedUnitTextView = view.findViewById(R.id.net_down_speed_unit_text_view)
+            holder.netUpTextView = view.findViewById(R.id.net_up_text_view)
+            holder.netUpUnitTextView = view.findViewById(R.id.net_up_unit_text_view)
+            holder.netDownTextView = view.findViewById(R.id.net_down_text_view)
+            holder.netDownUnitTextView = view.findViewById(R.id.net_down_unit_text_view)
+            holder.netBar = view.findViewById(R.id.net_bar)
+
+
             view.tag = holder
 
         } else {
             holder = view.tag as StatusNetDevViewHolder
+        }
+
+        val dev = netDevs[index]
+
+        val green = TypedValue()
+        context.theme.resolveAttribute(R.attr.highlightGreen, green, true)
+        val grey = TypedValue()
+        context.theme.resolveAttribute(R.attr.myTextSecondaryColor, grey, true)
+        if (!dev.virtual) {
+
+            holder.virtualImageView?.let {
+                ImageViewCompat.setImageTintMode(it, PorterDuff.Mode.SRC_IN)
+                ImageViewCompat.setImageTintList(it, ColorStateList.valueOf(green.data))
+            }
+
+        } else {
+            holder.virtualImageView?.let {
+                ImageViewCompat.setImageTintMode(it, PorterDuff.Mode.SRC_IN)
+                ImageViewCompat.setImageTintList(it, ColorStateList.valueOf(grey.data))
+            }
+        }
+
+        holder.nameTextView?.text = dev.name
+
+        if (dev.ips.isNotEmpty()) {
+            holder.ipTextView?.text = dev.ips[0]
+        }
+
+        holder.netUpSpeedTextView?.text = dev.upSpeed.formatPrint()
+        holder.netUpSpeedUnitTextView?.text = dev.upSpeedUnit
+        holder.netDownSpeedTextView?.text = dev.downSpeed.formatPrint()
+        holder.netDownSpeedUnitTextView?.text = dev.downSpeedUnit
+        holder.netUpTextView ?.text = dev.upBytesH.formatPrint()
+        holder.netUpUnitTextView?.text = dev.upBytesHUnit
+        holder.netDownTextView?.text = dev.downBytesH.formatPrint()
+        holder.netDownUnitTextView?.text = dev.downBytesHUnit
+
+        if (dev.downBytes != 0L && dev.upBytes != 0L ) {
+            val downOccupy = (100f * dev.downBytes.toFloat()) /
+                    (dev.downBytes.toFloat() + dev.upBytes.toFloat())
+            holder.netBar?.setProgress(downOccupy)
+            holder.netBar?.setProgressSecond(100f - downOccupy)
+        } else {
+            holder.netBar?.setProgress(0f)
+            holder.netBar?.setProgressSecond(0f)
         }
 
         assert(view != null)
@@ -324,7 +372,19 @@ class StatusNetDevBaseAdapter (context: Context, private val netDevs: List<NetDe
 }
 
 class StatusNetDevViewHolder {
+    var virtualImageView: ImageView? = null
+    var nameTextView: TextView? = null
+    var ipTextView: TextView? = null
 
+    var netUpSpeedTextView: TextView? = null
+    var netUpSpeedUnitTextView: TextView? = null
+    var netDownSpeedTextView: TextView? = null
+    var netDownSpeedUnitTextView: TextView? = null
+    var netUpTextView: TextView? = null
+    var netUpUnitTextView: TextView? = null
+    var netDownTextView: TextView? = null
+    var netDownUnitTextView: TextView? = null
+    var netBar: CircleProgress? = null
 }
 
 
