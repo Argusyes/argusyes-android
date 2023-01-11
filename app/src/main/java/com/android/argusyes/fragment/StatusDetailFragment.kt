@@ -56,6 +56,22 @@ class StatusDetailFragment : Fragment() {
     private var memCacheUnitUnitTextView: TextView? = null
     private var memBar: CircleProgress? = null
 
+    private var netUpSpeedTextView: TextView? = null
+    private var netUpSpeedUnitTextView: TextView? = null
+    private var netDownSpeedTextView: TextView? = null
+    private var netDownSpeedUnitTextView: TextView? = null
+    private var netUpTextView: TextView? = null
+    private var netUpUnitTextView: TextView? = null
+    private var netDownTextView: TextView? = null
+    private var netDownUnitTextView: TextView? = null
+    private var netBar: CircleProgress? = null
+
+    private var netReTranTextView: TextView? = null
+    private var netActiveTextView: TextView? = null
+    private var netPassiveTextView: TextView? = null
+    private var netFailTextView: TextView? = null
+
+
     private var netDevListView: ListViewForScrollView? = null
     private var storeListView: ListViewForScrollView? = null
 
@@ -105,14 +121,29 @@ class StatusDetailFragment : Fragment() {
         memCacheUnitUnitTextView = view.findViewById(R.id.status_detail_mem_cache_unit_text_view)
         memBar = view.findViewById(R.id.status_detail_mem_bar)
 
+        val netDevHeaderView = inflater.inflate(R.layout.item_status_net_header, container, false)
+
+        netUpSpeedTextView = netDevHeaderView.findViewById(R.id.net_head_up_speed_text_view)
+        netUpSpeedUnitTextView = netDevHeaderView.findViewById(R.id.net_head_up_speed_unit_text_view)
+        netDownSpeedTextView = netDevHeaderView.findViewById(R.id.net_head_down_speed_text_view)
+        netDownSpeedUnitTextView = netDevHeaderView.findViewById(R.id.net_head_down_speed_unit_text_view)
+        netUpTextView = netDevHeaderView.findViewById(R.id.net_head_up_text_view)
+        netUpUnitTextView = netDevHeaderView.findViewById(R.id.net_head_up_unit_text_view)
+        netDownTextView = netDevHeaderView.findViewById(R.id.net_head_down_text_view)
+        netDownUnitTextView = netDevHeaderView.findViewById(R.id.net_head_down_unit_text_view)
+        netBar = netDevHeaderView.findViewById(R.id.net_head_bar)
+
+        netReTranTextView = netDevHeaderView.findViewById(R.id.net_head_re_tran_text_view)
+        netActiveTextView = netDevHeaderView.findViewById(R.id.net_head_active_text_view)
+        netPassiveTextView = netDevHeaderView.findViewById(R.id.net_head_passive_text_view)
+        netFailTextView = netDevHeaderView.findViewById(R.id.net_head_fail_text_view)
+
+        netDevListView?.addHeaderView(netDevHeaderView)
+
         context?.run {
             netDevListView?.adapter = StatusNetDevBaseAdapter(this, getFakeNetDev())
             storeListView?.adapter = StatusStoreBaseAdapter(this, getFakeDisk())
         }
-
-        val netDevHeaderView = inflater.inflate(R.layout.item_status_net_header, container, false)
-        netDevListView?.addHeaderView(netDevHeaderView)
-
 
         updateView()
         if (job == null) {
@@ -179,6 +210,25 @@ class StatusDetailFragment : Fragment() {
             memCacheUnitUnitTextView?.text = it.monitor.monitorInfo.mem.cacheUnit
             memBar?.setProgress(it.monitor.monitorInfo.mem.usedOccupy)
             memBar?.setProgressSecond(it.monitor.monitorInfo.mem.cacheOccupy)
+
+
+            netUpSpeedTextView?.text = it.monitor.monitorInfo.netDevs.total.upSpeed.formatPrint()
+            netUpSpeedUnitTextView?.text = it.monitor.monitorInfo.netDevs.total.upSpeedUnit
+            netDownSpeedTextView?.text = it.monitor.monitorInfo.netDevs.total.downSpeed.formatPrint()
+            netDownSpeedUnitTextView?.text = it.monitor.monitorInfo.netDevs.total.downSpeedUnit
+            netUpTextView?.text = it.monitor.monitorInfo.netDevs.total.upBytesH.formatPrint()
+            netUpUnitTextView?.text = it.monitor.monitorInfo.netDevs.total.upBytesHUnit
+            netDownTextView?.text = it.monitor.monitorInfo.netDevs.total.downBytesH.formatPrint()
+            netDownUnitTextView?.text = it.monitor.monitorInfo.netDevs.total.downBytesHUnit
+            val downOccupy = (100f * it.monitor.monitorInfo.netDevs.total.downBytes.toFloat()) /
+                    (it.monitor.monitorInfo.netDevs.total.downBytes.toFloat() + it.monitor.monitorInfo.netDevs.total.upBytes.toFloat())
+            netBar?.setProgress(downOccupy)
+            netBar?.setProgressSecond(100f - downOccupy)
+
+            netReTranTextView?.text = it.monitor.monitorInfo.netStats.tcp.reTransRate.formatPrint()
+            netActiveTextView?.text = it.monitor.monitorInfo.netStats.tcp.activeOpens.toString()
+            netPassiveTextView?.text = it.monitor.monitorInfo.netStats.tcp.passiveOpens.toString()
+            netFailTextView?.text = it.monitor.monitorInfo.netStats.tcp.failOpens.toString()
         }
     }
 

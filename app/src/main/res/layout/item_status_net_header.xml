@@ -36,6 +36,7 @@
                 android:layout_gravity="center" >
 
                 <TextView
+                    android:id="@+id/net_head_up_speed_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="2sp"
@@ -44,10 +45,11 @@
                     android:theme="@style/mySmallText" />
 
                 <TextView
+                    android:id="@+id/net_head_up_speed_unit_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/trans"
-                    android:text="@string/k_s"
+                    android:text="@string/mem_unit"
                     android:theme="@style/mySmallTextSecondary" />
 
             </LinearLayout>
@@ -81,6 +83,7 @@
                 android:layout_gravity="center" >
 
                 <TextView
+                    android:id="@+id/net_head_down_speed_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="2sp"
@@ -89,10 +92,11 @@
                     android:theme="@style/mySmallText" />
 
                 <TextView
+                    android:id="@+id/net_head_down_speed_unit_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/trans"
-                    android:text="@string/k_s"
+                    android:text="@string/mem_unit"
                     android:theme="@style/mySmallTextSecondary" />
 
             </LinearLayout>
@@ -127,7 +131,8 @@
                     android:theme="@style/mySmallTextSecondary" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/net_head_down_text_view"
+                    android:layout_width="30sp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5sp"
                     android:background="@color/trans"
@@ -135,8 +140,9 @@
                     android:theme="@style/mySmallText" />
 
                 <TextView
+                    android:id="@+id/net_head_down_unit_text_view"
                     android:layout_marginStart="5sp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="14sp"
                     android:layout_height="wrap_content"
                     android:background="@color/trans"
                     android:text="@string/mem_unit"
@@ -166,7 +172,8 @@
                     android:theme="@style/mySmallTextSecondary" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/net_head_up_text_view"
+                    android:layout_width="30sp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5sp"
                     android:background="@color/trans"
@@ -174,8 +181,9 @@
                     android:theme="@style/mySmallText" />
 
                 <TextView
+                    android:id="@+id/net_head_up_unit_text_view"
                     android:layout_marginStart="5sp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="14sp"
                     android:layout_height="wrap_content"
                     android:background="@color/trans"
                     android:text="@string/mem_unit"
@@ -198,14 +206,15 @@
             android:layout_weight="0.4"/>
 
         <com.android.argusyes.ui.CircleProgress
+            android:id="@+id/net_head_bar"
             android:layout_width="45sp"
             android:layout_height="45sp"
             android:layout_gravity="center"
             android:background="@color/trans"
             android:indeterminate="true"
             android:indeterminateOnly="true"
-            app:myCPProgress="50"
-            app:myCPProgressSecond="30"
+            app:myCPProgress="0"
+            app:myCPProgressSecond="0"
             app:myCPMax="100"
             app:myCPBackgroundColor="?myHintColor"
             app:myCPProgressColor="?highlightYellow"
@@ -251,6 +260,7 @@
                 android:padding="0sp">
 
                 <TextView
+                    android:id="@+id/net_head_re_tran_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="2sp"
@@ -288,6 +298,7 @@
                 android:theme="@style/mySmallTextSecondary"/>
 
             <TextView
+                android:id="@+id/net_head_active_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="2sp"
@@ -315,6 +326,7 @@
                 android:theme="@style/mySmallTextSecondary"/>
 
             <TextView
+                android:id="@+id/net_head_passive_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="2sp"
@@ -342,6 +354,7 @@
                 android:theme="@style/mySmallTextSecondary"/>
 
             <TextView
+                android:id="@+id/net_head_fail_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="2sp"
