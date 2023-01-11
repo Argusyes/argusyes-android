@@ -156,10 +156,12 @@ class Monitor (var server: Server){
         monitorInfo.cpus.total.utilization = ROUND_FLOAT2.format(100.0 - 100.0*(new[0][5].toDouble() - old[0][5].toDouble()) / totalDiffTime).toFloat()
         monitorInfo.cpus.total.free = ROUND_FLOAT2.format(100.0*(new[0][5].toDouble() - old[0][5].toDouble()) / totalDiffTime).toFloat()
         monitorInfo.cpus.total.system = ROUND_FLOAT2.format(100.0*(new[0][4].toDouble() - old[0][4].toDouble()) / totalDiffTime).toFloat()
+        monitorInfo.cpus.total.nice = ROUND_FLOAT2.format(100.0*(new[0][3].toDouble() - old[0][3].toDouble()) / totalDiffTime).toFloat()
         monitorInfo.cpus.total.user = ROUND_FLOAT2.format(100.0*(new[0][2].toDouble() - old[0][2].toDouble()) / totalDiffTime).toFloat()
         monitorInfo.cpus.total.ioWait = ROUND_FLOAT2.format(100.0*(new[0][6].toDouble() - old[0][6].toDouble()) / totalDiffTime).toFloat()
         monitorInfo.cpus.total.steal = ROUND_FLOAT2.format(100.0*(new[0][9].toDouble() - old[0][9].toDouble()) / totalDiffTime).toFloat()
 
+        val cpuList = LinkedList<Cpu>()
         for (i in 1 until old.size) {
             var pNewTotalCpuTime = 0.0
             for(j in 2 until new[i].size) {
@@ -176,16 +178,22 @@ class Monitor (var server: Server){
                 pTotalDiffTime++
             }
             val processor = old[i][1].toInt()
-            val cpu = monitorInfo.cpus.map.getOrDefault(processor, Cpu())
+            val cpu = Cpu()
             cpu.processor = processor
             cpu.utilization = ROUND_FLOAT2.format(100.0 - 100.0*(new[i][5].toDouble() - old[i][5].toDouble()) / pTotalDiffTime).toFloat()
             cpu.free = ROUND_FLOAT2.format(100.0*(new[i][5].toDouble() - old[i][5].toDouble()) / pTotalDiffTime).toFloat()
             cpu.system = ROUND_FLOAT2.format(100.0*(new[i][4].toDouble() - old[i][4].toDouble()) / pTotalDiffTime).toFloat()
+            cpu.nice = ROUND_FLOAT2.format(100.0*(new[i][3].toDouble() - old[i][3].toDouble()) / pTotalDiffTime).toFloat()
             cpu.user = ROUND_FLOAT2.format(100.0*(new[i][2].toDouble() - old[i][2].toDouble()) / pTotalDiffTime).toFloat()
             cpu.ioWait = ROUND_FLOAT2.format(100.0*(new[i][6].toDouble() - old[i][6].toDouble()) / pTotalDiffTime).toFloat()
             cpu.steal = ROUND_FLOAT2.format(100.0*(new[i][9].toDouble() - old[i][9].toDouble()) / pTotalDiffTime).toFloat()
-            monitorInfo.cpus.map[processor] = cpu
+
+            cpuList.add(cpu)
         }
+
+        cpuList.sortBy { it.processor }
+        monitorInfo.cpus.cpus = cpuList
+
     }
 
     private fun parseMem(context: MonitorContext) {
@@ -278,11 +286,11 @@ class Monitor (var server: Server){
     }
 
     private fun parseLoadavg(context: MonitorContext) {
-        if (monitorInfo.cpus.map.isEmpty()) {
+        if (monitorInfo.cpus.cpus.isEmpty()) {
             return
         }
         context.getNew()
-        val processorNum = monitorInfo.cpus.map.size
+        val processorNum = monitorInfo.cpus.cpus.size
         val ss = context.new.replace("\n", "").split(" ")
         monitorInfo.loadavg.one = ss[0].toFloat()
         monitorInfo.loadavg.oneOccupy = ROUND_FLOAT2.format(100 * monitorInfo.loadavg.one / processorNum).toFloat()

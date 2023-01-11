@@ -14,7 +14,7 @@ data class MonitorInfo (
 )
 
 data class Cpus(
-    @Volatile var map: MutableMap<Int, Cpu> = HashMap(),
+    @Volatile var cpus: MutableList<Cpu> = LinkedList(),
     @Volatile var total: Cpu = Cpu(),
 )
 

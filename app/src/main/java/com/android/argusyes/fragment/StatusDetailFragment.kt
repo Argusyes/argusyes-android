@@ -6,51 +6,154 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.android.argusyes.R
-import com.android.argusyes.ssh.Cpu
-import com.android.argusyes.ssh.Disk
-import com.android.argusyes.ssh.NetDev
-import com.android.argusyes.ssh.SSHManager
+import com.android.argusyes.ssh.*
 import com.android.argusyes.ui.ListViewForScrollView
+import com.android.argusyes.ui.ThreeCircleProgress
+import kotlinx.coroutines.*
 import java.util.*
 
 class StatusDetailFragment : Fragment() {
 
-    private var serverId: String? = null
+    private var job: Job? = null
 
     private var sshManager: SSHManager? = null
 
+    private var serverId: String? = null
+    private var ssh: SSH? = null
+
+    private var titleTextView: TextView? = null
+    private var titleButton: Button? = null
+
+    private var cpuTotalTextView: TextView? = null
+    private var cpuSystemTextView: TextView? = null
+    private var cpuUserTextView: TextView? = null
+    private var cpuIOTextView: TextView? = null
+    private var cpuNiceTextView: TextView? = null
+
     private var cpuCoreListView: ListViewForScrollView? = null
+
+    private var cpuNumTextView: TextView? = null
+    private var cpuFreeTextView: TextView? = null
+
+    private var uptimeTextView: TextView? = null
+    private var uptimeUnitTextView: TextView? = null
+
+    private var loadBar: ThreeCircleProgress? = null
+
     private var netDevListView: ListViewForScrollView? = null
     private var storeListView: ListViewForScrollView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sshManager = context?.let { SSHManager.getInstance(it) }
-        arguments?.let {
-            serverId = it.getString(SERVER_ID)
-        }
     }
 
+
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_status_detail, container, false)
+
+        arguments?.let {
+            serverId = it.getString(SERVER_ID)
+            ssh = serverId?.let { id -> sshManager?.getServerById(id) }
+        }
+
+        titleTextView = view.findViewById(R.id.status_detail_title)
+        titleButton = view.findViewById(R.id.status_detail_title_button)
+        titleButton?.setOnClickListener { it.findNavController().popBackStack() }
+
+        cpuTotalTextView = view.findViewById(R.id.status_detail_cpu_total_text_view)
+        cpuSystemTextView = view.findViewById(R.id.status_detail_cpu_system_text_view)
+        cpuUserTextView = view.findViewById(R.id.status_detail_cpu_user_text_view)
+        cpuIOTextView = view.findViewById(R.id.status_detail_cpu_io_text_view)
+        cpuNiceTextView = view.findViewById(R.id.status_detail_cpu_nice_text_view)
+
         cpuCoreListView = view.findViewById(R.id.status_detail_cpu_core_list_view)
+
+        cpuNumTextView = view.findViewById(R.id.status_detail_cpu_num_text_view)
+        cpuFreeTextView = view.findViewById(R.id.status_detail_cpu_free_text_view)
+
+        uptimeTextView = view.findViewById(R.id.status_detail_uptime_text_view)
+        uptimeUnitTextView= view.findViewById(R.id.status_detail_uptime_unit_text_view)
+
         netDevListView = view.findViewById(R.id.status_detail_net_dev_list_view)
         storeListView = view.findViewById(R.id.status_detail_store_list_view)
 
+        loadBar = view.findViewById(R.id.status_detail_load_bar)
+
         context?.run {
-            cpuCoreListView?.adapter = StatusCpuCoreBaseAdapter(this, getFakeCpuCore())
             netDevListView?.adapter = StatusNetDevBaseAdapter(this, getFakeNetDev())
             storeListView?.adapter = StatusStoreBaseAdapter(this, getFakeDisk())
         }
 
         val netDevHeaderView = inflater.inflate(R.layout.item_status_net_header, container, false)
         netDevListView?.addHeaderView(netDevHeaderView)
+
+
+        updateView()
+        if (job == null) {
+            job = GlobalScope.launch(Dispatchers.Main) {
+                while (isActive) {
+                    delay(2000)
+                    updateView()
+                }
+            }
+        }
+
+        job?.let {
+            if (!it.isActive) {
+                it.start()
+            }
+        }
+
         return view
     }
+
+    private fun updateView () {
+        ssh?.let {
+            titleTextView?.text = it.data.name
+            cpuTotalTextView?.text = it.monitor.monitorInfo.cpus.total.utilization.toInt().toString()
+
+            cpuSystemTextView?.text = it.monitor.monitorInfo.cpus.total.system.toInt().toString()
+            cpuUserTextView?.text = it.monitor.monitorInfo.cpus.total.user.toInt().toString()
+            cpuIOTextView?.text = it.monitor.monitorInfo.cpus.total.ioWait.toInt().toString()
+            cpuNiceTextView?.text = it.monitor.monitorInfo.cpus.total.nice.toInt().toString()
+
+            cpuCoreListView?.adapter = context?.let { c -> StatusCpuCoreBaseAdapter(c, it.monitor.monitorInfo.cpus.cpus) }
+
+            cpuNumTextView?.text = it.monitor.monitorInfo.cpus.cpus.size.toString()
+            cpuFreeTextView?.text = it.monitor.monitorInfo.cpus.total.free.toInt().toString()
+
+            val uptime = UnitData(0f, "S")
+            if (it.monitor.monitorInfo.uptime.upDay != 0) {
+                uptime.data = it.monitor.monitorInfo.uptime.upDay.toFloat()
+                uptime.unit = "D"
+            } else if (it.monitor.monitorInfo.uptime.upHour != 0) {
+                uptime.data = it.monitor.monitorInfo.uptime.upHour.toFloat()
+                uptime.unit = "H"
+            } else if (it.monitor.monitorInfo.uptime.upMin != 0) {
+                uptime.data = it.monitor.monitorInfo.uptime.upMin.toFloat()
+                uptime.unit = "M"
+            } else {
+                uptime.data = it.monitor.monitorInfo.uptime.upSec.toFloat()
+                uptime.unit = "S"
+            }
+
+            uptimeTextView?.text = uptime.data.toInt().toString()
+            uptimeUnitTextView?.text = uptime.unit
+
+            loadBar?.setProgress(it.monitor.monitorInfo.loadavg.oneOccupy)
+            loadBar?.setProgressSecond(it.monitor.monitorInfo.loadavg.fiveOccupy)
+            loadBar?.setProgressThree(it.monitor.monitorInfo.loadavg.fifteenOccupy)
+        }
+    }
+
 }
 
 private fun getFakeDisk(): List<Disk> {
@@ -146,19 +249,6 @@ class StatusNetDevViewHolder {
 
 }
 
-private fun getFakeCpuCore(): List<Cpu> {
-    val res = LinkedList<Cpu>()
-    res.add(Cpu(0, 0.96f, 0.45f, 0f, 0.3f, 0.2f, 0.2f, 0.16f))
-    res.add(Cpu(1, 0.96f, 0.45f, 0.1f, 0f, 0.2f, 0.2f, 0.16f))
-    res.add(Cpu(2, 0.96f, 0.45f, 0.1f, 0.3f, 0f, 0.2f, 0.16f))
-    res.add(Cpu(3, 0.96f, 0.45f, 0.1f, 0.3f, 0.2f, 0f, 0.16f))
-    res.add(Cpu(4, 0.96f, 0.45f, 0.4f, 0.3f, 0.2f, 0.1f, 0.16f))
-    res.add(Cpu(5, 0.96f, 0.45f, 0.4f, 0.2f, 0.1f, 0.1f, 0.16f))
-    res.add(Cpu(6, 0.96f, 0.45f, 0.5f, 0.1f, 0.1f, 0.1f, 0.16f))
-    res.add(Cpu(7, 0.96f, 0.45f, 0.1f, 0.1f, 0.1f, 0.5f, 0.16f))
-    return res
-}
-
 
 class StatusCpuCoreBaseAdapter (context: Context, private val cpus: List<Cpu>) : BaseAdapter() {
 
@@ -226,10 +316,10 @@ class StatusCpuCoreBaseAdapter (context: Context, private val cpus: List<Cpu>) :
             holder = view.tag as StatusCpuCoreViewHolder
         }
         val cpu = cpus[index]
-        val system = (cpu.system * 34).toInt()
-        val user = ((cpu.user + cpu.system) * 34).toInt()
-        val io = ((cpu.ioWait + cpu.system + cpu.user) * 34).toInt()
-        val nice = ((cpu.nice + cpu.system + cpu.user + cpu.ioWait) * 34).toInt()
+        val system = (cpu.system * 0.34).toInt()
+        val user = ((cpu.user + cpu.system) * 0.34).toInt()
+        val io = ((cpu.ioWait + cpu.system + cpu.user) * 0.34).toInt()
+        val nice = ((cpu.nice + cpu.system + cpu.user + cpu.ioWait) * 0.34).toInt()
         assert(nice <= 34)
 
         assert(view != null)

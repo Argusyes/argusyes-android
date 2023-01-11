@@ -70,6 +70,7 @@
                         android:padding="0sp">
 
                         <TextView
+                            android:id="@+id/status_detail_cpu_total_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/zero"
@@ -122,6 +123,7 @@
                             android:padding="0sp">
 
                             <TextView
+                                android:id="@+id/status_detail_cpu_system_text_view"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/zero"
@@ -177,6 +179,7 @@
                             android:padding="0sp">
 
                             <TextView
+                                android:id="@+id/status_detail_cpu_user_text_view"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/zero"
@@ -231,6 +234,7 @@
                             android:padding="0sp">
 
                             <TextView
+                                android:id="@+id/status_detail_cpu_io_text_view"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/zero"
@@ -285,6 +289,7 @@
                             android:padding="0sp">
 
                             <TextView
+                                android:id="@+id/status_detail_cpu_nice_text_view"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/zero"
@@ -339,6 +344,7 @@
                             android:theme="@style/mySmallTextSecondary" />
 
                         <TextView
+                            android:id="@+id/status_detail_cpu_num_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="25sp"
                             android:background="@color/trans"
@@ -369,6 +375,7 @@
                             android:padding="0sp">
 
                             <TextView
+                                android:id="@+id/status_detail_cpu_free_text_view"
                                 android:layout_width="wrap_content"
                                 android:layout_height="25sp"
                                 android:text="@string/zero"
@@ -408,12 +415,15 @@
                             android:padding="0sp">
 
                             <TextView
+                                android:id="@+id/status_detail_uptime_text_view"
                                 android:layout_width="wrap_content"
                                 android:layout_height="25sp"
                                 android:text="@string/zero"
                                 android:padding="0sp"
                                 android:theme="@style/mySmallText" />
+
                             <TextView
+                                android:id="@+id/status_detail_uptime_unit_text_view"
                                 android:layout_width="wrap_content"
                                 android:layout_height="25sp"
                                 android:text="@string/d"
@@ -457,7 +467,7 @@
                     </LinearLayout>
 
                     <com.android.argusyes.ui.ThreeCircleProgress
-                        android:id="@+id/status_info_load_bar"
+                        android:id="@+id/status_detail_load_bar"
                         android:layout_width="45sp"
                         android:layout_height="45sp"
                         android:layout_gravity="end"

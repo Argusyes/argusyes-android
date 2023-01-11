@@ -92,5 +92,4 @@ class ServerAddFragment : Fragment() {
         }
         return view
     }
-
 }
