@@ -170,4 +170,6 @@ data class Disk (
     @Volatile var readSpeedUnit: String = "",
     @Volatile var writeIOPS: Int = 0,
     @Volatile var readIOPS: Int = 0,
+    @Volatile var writeDelay: Float = 0f,
+    @Volatile var readDelay: Float = 0f,
 )

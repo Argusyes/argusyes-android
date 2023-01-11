@@ -22,15 +22,16 @@
             android:gravity="center_vertical" >
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/name"
-                android:theme="@style/mySmallText"/>
-
-            <TextView
+                android:id="@+id/disk_mount_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mount"
+                android:theme="@style/mySmallText"/>
+            <TextView
+                android:id="@+id/disk_name_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/name"
                 android:theme="@style/mySmallTextSecondary"/>
 
 
@@ -49,9 +50,12 @@
             android:gravity="center_vertical" >
 
             <TextView
+                android:id="@+id/disk_file_system_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/filesystem"
+                android:gravity="end"
+                android:layout_gravity="end"
                 android:theme="@style/mySmallTextSecondary"/>
 
             <LinearLayout
@@ -62,6 +66,7 @@
                 android:layout_gravity="end" >
 
                 <TextView
+                    android:id="@+id/disk_used_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="2sp"
@@ -70,6 +75,7 @@
                     android:theme="@style/mySmallText" />
 
                 <TextView
+                    android:id="@+id/disk_used_unit_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/trans"
@@ -85,6 +91,7 @@
                     android:theme="@style/mySmallTextSecondary" />
 
                 <TextView
+                    android:id="@+id/disk_total_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="2sp"
@@ -93,6 +100,7 @@
                     android:theme="@style/mySmallTextSecondary" />
 
                 <TextView
+                    android:id="@+id/disk_total_unit_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/trans"
@@ -104,12 +112,13 @@
         </LinearLayout>
 
         <com.android.argusyes.ui.RectangleProgress
+            android:id="@+id/disk_bar"
             android:layout_marginStart="5sp"
             android:layout_width="25sp"
             android:layout_height="40sp"
             app:myRPFrontendColor="?highlightGreen"
             app:myRPBackgroundColor="?myBackColor"
-            app:myRPProgress="50"
+            app:myRPProgress="0"
             app:myRPMax="100" />
 
     </LinearLayout>
@@ -179,15 +188,18 @@
                 android:layout_gravity="center" >
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/disk_read_speed_text_view"
+                    android:layout_width="36sp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="2sp"
                     android:background="@color/trans"
                     android:text="@string/zero"
+                    android:gravity="end"
                     android:theme="@style/mySmallText" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/disk_read_speed_unit_text_view"
+                    android:layout_width="25sp"
                     android:layout_height="wrap_content"
                     android:background="@color/trans"
                     android:text="@string/k_s"
@@ -203,15 +215,18 @@
                 android:layout_gravity="center" >
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/disk_write_speed_text_view"
+                    android:layout_width="36sp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="2sp"
                     android:background="@color/trans"
                     android:text="@string/zero"
+                    android:gravity="end"
                     android:theme="@style/mySmallText" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/disk_write_speed_unit_text_view"
+                    android:layout_width="25sp"
                     android:layout_height="wrap_content"
                     android:background="@color/trans"
                     android:text="@string/k_s"
@@ -247,15 +262,18 @@
                 android:layout_gravity="center_vertical|end" >
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/disk_read_text_view"
+                    android:layout_width="36sp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="2sp"
                     android:background="@color/trans"
                     android:text="@string/zero"
+                    android:gravity="end"
                     android:theme="@style/mySmallText" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/disk_read_unit_text_view"
+                    android:layout_width="12sp"
                     android:layout_height="wrap_content"
                     android:background="@color/trans"
                     android:text="@string/mem_unit"
@@ -270,15 +288,18 @@
                 android:layout_gravity="center_vertical|end" >
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/disk_write_text_view"
+                    android:layout_width="36sp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="2sp"
                     android:background="@color/trans"
                     android:text="@string/zero"
+                    android:gravity="end"
                     android:theme="@style/mySmallText" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/disk_write_unit_text_view"
+                    android:layout_width="12sp"
                     android:layout_height="wrap_content"
                     android:background="@color/trans"
                     android:text="@string/mem_unit"
@@ -307,19 +328,23 @@
                 android:theme="@style/mySmallTextSecondary"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/disk_read_iops_text_view"
+                android:layout_width="36sp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="2sp"
                 android:background="@color/trans"
                 android:text="@string/zero"
+                android:gravity="end"
                 android:theme="@style/mySmallText" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/disk_write_iops_text_view"
+                android:layout_width="36sp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="2sp"
                 android:background="@color/trans"
                 android:text="@string/zero"
+                android:gravity="end"
                 android:theme="@style/mySmallText" />
 
         </LinearLayout>
@@ -343,7 +368,9 @@
                 android:theme="@style/mySmallTextSecondary"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/disk_read_delay_text_view"
+                android:layout_width="36sp"
+                android:gravity="end"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="2sp"
                 android:background="@color/trans"
@@ -351,7 +378,9 @@
                 android:theme="@style/mySmallText" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/disk_write_delay_text_view"
+                android:layout_width="36sp"
+                android:gravity="end"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="2sp"
                 android:background="@color/trans"

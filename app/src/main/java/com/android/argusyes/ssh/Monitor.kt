@@ -481,6 +481,7 @@ class Monitor (var server: Server){
             val oldV = oldDiskMap[mountEntry.key]?: continue
             val newV = newDiskMap[mountEntry.key]?: continue
             val d = Disk()
+            d.devName = mountEntry.key
             d.mount = mountV[2]
             d.fileSystem = mountV[3]
             val stat = context.statVFS(d.mount)
@@ -521,6 +522,19 @@ class Monitor (var server: Server){
 
             d.writeIOPS = ((newV[8].toInt() - oldV[8].toInt()) * 1000 / diffTime).toInt()
             d.readIOPS = ((newV[4].toInt() - oldV[4].toInt()) * 1000 / diffTime).toInt()
+
+            if (d.writeIOPS != 0) {
+                d.writeDelay = (newV[11].toFloat() - oldV[11].toFloat()) / d.writeIOPS.toFloat()
+            } else {
+                d.writeDelay = 0f
+            }
+
+            if (d.readIOPS != 0) {
+                d.readDelay = (newV[7].toFloat() - oldV[7].toFloat()) / d.readIOPS.toFloat()
+            } else {
+                d.readDelay = 0f
+            }
+
             diskList.add(d)
         }
         val total = DiskTotal()

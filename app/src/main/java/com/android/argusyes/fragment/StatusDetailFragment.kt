@@ -20,6 +20,7 @@ import com.android.argusyes.R
 import com.android.argusyes.ssh.*
 import com.android.argusyes.ui.CircleProgress
 import com.android.argusyes.ui.ListViewForScrollView
+import com.android.argusyes.ui.RectangleProgress
 import com.android.argusyes.ui.ThreeCircleProgress
 import com.android.argusyes.utils.formatPrint
 import kotlinx.coroutines.*
@@ -262,11 +263,55 @@ class StatusStoreBaseAdapter (context: Context, private val disks: List<Disk>) :
         if (view == null) {
             view = layoutInflater.inflate(R.layout.item_status_store, parent, false)
             holder = StatusStoreViewHolder()
+            holder.nameTextView = view.findViewById(R.id.disk_name_text_view)
+            holder.mountTextView = view.findViewById(R.id.disk_mount_text_view)
+            holder.fileSystemTextView = view.findViewById(R.id.disk_file_system_text_view)
+            holder.usedTextView = view.findViewById(R.id.disk_used_text_view)
+            holder.usedUnitTextView = view.findViewById(R.id.disk_used_unit_text_view)
+            holder.totalTextView = view.findViewById(R.id.disk_total_text_view)
+            holder.totalUnitTextView = view.findViewById(R.id.disk_total_unit_text_view)
+            holder.diskBar = view.findViewById(R.id.disk_bar)
+            holder.readSpeedTextView = view.findViewById(R.id.disk_read_speed_text_view)
+            holder.readSpeedUnitTextView = view.findViewById(R.id.disk_read_speed_unit_text_view)
+            holder.writeSpeedTextView = view.findViewById(R.id.disk_write_speed_text_view)
+            holder.writeSpeedUnitTextView = view.findViewById(R.id.disk_write_speed_unit_text_view)
+            holder.readTextView = view.findViewById(R.id.disk_read_text_view)
+            holder.readUnitTextView = view.findViewById(R.id.disk_read_unit_text_view)
+            holder.writeTextView = view.findViewById(R.id.disk_write_text_view)
+            holder.writeUnitTextView = view.findViewById(R.id.disk_write_unit_text_view)
+            holder.readIOPSTextView = view.findViewById(R.id.disk_read_iops_text_view)
+            holder.writeIOPSTextView = view.findViewById(R.id.disk_write_iops_text_view)
+            holder.readDelayTextView = view.findViewById(R.id.disk_read_delay_text_view)
+            holder.writeDelayTextView = view.findViewById(R.id.disk_write_delay_text_view)
+
             view.tag = holder
 
         } else {
             holder = view.tag as StatusStoreViewHolder
         }
+
+        val disk = disks[index]
+
+        holder.nameTextView?.text = disk.devName
+        holder.mountTextView?.text = disk.mount
+        holder.fileSystemTextView?.text = disk.fileSystem
+        holder.usedTextView?.text = disk.used.formatPrint()
+        holder.usedUnitTextView?.text = disk.usedUnit
+        holder.totalTextView?.text = disk.total.formatPrint()
+        holder.totalUnitTextView?.text = disk.totalUnit
+        holder.diskBar?.setProgress(disk.usedOccupy)
+        holder.readSpeedTextView?.text = disk.readSpeed.formatPrint()
+        holder.readSpeedUnitTextView?.text = disk.readSpeedUnit
+        holder.writeSpeedTextView?.text = disk.writeSpeed.formatPrint()
+        holder.writeSpeedUnitTextView?.text = disk.writeSpeedUnit
+        holder.readTextView?.text = disk.read.formatPrint()
+        holder.readUnitTextView?.text = disk.readUnit
+        holder.writeTextView?.text = disk.write.formatPrint()
+        holder.writeUnitTextView?.text = disk.writeUnit
+        holder.readIOPSTextView?.text = disk.readIOPS.toString()
+        holder.writeIOPSTextView?.text = disk.writeIOPS.toString()
+        holder.readDelayTextView?.text = disk.readDelay.formatPrint()
+        holder.writeDelayTextView?.text = disk.writeDelay.formatPrint()
 
         assert(view != null)
         return view!!
@@ -274,7 +319,26 @@ class StatusStoreBaseAdapter (context: Context, private val disks: List<Disk>) :
 }
 
 class StatusStoreViewHolder {
-
+    var nameTextView: TextView? = null
+    var mountTextView: TextView? = null
+    var fileSystemTextView: TextView? = null
+    var usedTextView: TextView? = null
+    var usedUnitTextView: TextView? = null
+    var totalTextView: TextView? = null
+    var totalUnitTextView: TextView? = null
+    var diskBar: RectangleProgress? = null
+    var readSpeedTextView: TextView? = null
+    var readSpeedUnitTextView: TextView? = null
+    var writeSpeedTextView: TextView? = null
+    var writeSpeedUnitTextView: TextView? = null
+    var readTextView: TextView? = null
+    var readUnitTextView: TextView? = null
+    var writeTextView: TextView? = null
+    var writeUnitTextView: TextView? = null
+    var readIOPSTextView: TextView? = null
+    var writeIOPSTextView: TextView? = null
+    var readDelayTextView: TextView? = null
+    var writeDelayTextView: TextView? = null
 }
 
 
