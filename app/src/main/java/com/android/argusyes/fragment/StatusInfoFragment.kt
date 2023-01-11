@@ -204,9 +204,9 @@ class StatusBaseAdapter (context: Context, private val sshs: List<SSH>) : BaseAd
         holder.swapBar?.setProgress(ssh.monitor.monitorInfo.mem.usedSwapOccupy)
         holder.swapBar?.setProgressSecond(ssh.monitor.monitorInfo.mem.cachedSwapOccupy)
 
-        holder.loadBar?.setProgress(50F)
-        holder.loadBar?.setProgressSecond(60F)
-        holder.loadBar?.setProgressThree(90F)
+        holder.loadBar?.setProgress(ssh.monitor.monitorInfo.loadavg.oneOccupy)
+        holder.loadBar?.setProgressSecond(ssh.monitor.monitorInfo.loadavg.fiveOccupy)
+        holder.loadBar?.setProgressThree(ssh.monitor.monitorInfo.loadavg.fifteenOccupy)
 
         assert(view != null)
         return view!!

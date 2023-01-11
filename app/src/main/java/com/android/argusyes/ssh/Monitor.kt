@@ -57,6 +57,11 @@ class Monitor (var server: Server){
             jobs.add(parse(sftp, ::parseCpu, "/proc/stat"))
             jobs.add(parse(sftp, ::parseMem, "/proc/meminfo"))
             jobs.add(parse(sftp, ::parseUptime, "/proc/uptime"))
+            jobs.add(parse(sftp, ::parseLoadavg, "/proc/loadavg"))
+            jobs.add(parse(sftp, ::parseNetDev, "/proc/net/dev"))
+            jobs.add(parse(sftp, ::parseNetStat, "/proc/net/snmp"))
+            jobs.add(parse(sftp, ::parseTemp, "/sys/class/thermal/thermal_zone0/temp"))
+            jobs.add(parse(sftp, ::parseDisk, "/proc/diskstats"))
             jobs.forEach { it.join() }
 
             connectStatus = ConnectStatus.FAIL
@@ -257,6 +262,43 @@ class Monitor (var server: Server){
         monitorInfo.uptime.upMin = uptime / (60)
         uptime %= (60)
         monitorInfo.uptime.upSec = uptime
+    }
+
+    private fun parseLoadavg(context: MonitorContext) {
+        if (monitorInfo.cpus.map.isEmpty()) {
+            return
+        }
+        context.getNew()
+        val processorNum = monitorInfo.cpus.map.size
+        val ss = context.new.replace("\n", "").split(" ")
+        monitorInfo.loadavg.one = ss[0].toFloat()
+        monitorInfo.loadavg.oneOccupy = ROUND_FLOAT2.format(100 * monitorInfo.loadavg.one / processorNum).toFloat()
+        monitorInfo.loadavg.five = ss[1].toFloat()
+        monitorInfo.loadavg.fiveOccupy = ROUND_FLOAT2.format(100 * monitorInfo.loadavg.five / processorNum).toFloat()
+        monitorInfo.loadavg.fifteen = ss[2].toFloat()
+        monitorInfo.loadavg.fifteenOccupy = ROUND_FLOAT2.format(100 * monitorInfo.loadavg.fifteen / processorNum).toFloat()
+
+        val thread = ss[3].split("/")
+        monitorInfo.loadavg.running = thread[0].toInt()
+        monitorInfo.loadavg.active = thread[1].toInt()
+        monitorInfo.loadavg.lastPid = ss[4].toInt()
+
+    }
+
+    private fun parseNetDev(context: MonitorContext) {
+
+    }
+
+    private fun parseNetStat(context: MonitorContext) {
+
+    }
+
+    private fun parseTemp(context: MonitorContext) {
+
+    }
+
+    private fun parseDisk(context: MonitorContext) {
+
     }
 }
 
