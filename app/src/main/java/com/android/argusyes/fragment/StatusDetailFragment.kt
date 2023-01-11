@@ -13,8 +13,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.android.argusyes.R
 import com.android.argusyes.ssh.*
+import com.android.argusyes.ui.CircleProgress
 import com.android.argusyes.ui.ListViewForScrollView
 import com.android.argusyes.ui.ThreeCircleProgress
+import com.android.argusyes.utils.formatPrint
 import kotlinx.coroutines.*
 import java.util.*
 
@@ -45,6 +47,14 @@ class StatusDetailFragment : Fragment() {
     private var uptimeUnitTextView: TextView? = null
 
     private var loadBar: ThreeCircleProgress? = null
+
+    private var memFreeTextView: TextView? = null
+    private var memFreeUnitUnitTextView: TextView? = null
+    private var memUsedTextView: TextView? = null
+    private var memUsedUnitUnitTextView: TextView? = null
+    private var memCacheTextView: TextView? = null
+    private var memCacheUnitUnitTextView: TextView? = null
+    private var memBar: CircleProgress? = null
 
     private var netDevListView: ListViewForScrollView? = null
     private var storeListView: ListViewForScrollView? = null
@@ -86,6 +96,14 @@ class StatusDetailFragment : Fragment() {
         storeListView = view.findViewById(R.id.status_detail_store_list_view)
 
         loadBar = view.findViewById(R.id.status_detail_load_bar)
+
+        memFreeTextView = view.findViewById(R.id.status_detail_mem_free_text_view)
+        memFreeUnitUnitTextView = view.findViewById(R.id.status_detail_mem_free_unit_text_view)
+        memUsedTextView = view.findViewById(R.id.status_detail_mem_used_text_view)
+        memUsedUnitUnitTextView = view.findViewById(R.id.status_detail_mem_used_unit_text_view)
+        memCacheTextView = view.findViewById(R.id.status_detail_mem_cache_text_view)
+        memCacheUnitUnitTextView = view.findViewById(R.id.status_detail_mem_cache_unit_text_view)
+        memBar = view.findViewById(R.id.status_detail_mem_bar)
 
         context?.run {
             netDevListView?.adapter = StatusNetDevBaseAdapter(this, getFakeNetDev())
@@ -151,6 +169,16 @@ class StatusDetailFragment : Fragment() {
             loadBar?.setProgress(it.monitor.monitorInfo.loadavg.oneOccupy)
             loadBar?.setProgressSecond(it.monitor.monitorInfo.loadavg.fiveOccupy)
             loadBar?.setProgressThree(it.monitor.monitorInfo.loadavg.fifteenOccupy)
+
+
+            memFreeTextView?.text = it.monitor.monitorInfo.mem.free.formatPrint()
+            memFreeUnitUnitTextView?.text = it.monitor.monitorInfo.mem.freeUnit
+            memUsedTextView?.text = it.monitor.monitorInfo.mem.used.formatPrint()
+            memUsedUnitUnitTextView?.text = it.monitor.monitorInfo.mem.usedUnit
+            memCacheTextView?.text = it.monitor.monitorInfo.mem.cache.formatPrint()
+            memCacheUnitUnitTextView?.text = it.monitor.monitorInfo.mem.cacheUnit
+            memBar?.setProgress(it.monitor.monitorInfo.mem.usedOccupy)
+            memBar?.setProgressSecond(it.monitor.monitorInfo.mem.cacheOccupy)
         }
     }
 

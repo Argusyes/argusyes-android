@@ -476,9 +476,9 @@
                         android:indeterminate="true"
                         android:indeterminateOnly="true"
                         app:myTCPArcWidth="4sp"
-                        app:myTCPProgress="50"
-                        app:myTCPProgressSecond="30"
-                        app:myTCPProgressThree="30"
+                        app:myTCPProgress="0"
+                        app:myTCPProgressSecond="0"
+                        app:myTCPProgressThree="0"
                         app:myTCPMax="100"
                         app:myTCPBackgroundColor="?myHintColor"
                         app:myTCPProgressColor="?highlightGreen"
@@ -538,6 +538,7 @@
                         android:padding="0sp">
 
                         <TextView
+                            android:id="@+id/status_detail_mem_free_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/zero"
@@ -545,6 +546,7 @@
                             android:theme="@style/mySmallText" />
 
                         <TextView
+                            android:id="@+id/status_detail_mem_free_unit_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/mem_unit"
@@ -593,6 +595,7 @@
                         android:padding="0sp">
 
                         <TextView
+                            android:id="@+id/status_detail_mem_used_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/zero"
@@ -600,6 +603,7 @@
                             android:theme="@style/mySmallText" />
 
                         <TextView
+                            android:id="@+id/status_detail_mem_used_unit_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/mem_unit"
@@ -648,6 +652,7 @@
                         android:padding="0sp">
 
                         <TextView
+                            android:id="@+id/status_detail_mem_cache_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/zero"
@@ -655,6 +660,7 @@
                             android:theme="@style/mySmallText" />
 
                         <TextView
+                            android:id="@+id/status_detail_mem_cache_unit_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/mem_unit"
@@ -667,15 +673,15 @@
                 </LinearLayout>
 
                 <com.android.argusyes.ui.CircleProgress
-                    android:id="@+id/status_info_cpu_bar"
+                    android:id="@+id/status_detail_mem_bar"
                     android:layout_width="45sp"
                     android:layout_height="45sp"
                     android:layout_gravity="center"
                     android:background="@color/trans"
                     android:indeterminate="true"
                     android:indeterminateOnly="true"
-                    app:myCPProgress="50"
-                    app:myCPProgressSecond="30"
+                    app:myCPProgress="0"
+                    app:myCPProgressSecond="0"
                     app:myCPMax="100"
                     app:myCPBackgroundColor="?myHintColor"
                     app:myCPProgressColor="?highlightGreen"
