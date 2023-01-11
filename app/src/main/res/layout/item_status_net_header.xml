@@ -13,10 +13,11 @@
         android:layout_height="60sp"
         android:padding="10sp"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="start">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0sp"
+            android:layout_weight="1"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="0sp"
@@ -33,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="0sp"
-                android:layout_gravity="center" >
+                android:layout_gravity="start" >
 
                 <TextView
                     android:id="@+id/net_head_up_speed_text_view"
@@ -54,20 +55,15 @@
 
             </LinearLayout>
 
-
         </LinearLayout>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"/>
-
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0sp"
+            android:layout_weight="1"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="0sp"
-            android:gravity="center_vertical" >
+            android:gravity="center_vertical|start" >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -80,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="0sp"
-                android:layout_gravity="center" >
+                android:layout_gravity="start" >
 
                 <TextView
                     android:id="@+id/net_head_down_speed_text_view"
@@ -101,13 +97,7 @@
 
             </LinearLayout>
 
-
         </LinearLayout>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -201,9 +191,8 @@
         </LinearLayout>
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.4"/>
+            android:layout_width="20sp"
+            android:layout_height="match_parent" />
 
         <com.android.argusyes.ui.CircleProgress
             android:id="@+id/net_head_bar"
